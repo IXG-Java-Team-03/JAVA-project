@@ -13,8 +13,11 @@
 - Πατάμε Next
 - Πατάμε Next
 - Επιλέγουμε 
-    - Language -> FXML
-    - Root-type -> AnchorPane 
-    - File Name -> mainWindow
-    - Controller Name -> mainWindowController
+    - `Language -> FXML`
+    - `Root-type -> AnchorPane`
+    - `File Name -> mainWindow`
+    - `Controller Name -> mainWindowController`
 - Πατάμε "Finish"
+- Στο eclipse πάμε στο `Run > Run Configurations...`
+- Δημιουργούμε ένα νέο `Java Application` configuration (διπλό κλικ) - επιλέγουμε το Project και το main class
+- Πατάμε Apply και είμαστε οκ
