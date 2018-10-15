@@ -17,16 +17,16 @@ public class Main extends Application {
         for (int i = myWords.minLength(); i <= myWords.maxLength(); i++) {
             ArrayList<String> myList = new ArrayList<String>();
             myList = myWords.WordsDB.get(i);
-            System.out.println("- "+myList.size()+" λέξεις "+i+" γραμμάτων.");
+            System.out.println("- "+myList.size()+" Ξ»Ξ­ΞΎΞµΞΉΟ‚ "+i+" Ξ³ΟΞ±ΞΌΞΌΞ¬Ο„Ο‰Ξ½.");
 //            //print some
 //            for (int x = 0; x<10;x++){
 //                System.out.println(myList.get(x));
 //            }
         }
         // String with the letters we have available. Can be given randomly or via an existing word.
-        String myLetters = "ΑΒΓΔΕ";
+        String myLetters = "Ξ‘Ξ’Ξ“Ξ”Ξ•";
         ArrayList<String> currentGameSet = myWords.AssembleWordGameSet(myLetters);
-        System.out.println("Με τα γράμματα \""+myLetters+"\" φτιάχνονται "+currentGameSet.size()+" λέξεις");
+        System.out.println("ΞΞµ Ο„Ξ± Ξ³ΟΞ¬ΞΌΞΌΞ±Ο„Ξ± \""+myLetters+"\" Ο†Ο„ΞΉΞ¬Ο‡Ξ½ΞΏΞ½Ο„Ξ±ΞΉ "+currentGameSet.size()+" Ξ»Ξ­ΞΎΞµΞΉΟ‚");
         for (int x = 0; x<currentGameSet.size();x++){
         	System.out.print(currentGameSet.get(x));
         	if (x<currentGameSet.size()-1) System.out.print(", ");
