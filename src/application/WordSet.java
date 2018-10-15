@@ -59,7 +59,7 @@ public class WordSet {
         }
         String alphabet = "";
         if (lang.equals("GR")){
-            alphabet = "&#913;Ξ‘Ξ’Ξ“Ξ”Ξ•Ξ–Ξ—Ξ�Ξ™Ξ�Ξ›Ξ�Ξ�Ξ�Ξ�Ξ Ξ΅Ξ£Ξ¤Ξ¥Ξ¦Ξ§Ξ¨Ξ©";
+            alphabet = "&#913;ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ";
         }
         if (alphabet.indexOf(Character.toUpperCase(c)) > 0) return true;
         return false;
@@ -104,7 +104,7 @@ public class WordSet {
     			// If all letters of the word exist in tempLetters, it is a valid choice.
     			for (int w=0;w<word.length();w++) {
     				// Dirty check for words with "invisible" illegal chars (eg english A instead of a greek one)
-    				if (word.length() < i) System.out.println("*** Ξ— Ξ›Ξ•Ξ�Ξ— "+word+" Ξ�Ξ‘ Ξ•Ξ Ξ΅Ξ•Ξ Ξ• Ξ�Ξ‘ Ξ•Ξ§Ξ•Ξ™ "+i+" Ξ“Ξ΅Ξ‘Ξ�Ξ�Ξ‘Ξ¤Ξ‘! ***");
+    				if (word.length() < i) System.out.println("*** Η ΛΕΞΗ "+word+" ΘΑ ΕΠΡΕΠΕ ΝΑ ΕΧΕΙ "+i+" ΓΡΑΜΜΑΤΑ! ***");
     				
     				for (int c=0;c<tempLetters.size();c++) {
     					//System.out.println(tempLetters.get(c)+" "+(int)tempLetters.get(c)+" - "+word.charAt(w)+" "+(int)word.charAt(w));
