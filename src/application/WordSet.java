@@ -33,11 +33,11 @@ public class WordSet {
         	BufferedReader fr = new BufferedReader(isr);
             int i;
             char c;
-            //String separators = ", .\n!\t?";
+            //we build a word by picking chars one by one, until we reach a non-alphabetic one
             StringBuilder word = new StringBuilder();
             while ((i=fr.read()) != -1) {
                 c = (char)i;
-                // If character is not a letter, save and reset the word
+                // If character is not a valid letter of the specified language, save and reset the word
                 if (!isValid(c,lang)){
                     if (word.length() > 0) w.add(word.toString());
                     word.setLength(0);
@@ -61,21 +61,27 @@ public class WordSet {
         if (lang.equals("GR")){
             alphabet = "&#913;ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ";
         }
+        
         if (alphabet.indexOf(Character.toUpperCase(c)) > 0) return true;
         return false;
     }
     
     public WordSet(String lang, int min, int max, String WordFilesDir){
-        //Reads from a directory where word files exist.
-        // * Language must be specified by the user. Valid values: GR
-        // * Filename format: <language>-<word length>.txt
-        //   E.g. the file for 3-letter Greek words is GR-3.txt
-        // * Directory name without trailing /
+        //
+    	// Reads from a directory where word files exist.
+        // * [lang] Language. Used to check validity of characters AND to select the
+    	//          appropriate word files.
+    	//          Must be specified by the user. Valid values: EN, GR
+    	// * [min, max] Minimum and maximum word length.
+    	// * [WordFilesDir] Directory where the word files are located, without trailing /
+        //                  Filename format: <language>-<word length>.txt
+        //                  E.g. the file for 3-letter Greek words is GR-3.txt
+        //
     	minLength = min;
     	maxLength = max;
         language = lang.toUpperCase();
         WordsDB = new HashMap<Integer, ArrayList<String>>();
-        //create an ArrayList for each of the legal word lengths (2 to 7)
+        //create an ArrayList for each of the legal word lengths, from the respective word files
         for (int i=minLength;i<=maxLength;i++){
             WordsDB.put(i,ReadWordFile(WordFilesDir+"/"+language+"-"+i+".txt",language));
         }
