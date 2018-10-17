@@ -26,30 +26,35 @@ public class CharContainer {
 	
 	
 	public void InitLetters(String letters) {
-		numChars = Math.min( MAX_CHARACTERS, letters.length());
-		System.arraycopy( letters.toCharArray(), 0, charArray, 0, numChars);
+		
+		numChars = Math.min( MAX_CHARACTERS, letters.length());		// calculate number of characters to set
+		
+		System.arraycopy( letters.toCharArray(), 0,					// source array 
+						  charArray, 0, 							// target array
+						  numChars);								// number of elements
 	}
 
 
 	public void pushLetter(char letter) {
 		if( numChars<MAX_CHARACTERS) {
-			charArray[numChars] = letter;
-			numChars++;
+			charArray[numChars] = letter;			// Store the character in the array
+			numChars++;								// increase number of characters
 		}
 	}
 
 
 	public char popLetter() {
 		if( numChars>0) {
-			numChars--;
-			return charArray[numChars];
+			numChars--;								// remove one character
+			return charArray[numChars];				// return that character back
 		}
 		return (char)0;
 	}
 	
 	@Override
 	public String toString() {
-		return String.valueOf(charArray).substring(0, numChars);
+		return String.valueOf(charArray)			// char array to String
+				     .substring(0, numChars); 		// limit to number of characters
 	}
 
 }
