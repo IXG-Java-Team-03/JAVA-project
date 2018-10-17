@@ -17,18 +17,29 @@ public class CharContainer {
 	private final char[] charArray;
 	private final BitSet validLetters;
 	
+	
+	/**
+	 * Default constructor
+	 */
 	public CharContainer() {
 		charArray = new char[MAX_CHARACTERS];
 		validLetters = new BitSet();
 	}
 
+	/**
+	 * Constructor with initial data 
+	 * @param letters Initial letters to populate the array
+	 */
 	public CharContainer( String letters) {
 		charArray = new char[MAX_CHARACTERS];
 		validLetters = new BitSet();
 		InitLetters( letters);
 	}
 	
-	
+	/**
+	 * Insert the letters in the string into the array
+	 * @param letters Initial letters to populate the array
+	 */
 	public void InitLetters(String letters) {
 		
 		int numChars = Math.min( MAX_CHARACTERS, letters.length());		// calculate number of characters to set
@@ -42,6 +53,10 @@ public class CharContainer {
 	}
 
 
+	/**
+	 * Insert one letter in the first empty position from the left
+	 * @param letter The input letter
+	 */
 	public void pushLetter(char letter) {
 		int insertPosition = validLetters.nextClearBit(0);
 		if( insertPosition < MAX_CHARACTERS) {
@@ -51,6 +66,10 @@ public class CharContainer {
 	}
 
 
+	/**
+	 * Get the rightmost letter and remove it from the array
+	 * @return The rightmost letter or 0 if nothing exists
+	 */
 	public char popLetter() {
 		int fetchPosition = validLetters.previousSetBit(MAX_CHARACTERS);
 		if( fetchPosition != -1) {
@@ -63,6 +82,12 @@ public class CharContainer {
 	}
 	
 	
+	/**
+	 * Get the letter at the specified position
+	 * If there is no letter at this position, return zero
+	 * @param position The position to fetch data from
+	 * @return The letter at the specified position
+	 */
 	public char popLetter(int position) {
 		if( position < MAX_CHARACTERS && validLetters.get(position)) {
 			char retval = charArray[position];
@@ -74,6 +99,22 @@ public class CharContainer {
 	}
 	
 	
+	
+	/**
+	 * Delete one letter at the specified position. 
+	 * The array is compacted, closing the space at the specified position
+	 * @param position The position to delete one letter
+	 */
+	public char removeLetter( int position) {
+		if( position < MAX_CHARACTERS && validLetters.get(position)) {
+			
+		}
+	}
+	
+	
+	/**
+	 * Return a string representation of the array data
+	 */
 	@Override
 	public String toString() {
 		return String.valueOf(charArray)											// char array to String
