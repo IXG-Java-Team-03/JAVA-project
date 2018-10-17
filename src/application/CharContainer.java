@@ -15,7 +15,6 @@ public class CharContainer {
 	public static char EMPTY_CHAR = 0;
 
 	private final char[] charArray;
-	private final BitSet validLetters;
 	
 	
 	/**
@@ -23,7 +22,9 @@ public class CharContainer {
 	 */
 	public CharContainer() {
 		charArray = new char[MAX_CHARACTERS];
-		validLetters = new BitSet();
+		for( int i = 0; i < MAX_CHARACTERS; i++) {
+			charArray[i] = EMPTY_CHAR;
+		}
 	}
 
 	/**
@@ -32,7 +33,6 @@ public class CharContainer {
 	 */
 	public CharContainer( String letters) {
 		charArray = new char[MAX_CHARACTERS];
-		validLetters = new BitSet();
 		InitLetters( letters);
 	}
 	
@@ -43,13 +43,14 @@ public class CharContainer {
 	public void InitLetters(String letters) {
 		
 		int numChars = Math.min( MAX_CHARACTERS, letters.length());		// calculate number of characters to set
-		validLetters.clear();
-		if( numChars>0) {
-			validLetters.set(0, numChars);
-		}
+		
 		System.arraycopy( letters.toCharArray(), 0,					// source array 
 						  charArray, 0, 							// target array
 						  numChars);								// number of elements
+		
+		for( int i = numChars; i < MAX_CHARACTERS; i++) {
+			charArray[i] = EMPTY_CHAR;
+		}
 	}
 
 
@@ -58,10 +59,15 @@ public class CharContainer {
 	 * @param letter The input letter
 	 */
 	public void pushLetter(char letter) {
-		int insertPosition = validLetters.nextClearBit(0);
-		if( insertPosition < MAX_CHARACTERS) {
+		int insertPosition = -1;
+		for( int i = 0; i < MAX_CHARACTERS; i++) {
+			if( charArray[i] == EMPTY_CHAR) {
+				insertPosition = i;
+				break;
+			}
+		}
+		if( insertPosition != -1) {
 			charArray[insertPosition] = letter;			// Store the character in the array
-			validLetters.set(insertPosition);			// Set the validity of the current letter
 		}
 	}
 
@@ -71,11 +77,10 @@ public class CharContainer {
 	 * @return The rightmost letter or 0 if nothing exists
 	 */
 	public char popLetter() {
-		int fetchPosition = validLetters.previousSetBit(MAX_CHARACTERS);
+		int fetchPosition = getLength();
 		if( fetchPosition != -1) {
 			char retval = charArray[fetchPosition];
 			charArray[fetchPosition] = EMPTY_CHAR;		// Empty the last position in the array
-			validLetters.clear(fetchPosition);			// remove one character
 			return retval;								// return that character back
 		}
 		return EMPTY_CHAR;
@@ -89,10 +94,9 @@ public class CharContainer {
 	 * @return The letter at the specified position
 	 */
 	public char popLetter(int position) {
-		if( position < MAX_CHARACTERS && validLetters.get(position)) {
+		if( position < MAX_CHARACTERS && charArray[position] != EMPTY_CHAR) {
 			char retval = charArray[position];
 			charArray[position] = EMPTY_CHAR;			// Empty the last position in the array
-			validLetters.clear(position);				// remove one character
 			return retval;								// return that character back
 		}
 		return EMPTY_CHAR;
@@ -106,10 +110,37 @@ public class CharContainer {
 	 * @param position The position to delete one letter
 	 */
 	public char removeLetter( int position) {
-		if( position < MAX_CHARACTERS && validLetters.get(position)) {
+		char retval = EMPTY_CHAR;
+		if( position < MAX_CHARACTERS && charArray[position] != EMPTY_CHAR) {
+			retval = charArray[position];
 			
+			System.arraycopy(
+					charArray, position+1, 
+					charArray, position, 
+					MAX_CHARACTERS-position-1 );
+
+			charArray[MAX_CHARACTERS-1] = EMPTY_CHAR;
 		}
+		return retval;
 	}
+	
+	
+	
+	/**
+	 * Get the highest index of the stored letters
+	 * @return The index of the rightmost stored letter
+	 */
+	private int getLength() {
+		int numChars = -1;
+		for( int i = MAX_CHARACTERS-1; i >= 0; i--) {
+			if( charArray[i] != EMPTY_CHAR) {
+				numChars = i;
+				break;
+			}
+		}
+		return numChars;
+	}
+	
 	
 	
 	/**
@@ -117,8 +148,14 @@ public class CharContainer {
 	 */
 	@Override
 	public String toString() {
-		return String.valueOf(charArray)											// char array to String
-				     .substring(0, validLetters.previousSetBit(MAX_CHARACTERS)+1); 	// limit to number of characters
+		int numChars = getLength();
+		if( numChars != -1) {
+			return String.valueOf(charArray)		// char array to String
+				     .substring(0, numChars+1); 	// limit to number of characters
+		}
+		else {
+			return "";
+		}
 	}
 
 }

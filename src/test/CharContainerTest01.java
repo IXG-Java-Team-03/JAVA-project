@@ -172,4 +172,71 @@ class CharContainerTest01 {
 		assertEquals( CharContainer.EMPTY_CHAR, c);
 	}
 
+	@Test
+	void test14() {
+		String letters = "ABCDGF";
+		obj1.InitLetters(letters);
+		
+		obj1.popLetter( 2);
+		obj1.popLetter( 4);
+		
+		char c = obj1.removeLetter(1);
+		assertEquals( 'B', c);
+		
+		String expected = 				
+				"A" + CharContainer.EMPTY_CHAR +
+				"D" + CharContainer.EMPTY_CHAR + 
+				"F";
+
+		assertEquals( expected, obj1.toString());
+	}
+
+	@Test
+	void test15() {
+
+		obj1.pushLetter( 'A');
+		assertEquals( "A", obj1.toString());
+		obj1.pushLetter( 'B');
+		assertEquals( "AB", obj1.toString());
+		obj1.pushLetter( 'C');
+		assertEquals( "ABC", obj1.toString());
+		obj1.pushLetter( 'D');
+		assertEquals( "ABCD", obj1.toString());
+		obj1.pushLetter( 'E');
+		assertEquals( "ABCDE", obj1.toString());
+		obj1.pushLetter( 'F');
+		assertEquals( "ABCDEF", obj1.toString());
+		obj1.pushLetter( 'G');
+		assertEquals( "ABCDEF", obj1.toString());
+				
+		char c = obj1.removeLetter(5);
+		assertEquals( 'F', c);
+		c = obj1.removeLetter(0);
+		assertEquals( 'A', c);
+		c = obj1.removeLetter(1);
+		assertEquals( 'C', c);
+		c = obj1.removeLetter(0);
+		assertEquals( 'B', c);
+		c = obj1.removeLetter(0);
+		assertEquals( 'D', c);
+		c = obj1.removeLetter(0);
+		assertEquals( 'E', c);
+		c = obj1.removeLetter(0);
+		assertEquals( CharContainer.EMPTY_CHAR, c);
+		c = obj1.removeLetter(200);
+		assertEquals( CharContainer.EMPTY_CHAR, c);
+	}
+	
+
+	@Test
+	void test16() {
+		obj1.InitLetters("ABCDEF");
+		obj1.popLetter(4);
+		String expected = "ABCD" + CharContainer.EMPTY_CHAR + "F";
+		assertEquals( expected, obj1.toString());
+		obj1.InitLetters("AB");
+		assertEquals( "AB", obj1.toString());
+	}
+
+
 }
