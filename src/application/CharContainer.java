@@ -3,7 +3,6 @@
  */
 package application;
 
-import java.util.BitSet;
 
 /**
  * @author nkot
@@ -94,7 +93,7 @@ public class CharContainer {
 	 * @return The letter at the specified position
 	 */
 	public char popLetter(int position) {
-		if( position < MAX_CHARACTERS && charArray[position] != EMPTY_CHAR) {
+		if( position >=0 && position < MAX_CHARACTERS && charArray[position] != EMPTY_CHAR) {
 			char retval = charArray[position];
 			charArray[position] = EMPTY_CHAR;			// Empty the last position in the array
 			return retval;								// return that character back
@@ -111,7 +110,7 @@ public class CharContainer {
 	 */
 	public char removeLetter( int position) {
 		char retval = EMPTY_CHAR;
-		if( position < MAX_CHARACTERS && charArray[position] != EMPTY_CHAR) {
+		if( position >=0 && position < MAX_CHARACTERS && charArray[position] != EMPTY_CHAR) {
 			retval = charArray[position];
 			
 			System.arraycopy(
@@ -131,12 +130,9 @@ public class CharContainer {
 	 * @return The index of the rightmost stored letter
 	 */
 	private int getLength() {
-		int numChars = -1;
-		for( int i = MAX_CHARACTERS-1; i >= 0; i--) {
-			if( charArray[i] != EMPTY_CHAR) {
-				numChars = i;
-				break;
-			}
+		int numChars = MAX_CHARACTERS-1;
+		while( numChars>=0 && charArray[numChars] == EMPTY_CHAR) {
+			numChars--;
 		}
 		return numChars;
 	}

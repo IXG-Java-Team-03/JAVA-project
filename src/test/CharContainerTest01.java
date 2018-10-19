@@ -2,6 +2,9 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -228,6 +231,13 @@ class CharContainerTest01 {
 		assertEquals( CharContainer.EMPTY_CHAR, c);
 		c = obj1.removeLetter(200);
 		assertEquals( CharContainer.EMPTY_CHAR, c);
+		c = obj1.removeLetter(-2);
+		assertEquals( CharContainer.EMPTY_CHAR, c);
+		
+		c = obj1.popLetter(-2);
+		assertEquals( CharContainer.EMPTY_CHAR, c);
+		c = obj1.popLetter(200);
+		assertEquals( CharContainer.EMPTY_CHAR, c);
 	}
 	
 
@@ -239,6 +249,56 @@ class CharContainerTest01 {
 		assertEquals( expected, obj1.toString());
 		obj1.InitLetters("AB");
 		assertEquals( "AB", obj1.toString());
+	}
+
+
+	@Test
+	void test17() {
+		
+		assertEquals( "", obj1.toString());
+
+		int length = 0;
+		try {
+			Method method = obj1.getClass().getDeclaredMethod( "getLength");
+			method.setAccessible(true);
+			length = (int) method.invoke( obj1);
+
+		} catch (NoSuchMethodException | SecurityException e) {
+		} catch (IllegalAccessException e) {
+		} catch (IllegalArgumentException e) {
+		} catch (InvocationTargetException e) {
+		}
+		assertEquals( -1, length);
+		
+		
+		obj1.InitLetters("ABCDEF");
+		obj1.popLetter(4);
+		length = -2;
+		try {
+			Method method = obj1.getClass().getDeclaredMethod( "getLength");
+			method.setAccessible(true);
+			length = (int) method.invoke( obj1);
+
+		} catch (NoSuchMethodException | SecurityException e) {
+		} catch (IllegalAccessException e) {
+		} catch (IllegalArgumentException e) {
+		} catch (InvocationTargetException e) {
+		}
+		assertEquals( 5, length);
+
+		obj1.removeLetter(2);
+		length = -2;
+		try {
+			Method method = obj1.getClass().getDeclaredMethod( "getLength");
+			method.setAccessible(true);
+			length = (int) method.invoke( obj1);
+
+		} catch (NoSuchMethodException | SecurityException e) {
+		} catch (IllegalAccessException e) {
+		} catch (IllegalArgumentException e) {
+		} catch (InvocationTargetException e) {
+		}
+		assertEquals( 4, length);
 	}
 
 
