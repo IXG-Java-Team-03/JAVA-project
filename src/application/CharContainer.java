@@ -11,7 +11,7 @@ import java.util.BitSet;
  */
 public class CharContainer {
 
-	public static int MAX_CHARACTERS = 6;
+	public static int MAX_CHARACTERS = 7;
 	public static char EMPTY_CHAR = 0;
 
 	private final char[] charArray;
@@ -115,9 +115,9 @@ public class CharContainer {
 			retval = charArray[position];
 			
 			System.arraycopy(
-					charArray, position+1, 
-					charArray, position, 
-					MAX_CHARACTERS-position-1 );
+					charArray, position+1, 				// source range
+					charArray, position, 				// target range
+					MAX_CHARACTERS-position-1 );		// number of data
 
 			charArray[MAX_CHARACTERS-1] = EMPTY_CHAR;
 		}
