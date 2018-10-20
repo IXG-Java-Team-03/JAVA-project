@@ -21,11 +21,17 @@ public class WordSet {
     
     public HashMap<Integer, ArrayList<String>> WordsDB;
     
+    /**
+     * Returns an ArrayList with words from a text file
+     * Words can be separated by any non-letter character
+     * WARNING: A word with an invalid character that looks valid (eg an english A instead of
+     * a greek one in a greek word) will separate the word.
+     * @param filePath
+     * @param lang		Select input language (EN or GR)
+     * @return			An ArrayList with the words
+     */
     private ArrayList<String> ReadWordFile(String filePath, String lang){
-        // Returns an ArrayList with words from a text file
-        // Words can be separated by any non-letter character
-    	// WARNING: A word with an invalid character that looks valid (eg an english A instead of
-    	// a greek one in a greek word) will separate the word.
+
         ArrayList<String> w = new ArrayList<String>();
         try {
         	FileInputStream is = new FileInputStream(filePath);
@@ -53,6 +59,13 @@ public class WordSet {
         return w;
     }
     
+    
+    /**
+     * Check if that is a valid letter
+     * @param c		Input character 
+     * @param lang	Language selection (GR or EN)
+     * @return		If the character is valid
+     */
     boolean isValid(char c, String lang){
         if (lang.equals("EN")){
             return Character.isLetter(c);
@@ -66,17 +79,20 @@ public class WordSet {
         return false;
     }
     
+    
+    /**
+     * Reads from a directory where word files exist.
+     * @param lang Language. Used to check validity of characters AND to select the
+     * 				appropriate word files.
+     * 				Must be specified by the user. Valid values: EN, GR
+     * @param min   Minimum word length.
+     * @param max   Maximum word length.
+     * @param WordFilesDir Directory where the word files are located, without trailing /
+     * 				Filename format: <language>-<word length>.txt
+     * 				E.g. the file for 3-letter Greek words is GR-3.txt
+     */
     public WordSet(String lang, int min, int max, String WordFilesDir){
-        //
-    	// Reads from a directory where word files exist.
-        // * [lang] Language. Used to check validity of characters AND to select the
-    	//          appropriate word files.
-    	//          Must be specified by the user. Valid values: EN, GR
-    	// * [min, max] Minimum and maximum word length.
-    	// * [WordFilesDir] Directory where the word files are located, without trailing /
-        //                  Filename format: <language>-<word length>.txt
-        //                  E.g. the file for 3-letter Greek words is GR-3.txt
-        //
+
     	minLength = min;
     	maxLength = max;
         language = lang.toUpperCase();
@@ -87,8 +103,13 @@ public class WordSet {
         }
     }
     
+    
+    /**
+     * Breaks the input string in letters and finds all words that can be created with them.
+     * @param l 
+     * @return
+     */
     public ArrayList<String> AssembleWordGameSet(String l) {
-    	// Breaks the input string in letters and finds all words that can be created with them.
     	
     	// letters: an arraylist of chars to assemble words.
     	ArrayList<Character> letters = new ArrayList<Character>();

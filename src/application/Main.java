@@ -20,7 +20,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-import java.awt.Dimension;
+//import java.awt.Dimension;
 
 public class Main extends Application {
 	
