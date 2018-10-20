@@ -3,6 +3,8 @@ package application;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+
 /**
  * Write a description of WordSet here.
  * 
@@ -11,15 +13,47 @@ import java.util.HashMap;
  */
 public class WordSet {
     private String language;
-    public String language(){return language;}
     private int size;
-    public int size(){return size;}
     private int minLength;
-    public int minLength() {return minLength;}
     private int maxLength;
-    public int maxLength() {return maxLength;}
     
     public HashMap<Integer, ArrayList<String>> WordsDB;
+
+    
+    /**
+     * Get language value
+     * @return language value
+     */
+    public String language() {
+    	return language;
+	}
+
+    /**
+     * Get minimum length
+     * @return
+     */
+    public int minLength() {
+    	return minLength;
+	}
+
+    
+    /**
+     * Get maximum length
+     * @return
+     */
+    public int maxLength() {
+		return maxLength;
+	}
+
+
+    /**
+     * Get size
+     * @return
+     */
+    public int size(){
+    	return size;
+	}
+
     
     /**
      * Returns an ArrayList with words from a text file
@@ -44,8 +78,10 @@ public class WordSet {
             while ((i=fr.read()) != -1) {
                 c = (char)i;
                 // If character is not a valid letter of the specified language, save and reset the word
-                if (!isValid(c,lang)){
-                    if (word.length() > 0) w.add(word.toString());
+                if ( !isValid(c,lang)) {
+                    if (word.length() > 0) {
+                    	w.add(word.toString());
+                    }
                     word.setLength(0);
                     continue;
                 }
@@ -67,17 +103,21 @@ public class WordSet {
      * @return		If the character is valid
      */
     boolean isValid(char c, String lang){
-        if (lang.equals("EN")){
+        if (lang.equals("EN")) {
             return Character.isLetter(c);
         }
         String alphabet = "";
-        if (lang.equals("GR")){
+        if (lang.equals("GR")) {
             alphabet = "&#913;ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ";
         }
         
-        if (alphabet.indexOf(Character.toUpperCase(c)) > 0) return true;
+        if (alphabet.indexOf(Character.toUpperCase(c)) > 0) {
+        	return true;
+        }
         return false;
     }
+    
+    
     
     
     /**
@@ -98,10 +138,11 @@ public class WordSet {
         language = lang.toUpperCase();
         WordsDB = new HashMap<Integer, ArrayList<String>>();
         //create an ArrayList for each of the legal word lengths, from the respective word files
-        for (int i=minLength;i<=maxLength;i++){
+        for (int i=minLength;i<=maxLength;i++) {
             WordsDB.put(i,ReadWordFile(WordFilesDir+"/"+language+"-"+i+".txt",language));
         }
     }
+    
     
     
     /**
@@ -118,26 +159,36 @@ public class WordSet {
     	}
     	
     	ArrayList<String> wset = new ArrayList<String>();
+    	
     	// For each set i in WordsDB (each set consists of words with the same size)
     	for (int i=maxLength;i>=minLength;i--) {
     		// For each word in the set
     		for (String word : WordsDB.get(i)) {
+    			
     			// A bool to check validity
     			boolean invalid = false;
+    			
     			// Create a temp ArrayList to keep the original one intact.
         		ArrayList<Character> tempLetters = new ArrayList<>(letters);
+        		
     			// For each character in word, check if it exists in tempLetters
     			// If yes, remove it from there (this way we also check duplicate occurencies).
     			// If all letters of the word exist in tempLetters, it is a valid choice.
-    			for (int w=0;w<word.length();w++) {
-    				// Dirty check for words with "invisible" illegal chars (eg english A instead of a greek one)
-    				if (word.length() < i) System.out.println("*** Η ΛΕΞΗ "+word+" ΘΑ ΕΠΡΕΠΕ ΝΑ ΕΧΕΙ "+i+" ΓΡΑΜΜΑΤΑ! ***");
+    			for (int w=0; w<word.length(); w++) {
     				
-    				for (int c=0;c<tempLetters.size();c++) {
+    				// Dirty check for words with "invisible" illegal chars (eg english A instead of a greek one)
+    				if (word.length() < i) {
+    					System.out.println("*** Η ΛΕΞΗ "+word+" ΘΑ ΕΠΡΕΠΕ ΝΑ ΕΧΕΙ "+i+" ΓΡΑΜΜΑΤΑ! ***");
+    				}
+    				
+    				for (int c=0; c<tempLetters.size(); c++) {
+    					
     					//System.out.println(tempLetters.get(c)+" "+(int)tempLetters.get(c)+" - "+word.charAt(w)+" "+(int)word.charAt(w));
     					if (tempLetters.get(c).equals(word.charAt(w))) {
     						tempLetters.remove(c);
-    						if (w == word.length()-1) wset.add(word);
+    						if (w == word.length()-1) {
+    							wset.add(word);
+    						}
     						break;
     					}
     					// If a char of the word does not exist in our list of chars,
@@ -147,8 +198,11 @@ public class WordSet {
     						break;
     					}
     				}
+    				
     				// Word cannot be assembled
-    				if (invalid) break;
+    				if (invalid) {
+    					break;
+    				}
     			}
     		}
     	}
