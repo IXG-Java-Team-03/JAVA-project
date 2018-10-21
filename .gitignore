@@ -27,4 +27,4 @@ bin/*
 .project
 build.fxbuild
 .settings/*
-/bin/
+
