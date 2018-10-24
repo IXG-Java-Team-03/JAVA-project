@@ -3,16 +3,15 @@
  */
 package test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.Assert.*;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import application.WordSet;
 
@@ -20,50 +19,35 @@ import application.WordSet;
  * @author nkot
  *
  */
-class WordSetTest {
+public class WordSetTest {
 
-	static WordSet obj1;
+	private static WordSet obj1;
 	
-	static int min = 2;
-	static int max = 5;
-	static String langGR = "GR";
-	static String langEN = "EN";
+	private static int min = 2;
+	private static int max = 5;
+	private static String langGR = "GR";
+	private static String langEN = "EN";
 	
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@BeforeAll
-	static void setUpBeforeClass() throws Exception {
+	
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
 		obj1 = new WordSet( langGR, min, max, "words");
 	}
 
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@AfterAll
-	static void tearDownAfterClass() throws Exception {
+	@AfterClass
+	public static void tearDownAfterClass() throws Exception {
 	}
 
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@BeforeEach
-	void setUp() throws Exception {
-		
+	@Before
+	public void setUp() throws Exception {
 	}
 
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@AfterEach
-	void tearDown() throws Exception {
+	@After
+	public void tearDown() throws Exception {
 	}
 
-	/**
-	 * Test method for {@link application.WordSet#isValid(char, java.lang.String)}.
-	 */
 	@Test
-	void testIsValid() {
+	public void testIsValid() {
 		boolean result = false;
 		try {
 			Method method = obj1.getClass().getDeclaredMethod( "isValid", char.class, String.class);
@@ -104,25 +88,9 @@ class WordSetTest {
 		
 	}
 
-	/**
-	 * Test method for {@link application.WordSet#WordSet(java.lang.String, int, int, java.lang.String)}.
-	 */
-	@Test
-	void testWordSet() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link application.WordSet#AssembleWordGameSet(java.lang.String)}.
-	 */
-	@Test
-	void testAssembleWordGameSet() {
-		fail("Not yet implemented");
-	}
-
 	
 	@Test
-	void testGetters() {
+	public void testGetters() {
 		
 		int val = obj1.minLength();
 		assertEquals( min, val);

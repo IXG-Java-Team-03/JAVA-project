@@ -1,41 +1,41 @@
 package test;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.Assert.*;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import application.CharContainer;
 
-class CharContainerTest01 {
+public class CharContainerTest01 {
 	
-	CharContainer obj1;
+	private CharContainer obj1;
 
-	@BeforeAll
-	static void setUpBeforeClass() throws Exception {
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
 	}
 
-	@AfterAll
-	static void tearDownAfterClass() throws Exception {
+	@AfterClass
+	public static void tearDownAfterClass() throws Exception {
 	}
 
-	@BeforeEach
-	void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		obj1 = new CharContainer();
 	}
 
-	@AfterEach
-	void tearDown() throws Exception {
+	@After
+	public void tearDown() throws Exception {
 	}
 
 	@Test
-	void test01() {
+	public void test01() {
 		String letters = "AR";
 		obj1.InitLetters(letters);
 		String val = obj1.toString();
@@ -43,7 +43,7 @@ class CharContainerTest01 {
 	}
 
 	@Test
-	void test02() {
+	public void test02() {
 		String letters = "ARerA";
 		obj1.InitLetters(letters);
 		String val = obj1.toString();
@@ -51,7 +51,7 @@ class CharContainerTest01 {
 	}
 
 	@Test
-	void test03() {
+	public void test03() {
 		String letters = "ARerA1";
 		for( int i=0; i < letters.length(); i++) {
 			obj1.pushLetter( letters.charAt(i));
@@ -61,7 +61,7 @@ class CharContainerTest01 {
 	}
 
 	@Test
-	void test04() {
+	public void test04() {
 		String letters = "ARerA1";
 		obj1.InitLetters(letters);
 		String val1 = "";
@@ -72,7 +72,7 @@ class CharContainerTest01 {
 	}
 
 	@Test
-	void test05() {
+	public void test05() {
 		String letters = "ARerA";
 		CharContainer obj2 = new CharContainer(letters);
 		String val = obj2.toString();
@@ -81,7 +81,7 @@ class CharContainerTest01 {
 	}
 
 	@Test
-	void test06() {
+	public void test06() {
 		String letters = "ARerA1a";
 		obj1.InitLetters(letters);
 		obj1.pushLetter( 't');
@@ -97,7 +97,7 @@ class CharContainerTest01 {
 	}
 
 	@Test
-	void test07() {
+	public void test07() {
 		String letters = "ARerA1s";
 		obj1.InitLetters(letters);
 		obj1.pushLetter( 't');
@@ -115,7 +115,7 @@ class CharContainerTest01 {
 	}
 
 	@Test
-	void test08() {
+	public void test08() {
 		String letters = "ARerA1";
 		obj1.InitLetters(letters);
 		obj1.popLetter(2);
@@ -133,7 +133,7 @@ class CharContainerTest01 {
 	}
 
 	@Test
-	void test09() {
+	public void test09() {
 		String letters = "";
 		obj1.InitLetters(letters);
 		String val = obj1.toString();
@@ -141,7 +141,7 @@ class CharContainerTest01 {
 	}
 
 	@Test
-	void test10() {
+	public void test10() {
 		String letters = "ABCDGFHE";
 		obj1.InitLetters(letters);
 		String val = obj1.toString();
@@ -149,7 +149,7 @@ class CharContainerTest01 {
 	}
 
 	@Test
-	void test11() {
+	public void test11() {
 		String letters = "ABCDGF";
 		obj1.InitLetters(letters);
 		obj1.popLetter(2);
@@ -159,7 +159,7 @@ class CharContainerTest01 {
 	}
 
 	@Test
-	void test12() {
+	public void test12() {
 		String letters = "ABCDGF";
 		obj1.InitLetters(letters);
 		char c = obj1.popLetter(CharContainer.MAX_CHARACTERS+2);
@@ -167,7 +167,7 @@ class CharContainerTest01 {
 	}
 
 	@Test
-	void test13() {
+	public void test13() {
 		String letters = "ABCDGF";
 		obj1.InitLetters(letters);
 		obj1.popLetter(3);
@@ -176,7 +176,7 @@ class CharContainerTest01 {
 	}
 
 	@Test
-	void test14() {
+	public void test14() {
 		String letters = "ABCDGFd";
 		obj1.InitLetters(letters);
 		
@@ -195,7 +195,7 @@ class CharContainerTest01 {
 	}
 
 	@Test
-	void test15() {
+	public void test15() {
 		obj1.pushLetter( 'A');
 		assertEquals( "A", obj1.toString());
 		obj1.pushLetter( 'B');
@@ -242,7 +242,7 @@ class CharContainerTest01 {
 	
 
 	@Test
-	void test16() {
+	public void test16() {
 		obj1.InitLetters("ABCDEF");
 		obj1.popLetter(4);
 		String expected = "ABCD" + CharContainer.EMPTY_CHAR + "F";
@@ -253,7 +253,7 @@ class CharContainerTest01 {
 
 
 	@Test
-	void test17() {
+	public void test17() {
 		
 		assertEquals( "", obj1.toString());
 
