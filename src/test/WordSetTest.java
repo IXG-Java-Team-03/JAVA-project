@@ -24,12 +24,17 @@ class WordSetTest {
 
 	static WordSet obj1;
 	
+	static int min = 2;
+	static int max = 5;
+	static String langGR = "GR";
+	static String langEN = "EN";
+	
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		obj1 = new WordSet( "GR", 2, 5, "words");
+		obj1 = new WordSet( langGR, min, max, "words");
 	}
 
 	/**
@@ -64,31 +69,31 @@ class WordSetTest {
 			Method method = obj1.getClass().getDeclaredMethod( "isValid", char.class, String.class);
 			method.setAccessible(true);
 			
-			result = (boolean) method.invoke( obj1, 'Á', "GR");
+			result = (boolean) method.invoke( obj1, 'Á', langGR);
 			assertTrue( result);
 
-			result = (boolean) method.invoke( obj1, 'Â', "GR");
+			result = (boolean) method.invoke( obj1, 'Â', langGR);
 			assertTrue( result);
 
-			result = (boolean) method.invoke( obj1, 'Ã', "GR");
+			result = (boolean) method.invoke( obj1, 'Ã', langGR);
 			assertTrue( result);
 
-			result = (boolean) method.invoke( obj1, 'ã', "GR");
+			result = (boolean) method.invoke( obj1, 'ã', langGR);
 			assertTrue( result);
 
-			result = (boolean) method.invoke( obj1, 'C', "GR");
+			result = (boolean) method.invoke( obj1, 'C', langGR);
 			assertFalse( result);
 
-			result = (boolean) method.invoke( obj1, 'C', "EN");
+			result = (boolean) method.invoke( obj1, 'C', langEN);
 			assertTrue( result);
 
 			result = (boolean) method.invoke( obj1, 'C', "FR");
 			assertFalse( result);
 
-			result = (boolean) method.invoke( obj1, 'Ù', "GR");
+			result = (boolean) method.invoke( obj1, 'Ù', langGR);
 			assertTrue( result);
 
-			result = (boolean) method.invoke( obj1, 'Ö', "GR");
+			result = (boolean) method.invoke( obj1, 'Ö', langGR);
 			assertTrue( result);
 
 		} catch (NoSuchMethodException | SecurityException e) {
@@ -115,4 +120,17 @@ class WordSetTest {
 		fail("Not yet implemented");
 	}
 
+	
+	@Test
+	void testGetters() {
+		
+		int val = obj1.minLength();
+		assertEquals( min, val);
+		
+		val = obj1.maxLength();
+		assertEquals( max, val);
+		
+		String val1 = obj1.language();
+		assertEquals( langGR, val1);
+	}
 }
