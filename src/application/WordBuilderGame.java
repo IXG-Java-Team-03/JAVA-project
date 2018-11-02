@@ -57,13 +57,13 @@ public class WordBuilderGame extends Application {
 
 	private BorderPane root;
 
-	private int Level;
+	private static int Level;
 
 	private Scene scene;
 
-	private int Score;
+	private static int Score;
 
-	private Button chckword, resetword, shuffleword;
+	private Button chckword, resetword, shuffleword,nextlevel;
 
 	private GridPane gamePane;
 
@@ -76,13 +76,13 @@ public class WordBuilderGame extends Application {
 	// variable for the timer value
 	private static Integer STARTTIME = 60;
 
-	private VBox createTimer() {
+	private HBox createTimer() {
 
 		if (STARTTIME != 0) {
 
 			Label timeSlogan = new Label("Time");
 			timeSlogan.setTextFill(Color.WHITE);
-			timeSlogan.setStyle("-fx-font-size:34px;");
+			timeSlogan.setStyle("-fx-font-size:28px;");
 			// timeSlogan.setStyle("-fx-font-weight:bold");
 
 			Timeline timeline = null;
@@ -91,7 +91,7 @@ public class WordBuilderGame extends Application {
 
 			timerLabel.textProperty().bind(timeSeconds.divide(100).asString());
 			timerLabel.setTextFill(Color.GREEN);
-			timerLabel.setStyle("-fx-font-size:4em;");
+			timerLabel.setStyle("-fx-font-size:28px;");
 
 			ProgressBar pb = new ProgressBar();
 			pb.setProgress(0);
@@ -103,12 +103,12 @@ public class WordBuilderGame extends Application {
 
 			timeline.playFromStart();
 
-			VBox vb = new VBox(20);
-			vb.setAlignment(Pos.CENTER);
-			vb.getChildren().addAll(timeSlogan, timerLabel);
-			vb.setLayoutY(30);
+			HBox hb = new HBox(20);
+			hb.setAlignment(Pos.BASELINE_LEFT);
+			hb.getChildren().addAll(timeSlogan, timerLabel);
+			//hb.setLayoutY(20);
 
-			return vb;
+			return hb;
 
 		}
 
@@ -234,7 +234,7 @@ public class WordBuilderGame extends Application {
 					setGridPaneRowsCols(gamePane, MAXROWS, MAXCOLS);
 
 					// it shows the grid of cols and rows
-					// gamePane.setGridLinesVisible(true);
+					//gamePane.setGridLinesVisible(true);
 
 					gamePane.setPadding(new Insets(10, 10, 10, 10));
 
@@ -256,7 +256,7 @@ public class WordBuilderGame extends Application {
 					// here we will call a function that will return the found words
 					// with a dash replacing each word letter
 					String[] exampleWords = { "- - - - - - -", "- - -", "- - -", "- - - - -", "- - - - -", "- -", "- -",
-							"- - -", "- - -", "- - - - -", "- - - -" };
+							"- - -", "- - -","- - - - - - -" };
 
 					wordsList.setItems(FXCollections.observableArrayList(exampleWords));
 					// wordsList.setBackground(value);
@@ -264,22 +264,28 @@ public class WordBuilderGame extends Application {
 					wordsList.setMouseTransparent(true);
 					wordsList.setFocusTraversable(false);
 
-					gamePane.add(wordsList, 0, 2, 3, MAXROWS - 3); // spans 1 column, 4 rows
+					gamePane.add(wordsList, 0, 2, 3, MAXROWS - 2); // spans 1 column, 4 rows
 
 					// create and add the timer
-					VBox vbtimer = createTimer();
-					vbtimer.setPadding(new Insets(10));
+					HBox hbtimer = createTimer();
+					//hbtimer.setPadding(new Insets(10));
 
-					gamePane.add(vbtimer, MAXCOLS - 2, 1, 2, 2); // spans 2 columns and 2 rows (the last two elements)
+					gamePane.add(hbtimer, MAXCOLS - 4, 2, 2, 1); // spans 2 columns and 2 rows (the last two elements)
 
 					SetScore();
 
 					createLetterSeqBut("KOSSSTA");
 
-					if (availableLetters == null)
-						System.out.println("mphka");
+                    //create the 4 control buttons: check word, shuffle, reset, next level
+					chckword = createControlButton("/res/ok.png","Checks if word is in the list!");
+					resetword = createControlButton("/res/reset.png","Resets all actions done so far!");
+					shuffleword = createControlButton("/res/shuffle.png","Shuffle letters!");
+					nextlevel = createControlButton("/res/level.png","Go to next level!");
+					
+					HBox hbox = new HBox(chckword, resetword, shuffleword,nextlevel);
 
-					createControlButtons();
+					gamePane.add(hbox, MAXCOLS - 5, MAXROWS - 1, 1, 1);
+					
 
 					scene = new Scene(gamePane, GamePreloader.WIDTH, GamePreloader.HEIGHT);
 
@@ -321,7 +327,7 @@ public class WordBuilderGame extends Application {
 
 		GridPane.setHalignment(gameLevel, HPos.CENTER);
 
-		gamePane.add(gameLevel, MAXCOLS / 2, 0, 2, 2);
+		gamePane.add(gameLevel, (MAXCOLS / 2)+1, 0, 1, 1);
 
 	}
 
@@ -329,19 +335,19 @@ public class WordBuilderGame extends Application {
 
 		Label scoreSlogan = new Label("Score");
 		scoreSlogan.setTextFill(Color.WHITE);
-		scoreSlogan.setStyle("-fx-font-size:34px;");
+		scoreSlogan.setStyle("-fx-font-size:28px;");
 
 		Label scoreLabel = new Label();
 		scoreLabel.setText(Integer.toString(Score));
 		scoreLabel.setTextFill(Color.BLUE);
-		scoreLabel.setStyle("-fx-font-size:4em;");
+		scoreLabel.setStyle("-fx-font-size:28px;");
 
-		VBox vb = new VBox(20);
-		vb.setAlignment(Pos.CENTER);
-		vb.getChildren().addAll(scoreSlogan, scoreLabel);
-		vb.setLayoutY(20);
+		HBox hb = new HBox(20);
+		hb.setAlignment(Pos.BASELINE_LEFT);
+		hb.getChildren().addAll(scoreSlogan, scoreLabel);
+		//hb.setLayoutY(20);
 
-		gamePane.add(vb, MAXCOLS - 5, 1, 1, 2);
+		gamePane.add(hb, MAXCOLS - 4, 1, 2, 1);
 
 	}
 
@@ -449,23 +455,18 @@ public class WordBuilderGame extends Application {
 			charArrayUpper = new CharContainer();
 
 			for (int i = 0; i < letters.length(); i++) {
-
-				System.out.println("hgap:" + gamePane.hgapProperty());
-				System.out.println("vgap:" + gamePane.getVgap());
-
+	
 				Button btn = createNewButton(letters.substring(i, i + 1));
-				// System.out.println(letters.substring(i,i+1));
+				
 				availableLetters.add(btn);
 
 				availlettersbox.getChildren().add(btn);
-
-				// gamePane.add(btn, i+4, (MAXROWS/3)+2, 1, 1);
 
 				btn = createNewButton(String.valueOf(EmptyLabel));
 				availablePositions.add(btn);
 
 				availposlettersbox.getChildren().add(btn);
-				// gamePane.add(btn, i+4, MAXROWS/3,1,1);
+				
 
 			}
 
@@ -480,20 +481,12 @@ public class WordBuilderGame extends Application {
 
 		Button btn = new Button(slogan);
 		btn.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-		// btn.setPrefSize(gamePane.getHgap(), gamePane.getVgap());
 
-		// GridPane.setFillWidth(btn, true);
-		// GridPane.setFillHeight(btn, true);
 
 		GridPane.setHalignment(btn, HPos.CENTER);
 		btn.setOnAction(myHandler);
 
-		/*btn.setStyle("-fx-background-color: \r\n" + "        #000000,\r\n"
-				+ "        linear-gradient(#7ebcea, #2f4b8f),\r\n" + "        linear-gradient(#426ab7, #263e75),\r\n"
-				+ "        linear-gradient(#395cab, #223768);\r\n" + "    -fx-background-insets: 0,1,2,3;\r\n"
-				+ "    -fx-background-radius: 3,2,2,2;\r\n" + "    -fx-padding: 12 30 12 30;\r\n"
-				+ "    -fx-text-fill: white;\r\n" + "    -fx-font-size: 14px;");
-         */
+		
 		return btn;
 	}
 
@@ -519,61 +512,40 @@ public class WordBuilderGame extends Application {
 		});
 
 	}
+	
+	
+	
+	private Button createControlButton(String filepath,String tooltipslogan) {
+		
+		Button btn = null;
+		
+		if(!filepath.isEmpty() && !tooltipslogan.isEmpty())
+		{
+		
+	      	Image img = new Image(getClass().getResourceAsStream(filepath));
 
-	private void createControlButtons() {
+	      	btn = new Button("", new ImageView(img));
 
-		Image check = new Image(getClass().getResourceAsStream("/res/ok.png"));
+	      	Tooltip tooltip = new Tooltip(tooltipslogan);
 
-		chckword = new Button("", new ImageView(check));
+	      	tooltip.setFont(new Font("Arial", 16));
 
-		Tooltip tooltip = new Tooltip("Checks if word is in the list!");
+	      	btn.setTooltip(tooltip);
 
-		tooltip.setFont(new Font("Arial", 16));
+	      	btn.setId("check-button");
 
-		chckword.setTooltip(tooltip);
+	      	btn.setOnAction(myHandler);
 
-		chckword.setId("check-button");
-
-		chckword.setOnAction(myHandler);
-
-		setEffectShadow(chckword);
-
-		Image reset = new Image(getClass().getResourceAsStream("/res/reset.jpg"));
-
-		resetword = new Button("", new ImageView(reset));
-
-		tooltip = new Tooltip("Resets all actions done so far!");
-
-		tooltip.setFont(new Font("Arial", 16));
-
-		resetword.setTooltip(tooltip);
-
-		resetword.setId("check-button");
-
-		resetword.setOnAction(myHandler);
-
-		setEffectShadow(resetword);
-
-		Image shuffle = new Image(getClass().getResourceAsStream("/res/shuffle.png"));
-
-		shuffleword = new Button("", new ImageView(shuffle));
-
-		tooltip = new Tooltip("Shuffle letters!");
-
-		tooltip.setFont(new Font("Arial", 16));
-
-		shuffleword.setTooltip(tooltip);
-
-		shuffleword.setId("check-button");
-
-		shuffleword.setOnAction(myHandler);
-
-		setEffectShadow(shuffleword);
-
-		HBox hbox = new HBox(chckword, resetword, shuffleword);
-
-		gamePane.add(hbox, MAXCOLS - 5, MAXROWS - 1, 1, 1);
-
+	      	setEffectShadow(btn);
+		}
+		
+		
+		return btn;
+		
+		
 	}
+	
+	
+	
 
 }

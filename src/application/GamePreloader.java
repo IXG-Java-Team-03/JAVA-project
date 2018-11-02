@@ -23,7 +23,7 @@ public class GamePreloader extends Preloader {
 	private ProgressBar pb;
 	private Label progress;
 
-	final static double WIDTH = 1048;// java.awt.Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2.0f;
+	final static double WIDTH = 1060;// java.awt.Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2.0f;
 	final static double HEIGHT = 768; // java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2.0f;
 
 	private VBox vb;

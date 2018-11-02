@@ -9,7 +9,7 @@
 .list-view  {
           -fx-background-color: transparent;
           -fx-text-fill: white;
-          -fx-font-size: 20px;
+          -fx-font-size: 30px;
 }
 
 
@@ -17,7 +17,7 @@
 .list-cell {
           -fx-background-color: transparent;
           -fx-text-fill: white;
-          -fx-font-size: 20px;
+          -fx-font-size: 30px;
 }
 
 /* removes the borders of list view */
@@ -76,6 +76,7 @@
 
 	/* text styles */
 	-fx-text-decoration: none;
+	-fx-text-fill: grey;
 	-fx-font-size: 25px;
 	-fx-font-family: sans-serif;
 	-fx-font-weight: 100;
