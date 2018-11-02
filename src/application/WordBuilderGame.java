@@ -488,12 +488,12 @@ public class WordBuilderGame extends Application {
 		GridPane.setHalignment(btn, HPos.CENTER);
 		btn.setOnAction(myHandler);
 
-		btn.setStyle("-fx-background-color: \r\n" + "        #000000,\r\n"
+		/*btn.setStyle("-fx-background-color: \r\n" + "        #000000,\r\n"
 				+ "        linear-gradient(#7ebcea, #2f4b8f),\r\n" + "        linear-gradient(#426ab7, #263e75),\r\n"
 				+ "        linear-gradient(#395cab, #223768);\r\n" + "    -fx-background-insets: 0,1,2,3;\r\n"
 				+ "    -fx-background-radius: 3,2,2,2;\r\n" + "    -fx-padding: 12 30 12 30;\r\n"
 				+ "    -fx-text-fill: white;\r\n" + "    -fx-font-size: 14px;");
-
+         */
 		return btn;
 	}
 

@@ -56,31 +56,40 @@
 }
 
 #default-button:hover {
-	
+	-fx-background-color: linear-gradient(#82c0ce, #3f6770);
 }
 
 
 #default-button:pressed {
-	
+	-fx-background-color: linear-gradient(#3f6770, #82c0ce);
 }
 
 
 
 .button{
-    -fx-background-color: 
-        #000000,
-        linear-gradient(#7ebcea, #2f4b8f),
-        linear-gradient(#426ab7, #263e75),
-        linear-gradient(#395cab, #223768);
-    -fx-background-insets: 0,1,2,3,0;
-    -fx-background-radius: 20;
-    -fx-padding: 12 30 12 30;
-    -fx-text-fill: white;
-    -fx-font-size: 12px;    
+	
+	-fx-position: relative;
+	-fx-display: inline-block;
+	-fx-padding: 15px 25px;
+	-fx-background-color: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.2));
+	
+
+	/* text styles */
+	-fx-text-decoration: none;
+	-fx-font-size: 25px;
+	-fx-font-family: sans-serif;
+	-fx-font-weight: 100;
+	
+	
+	-fx-content: '';
+	-fx-position: absolute;
+	-fx-top: 2px;
+	-fx-left: 2px;
+	-fx-height: 50%;
 }
 
 .button:hover {
-    -fx-background-color: #383838;
+    -fx-background-color: #f0f8ff;
     -fx-scale-y: 1.2;
 }
 
