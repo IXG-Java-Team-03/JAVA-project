@@ -2,20 +2,20 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
 .root {
      -fx-background-image: url("file:wooden.jpg");
+     -fx-background-repeat: no-repeat;
+     -fx-background-size: cover;
 }
 
-.list-view .list-cell:even {
-          -fx-background-image: url("file:wooden.jpg");
-          -fx-background-repeat: no-repeat;
+.list-view  {
+          -fx-background-color: transparent;
           -fx-text-fill: white;
           -fx-font-size: 20px;
 }
 
 
-/*set background off odd cells wooden.jpg */
-.list-view .list-cell:odd {
-          -fx-background-image: url("file:wooden.jpg");
-          -fx-background-repeat: no-repeat;
+
+.list-cell {
+          -fx-background-color: transparent;
           -fx-text-fill: white;
           -fx-font-size: 20px;
 }
@@ -38,6 +38,30 @@
 
 .list-view .scroll-bar:vertical {
     -fx-scale-x: 0;
+}
+
+
+
+#default-button{
+	-fx-background-color: 
+        #000000,
+        linear-gradient(#7ebcea, #2f4b8f),
+        linear-gradient(#426ab7, #263e75),
+        linear-gradient(#395cab, #223768);
+    -fx-background-insets: 0,1,2,3,0;
+    -fx-background-radius: 20;
+    -fx-padding: 12 30 12 30;
+    -fx-text-fill: white;
+    -fx-font-size: 12px; 
+}
+
+#default-button:hover {
+	
+}
+
+
+#default-button:pressed {
+	
 }
 
 

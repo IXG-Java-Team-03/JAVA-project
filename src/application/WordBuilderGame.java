@@ -144,6 +144,12 @@ public class WordBuilderGame extends Application {
 		availablePositions = new ArrayList<Button>();
 		Level = 0;
 		Score = 0;
+		
+		startGame.setId("default-button");
+		quitGame.setId("default-button");
+
+		startGame.setPrefWidth(200.0);
+		quitGame.setPrefWidth(200.0);
 
 	}
 
@@ -178,9 +184,8 @@ public class WordBuilderGame extends Application {
 
 			// set the log at the center of the center
 			root.setCenter(box);
-
-			startGame.setPrefWidth(200.0);
-			quitGame.setPrefWidth(200.0);
+			
+			
 
 			BorderPane border = new BorderPane();
 
