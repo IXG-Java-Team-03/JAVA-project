@@ -6,13 +6,14 @@ package application;
 
 
 /**
+ * 
  * @author nkot
  *
  */
 public class CharContainer {
 
-	public static int MAX_CHARACTERS = 7;
-	public static char EMPTY_CHAR = 0;
+	public static final int MAX_CHARACTERS = 7;
+	public static final char EMPTY_CHAR = 0;
 
 	private final char[] charArray;
 	

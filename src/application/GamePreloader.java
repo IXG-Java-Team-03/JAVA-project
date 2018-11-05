@@ -17,6 +17,11 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
+/**
+ * 
+ * @author soco
+ *
+ */
 public class GamePreloader extends Preloader {
 
 	private static BorderPane root;

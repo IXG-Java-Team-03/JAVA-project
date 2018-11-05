@@ -42,6 +42,11 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * 
+ * @author soco
+ *
+ */
 public class WordBuilderGame extends Application {
 
 	private final static Button startGame = new Button("Start Playing");

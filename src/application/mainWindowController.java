@@ -3,6 +3,11 @@ package application;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * 
+ * @author soco
+ *
+ */
 public class mainWindowController {
 
 	@FXML
