@@ -41,7 +41,7 @@ public class CharContainer {
 	 * Insert the letters in the string into the array
 	 * @param letters Initial letters to populate the array
 	 */
-	public void InitLetters(String letters) {
+	public void InitLetters( String letters) {
 		
 		int numChars = Math.min( MAX_CHARACTERS, letters.length());		// calculate number of characters to set
 		
@@ -74,11 +74,12 @@ public class CharContainer {
 
 
 	/**
-	 * Get the rightmost letter and remove it from the array
-	 * @return The rightmost letter or 0 if nothing exists
+	 * Get the rightmost letter and remove it from the array.
+	 * @return <ul><li>The rightmost letter or</li>
+	 * <li> EMPTY_CHAR if nothing is stored in the container</li></ul>
 	 */
 	public char popLetter() {
-		int fetchPosition = getLength();
+		int fetchPosition = getHighestIndex();
 		if( fetchPosition != -1) {
 			char retval = charArray[fetchPosition];
 			charArray[fetchPosition] = EMPTY_CHAR;		// Empty the last position in the array
@@ -89,10 +90,11 @@ public class CharContainer {
 	
 	
 	/**
-	 * Get the letter at the specified position
-	 * If there is no letter at this position, return zero
+	 * Get the letter at the specified position. <br>
+	 * If there is no letter at this position, return EMPTY_CHAR value.
 	 * @param position The position to fetch data from
-	 * @return The letter at the specified position
+	 * @return <ul><li>The letter at the specified position</li>
+	 * <li> EMPTY_CHAR if nothing is stored at this position</li></ul>
 	 */
 	public char popLetter(int position) {
 		if( position >=0 && position < MAX_CHARACTERS && charArray[position] != EMPTY_CHAR) {
@@ -105,8 +107,9 @@ public class CharContainer {
 	
 	
 	
+	
 	/**
-	 * Delete one letter at the specified position. 
+	 * Delete one letter at the specified position. <br>
 	 * The array is compacted, closing the space at the specified position
 	 * @param position The position to delete one letter
 	 */
@@ -128,10 +131,11 @@ public class CharContainer {
 	
 	
 	/**
-	 * Get the highest index of the stored letters
-	 * @return The index of the rightmost stored letter
+	 * Get the highest index of the non-empty stored letters (length-1)
+	 * @return The index of the rightmost non-empty stored letter.<br>
+	 *         If there are no stored characters, -1 will be returned.
 	 */
-	private int getLength() {
+	private int getHighestIndex() {
 		int numChars = MAX_CHARACTERS-1;
 		while( numChars>=0 && charArray[numChars] == EMPTY_CHAR) {
 			numChars--;
@@ -146,7 +150,7 @@ public class CharContainer {
 	 */
 	@Override
 	public String toString() {
-		int numChars = getLength();
+		int numChars = getHighestIndex();
 		if( numChars != -1) {
 			return String.valueOf(charArray)		// char array to String
 				     .substring(0, numChars+1); 	// limit to number of characters
