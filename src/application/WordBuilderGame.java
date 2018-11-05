@@ -1,9 +1,11 @@
 package application;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import com.sun.javafx.application.LauncherImpl;
 
+import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -23,7 +25,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Tooltip;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -84,6 +85,10 @@ public class WordBuilderGame extends Application {
 	private HBox createTimer() {
 
 		if (STARTTIME != 0) {
+			
+			AnimationTimer timer;
+			
+			
 
 			Label timeSlogan = new Label("Time");
 			timeSlogan.setTextFill(Color.WHITE);
@@ -98,15 +103,57 @@ public class WordBuilderGame extends Application {
 			timerLabel.setTextFill(Color.GREEN);
 			timerLabel.setStyle("-fx-font-size:28px;");
 
-			ProgressBar pb = new ProgressBar();
-			pb.setProgress(0);
-			pb.progressProperty().bind(timeSeconds.divide(STARTTIME * 100.0).subtract(1).multiply(-1));
+
 
 			timeSeconds.set((STARTTIME + 1) * 100);
 			timeline = new Timeline();
 			timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(STARTTIME + 1), new KeyValue(timeSeconds, 0)));
+			
+			
+			
+			
+			
+			
+			//You can add a specific action when each frame is started.
+	        timer = new AnimationTimer() {
+	        	
+	        	long starttime = 0L;
+	        	long currentabstime=0;
+	        	
+	            @Override
+	            public void handle(long l) {
+	            	
+	            	if(starttime==0)
+	            		starttime=l;
+	            	else
+	            	{
+	            		currentabstime=l-starttime;		
+	            	}
+	            	
+	                
+	            	if(TimeUnit.SECONDS.convert(currentabstime, TimeUnit.NANOSECONDS)==(STARTTIME-(STARTTIME/2)))
+	            		timerLabel.setTextFill(Color.YELLOW);
+	            	else if(STARTTIME > 10 && (TimeUnit.SECONDS.convert(currentabstime, TimeUnit.NANOSECONDS)==STARTTIME-5))
+	            		timerLabel.setTextFill(Color.RED);
+	                
+	            }
+	        };
+			
+		
+	        //this part of code will perform some actions when 
+			//the timer expires
+            timeline.setOnFinished(event -> {
+				timer.stop(); //stop Animation timer
+			
+				
+				
+			});
+			
 
 			timeline.playFromStart();
+			timer.start();
+			
+
 
 			HBox hb = new HBox(20);
 			hb.setAlignment(Pos.BASELINE_LEFT);
@@ -282,10 +329,10 @@ public class WordBuilderGame extends Application {
 					createLetterSeqBut("KOSSSTA");
 
                     //create the 4 control buttons: check word, shuffle, reset, next level
-					chckword = createControlButton("/res/ok.png","Checks if word is in the list!");
-					resetword = createControlButton("/res/reset.png","Resets all actions done so far!");
-					shuffleword = createControlButton("/res/shuffle.png","Shuffle letters!");
-					nextlevel = createControlButton("/res/level.png","Go to next level!");
+					chckword = createControlButton("/res/ok.png","Checks if word is in the list!",Color.GREENYELLOW);
+					resetword = createControlButton("/res/reset.png","Resets all actions done so far!",Color.GREENYELLOW);
+					shuffleword = createControlButton("/res/shuffle.png","Shuffle letters!",Color.GREENYELLOW);
+					nextlevel = createControlButton("/res/level.png","Go to next level!",Color.AQUA);
 					
 					HBox hbox = new HBox(chckword, resetword, shuffleword,nextlevel);
 
@@ -495,11 +542,11 @@ public class WordBuilderGame extends Application {
 		return btn;
 	}
 
-	private void setEffectShadow(Button button) {
+	private void setEffectShadow(Button button,Color color) {
 
 		DropShadow shadow = new DropShadow();
 
-		shadow.setColor(Color.ORANGE);
+		shadow.setColor(color);
 		shadow.setRadius(50.0f);
 
 		button.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
@@ -520,7 +567,7 @@ public class WordBuilderGame extends Application {
 	
 	
 	
-	private Button createControlButton(String filepath,String tooltipslogan) {
+	private Button createControlButton(String filepath,String tooltipslogan,Color color) {
 		
 		Button btn = null;
 		
@@ -541,7 +588,7 @@ public class WordBuilderGame extends Application {
 
 	      	btn.setOnAction(myHandler);
 
-	      	setEffectShadow(btn);
+	      	setEffectShadow(btn,color);
 		}
 		
 		
@@ -549,6 +596,7 @@ public class WordBuilderGame extends Application {
 		
 		
 	}
+	
 	
 	
 	
