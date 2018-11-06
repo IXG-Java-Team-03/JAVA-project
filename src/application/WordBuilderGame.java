@@ -44,7 +44,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
- * 
+ * hdfghdfghdfgh
  * @author soco
  *
  */
@@ -56,7 +56,9 @@ public class WordBuilderGame extends Application {
 	private final static int MAXROWS = 15;
 	private final static int MAXCOLS = 15;
 
-	// Just a counter to create some delay while showing preloader.
+	/**
+	 *  Just a counter to create some delay while showing preloader.
+	 */
 	private static final int COUNT_LIMIT = 5000;
 
 	private static int stepCount = 1;
@@ -75,12 +77,24 @@ public class WordBuilderGame extends Application {
 
 	private ArrayList<Button> availableLetters, availablePositions;
 
+	/**
+	 * Container for the upper row
+	 */
 	private CharContainer charArrayUpper = new CharContainer();
+	/**
+	 * Container for the lower row
+	 */
 	private CharContainer charArrayLower = new CharContainer();
-	private static final char EmptyLabel = '_';
+	/**
+	 * Char indicating an empty position
+	 */
+	public static final char EmptyLabel = '_';
 
-	// variable for the timer value
+	/**
+	 *  variable for the timer value
+	 */
 	private static Integer STARTTIME = 60;
+	
 
 	private HBox createTimer() {
 
