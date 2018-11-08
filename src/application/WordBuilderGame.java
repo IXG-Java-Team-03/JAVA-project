@@ -89,7 +89,8 @@ public class WordBuilderGame extends Application {
 	 * Char indicating an empty position
 	 */
 	public static final char EmptyLabel = '_';
-        private String initialLetters;
+    
+	private String initialLetters;
 
 	/**
 	 *  variable for the timer value
@@ -481,7 +482,8 @@ public class WordBuilderGame extends Application {
 			} else if (x == resetword) {
 				System.out.println("check2" + event.getSource().toString());
 			} else if (x == shuffleword) {
-				charArrayLower.ShuffleContainer(initialLetters);
+				charArrayLower.InitLetters(initialLetters);
+				charArrayLower.ShuffleContainer();
 				charArrayUpper.InitLetters("");
 				updateButtons();
 				System.out.println("check3" + event.getSource().toString());

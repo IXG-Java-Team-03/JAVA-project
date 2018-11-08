@@ -165,22 +165,19 @@ public class CharContainer {
 	/**
 	 * Shuffle the characters of the array
 	 */
-	 public void ShuffleContainer(String initialString) {
+	 public void ShuffleContainer() {
+		 
 		Random r = new Random();
-		// Convert your string into a simple char array:
-		char array[] = initialString.toCharArray();
-
+		
 		// Scramble the letters using the standard Fisher-Yates shuffle,
-		for( int i=0 ; i<array.length ; i++ )
+		for( int i=0 ; i<charArray.length ; i++ )
 		  {
-		    int j = r.nextInt(array.length);
+		    int j = r.nextInt(charArray.length);
 		    // Swap letters
-		    char temp = array[i]; 
-		    array[i] = array[j];  
-		    array[j] = temp;
+		    char temp = charArray[i]; 
+		    charArray[i] = charArray[j];  
+		    charArray[j] = temp;
 		  }
-		 String shuffled = new String(array);
-		 InitLetters(shuffled); 
 	 }
 	
 	
