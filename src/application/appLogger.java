@@ -23,7 +23,7 @@ public class appLogger extends Logger {
 			
 			Date d = new Date( record.getMillis());
 			
-			return String.format( "%-8s <%s>  %-28s :   %s%n", 
+			return String.format( "%-9s <%s>  %-28s :   %s%n", 
 					"["+ record.getLevel().getName() + "]",
 					df.format(d),
 					Thread.currentThread().getName(),
