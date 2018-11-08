@@ -6,11 +6,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import application.CharContainer;
 import application.WordBuilderGame;
 import application.validateWords;
 
-public class test1 {
+public class testValidateWords {
 	
 	@Before
 	public void setUp() throws Exception {
