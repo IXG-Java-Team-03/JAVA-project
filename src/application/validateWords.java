@@ -14,13 +14,13 @@ public class validateWords {
 	/**
 	 * check if the given word has a valid format - only letters
 	 */
-	public String isValidFormat(String word) {
+	public static String isValidFormat(String word) {
 
 		StringBuilder sbWord = new StringBuilder(word);
 		String newWord = "";
 
 		// character "_"
-		Character ch = WordBuilderGame.EmptyLabel;
+		char ch = WordBuilderGame.EmptyLabel;
 		int i;
 
 		// trim all empty characters before the first letter if any
@@ -50,7 +50,7 @@ public class validateWords {
 	/**
 	 * check if the word is valid to be searched in the ArrayList
 	 */
-	public String isValidWord(String word) {
+	public static String isValidWord(String word) {
 
 		// call method wordForSearch to check the validity of the word format
 		String wordForSearch = isValidFormat(word);
@@ -76,7 +76,7 @@ public class validateWords {
 	/**
 	 * Check if the word exists in the arrayList of valid words
 	 */
-	public void searchInArrayList(ArrayList<String> wordsDB, String wordForSearch) {
+	public static void searchInArrayList(ArrayList<String> wordsDB, String wordForSearch) {
 
 		if (wordsDB.contains(wordForSearch)) {
 
