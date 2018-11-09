@@ -51,7 +51,7 @@ import javafx.util.Duration;
  */
 public class WordBuilderGame extends Application {
 	
-	public static appLogger logger = new appLogger( WordBuilderGame.class.getName(), null);
+	private final static appLogger logger = new appLogger( WordBuilderGame.class.getName(), null);
 
 	private final static Button startGame = new Button("Start Playing");
 	private final static Button quitGame = new Button("Quit");

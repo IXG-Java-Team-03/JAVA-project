@@ -22,13 +22,11 @@ public class testValidateWords {
 	@Test
 	public void testIsValidFormat() {
 		
-		Character ch = WordBuilderGame.EmptyLabel;
-		String returnVal = validateWords.isValidFormat( 
-				ch.toString()+ch.toString()+"Ari"+ch.toString()+"s");
+		String ch = ( (Character)WordBuilderGame.EmptyLabel).toString();
+		String returnVal = validateWords.isValidFormat( ch + ch + "Ari" + ch + "s");
 		assertEquals( "", returnVal);
 
-		returnVal = validateWords.isValidFormat( 
-				ch.toString()+ch.toString()+"Ari"+ch.toString());
+		returnVal = validateWords.isValidFormat( ch + ch + "Ari" + ch);
 		assertEquals( "Ari", returnVal);
 	}
 	

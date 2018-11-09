@@ -11,21 +11,23 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
+
 public class appLogger extends Logger {
 	
 
 	private class singleLineFormatter extends Formatter {
 		
-		private final DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+		private final DateFormat df = new SimpleDateFormat("HH:mm:ss.SSS");
 		
 		@Override
 		public synchronized String format( LogRecord record) {
 			
 			Date d = new Date( record.getMillis());
 			
-			return String.format( "%-9s <%s>  %-28s :   %s%n", 
-					"["+ record.getLevel().getName() + "]",
+			return String.format( "%-13s %-10s %-30s %-30s :   %s%n", 
 					df.format(d),
+					"["+ record.getLevel().getName() + "]",
+					record.getLoggerName(),
 					Thread.currentThread().getName(),
 					record.getMessage()
 					);

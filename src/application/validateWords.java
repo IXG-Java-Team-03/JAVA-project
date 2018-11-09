@@ -10,7 +10,8 @@ import java.util.ArrayList;
  */
 public class validateWords {
 
-	
+	private final static appLogger logger = new appLogger( validateWords.class.getName(), null);
+
 	/**
 	 * check if the given word has a valid format - only letters
 	 */
@@ -37,10 +38,10 @@ public class validateWords {
 
 		// check if the trimmed word is valid - without any empty character inside
 		if (newWord.length() < 3 || newWord.indexOf(ch) != -1) {
-			WordBuilderGame.logger.info( "Invalid format. Try again");
+			logger.info( "Invalid format. Try again");
 			return "";
 		} else {
-			WordBuilderGame.logger.info( "The word that should be checked if valid = " + newWord);
+			logger.info( "The word that should be checked if valid = " + newWord);
 			return newWord;
 		}
 	}
@@ -57,13 +58,13 @@ public class validateWords {
 
 		// if empty print error
 		if (wordForSearch == "") {
-			WordBuilderGame.logger.info( "Invalid format. Try again");
+			logger.info( "Invalid format. Try again");
 
 		}
 		// return the valid word to be searched
 		else {
 
-			WordBuilderGame.logger.info( "The word that should be checked if valid = " + wordForSearch);
+			logger.info( "The word that should be checked if valid = " + wordForSearch);
 
 			return wordForSearch;
 		}
@@ -84,7 +85,7 @@ public class validateWords {
 
 		} else {
 
-			WordBuilderGame.logger.info( "Invalid Word, Not in the arrayList. Try with another word");
+			logger.info( "Invalid Word, Not in the arrayList. Try with another word");
 
 		}
 	}
