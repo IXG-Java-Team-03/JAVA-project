@@ -477,6 +477,12 @@ public class WordBuilderGame extends Application {
 			}
 
 			if (x == chckword) {
+				//validate word - aris
+				String word = charArrayUpper.toString();
+				
+				String wordForSearch = validateWords.isValidWord(word);
+				
+			//	validateWords.searchInArrayList(wset,wordForSearch);
 				System.out.println("check1" + event.getSource().toString());
 			} else if (x == resetword) {
 				System.out.println("check2" + event.getSource().toString());

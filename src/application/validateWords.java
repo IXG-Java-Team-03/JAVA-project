@@ -19,8 +19,7 @@ public class validateWords {
 		StringBuilder sbWord = new StringBuilder(word);
 		String newWord = "";
 
-		// character "_"
-		char ch = WordBuilderGame.EmptyLabel;
+		char ch = CharContainer.EMPTY_CHAR;
 		int i;
 
 		// trim all empty characters before the first letter if any
@@ -33,14 +32,14 @@ public class validateWords {
 		for (i = newWord.length(); i >= 0 && newWord.charAt(i - 1) == ch; i--)
 			;
 
-		newWord = newWord.substring(0, i);
+        newWord = newWord.substring(0, i);
 
 		// check if the trimmed word is valid - without any empty character inside
 		if (newWord.length() < 3 || newWord.indexOf(ch) != -1) {
 			System.out.println("Invalid format. Try again");
 			return "";
 		} else {
-			System.out.println("The word that should be checked if valid = " + newWord);
+			System.out.println("Valid Format = " + newWord);
 			return newWord;
 		}
 	}
