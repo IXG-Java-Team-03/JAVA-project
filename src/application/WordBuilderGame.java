@@ -2,6 +2,7 @@ package application;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 
 import com.sun.javafx.application.LauncherImpl;
 
@@ -49,6 +50,8 @@ import javafx.util.Duration;
  *
  */
 public class WordBuilderGame extends Application {
+	
+	private final static appLogger logger = new appLogger( WordBuilderGame.class.getName(), null);
 
 	private final static Button startGame = new Button("Start Playing");
 	private final static Button quitGame = new Button("Quit");
@@ -65,7 +68,7 @@ public class WordBuilderGame extends Application {
 
 	private BorderPane root;
 
-	private static int Level;
+	private static int CurrentLevel;
 
 	private Scene scene;
 
@@ -89,13 +92,17 @@ public class WordBuilderGame extends Application {
 	 * Char indicating an empty position
 	 */
 	public static final char EmptyLabel = '_';
-        private String initialLetters;
+    
+	private String initialLetters;
 
 	/**
 	 *  variable for the timer value
 	 */
 	private static Integer STARTTIME = 60;
 	
+		
+	private Stage applicationStage;
+
 
 	private HBox createTimer() {
 
@@ -189,27 +196,39 @@ public class WordBuilderGame extends Application {
 
 	}
 
-	// Used to demonstrate step couns.
+	
+	
+	/**
+	 *  Used to demonstrate step counts.
+	 * @return
+	 */
 	public static String STEP() {
 		return stepCount++ + ". ";
 	}
 
-	private Stage applicationStage;
+	
 
+	
+	
 	public static void main(String[] args) {
+
+		logger.setLevel( Level.FINEST);
+
 		// thes ena thread gia na kaleis afto
 		LauncherImpl.launchApplication(WordBuilderGame.class, GamePreloader.class, args);
 	}
 
+	
+	
 	public WordBuilderGame() {
+		logger.entering( this.getClass().getName(), "WordBuilderGame");
 		// Constructor is called after BEFORE_LOAD.
-		System.out.println(WordBuilderGame.STEP() + "MyApplication constructor called, thread: "
-				+ Thread.currentThread().getName());
+		logger.info( WordBuilderGame.STEP() + "MyApplication constructor called");
 		// Create down BorderPane
 		root = new BorderPane();
 		availableLetters = new ArrayList<Button>();
 		availablePositions = new ArrayList<Button>();
-		Level = 0;
+		CurrentLevel = 0;
 		Score = 0;
 		
 		startGame.setId("default-button");
@@ -222,8 +241,7 @@ public class WordBuilderGame extends Application {
 
 	@Override
 	public void init() throws Exception {
-		System.out.println(WordBuilderGame.STEP() + "MyApplication#init (doing some heavy lifting), thread: "
-				+ Thread.currentThread().getName());
+		logger.info( WordBuilderGame.STEP() + "MyApplication#init (doing some heavy lifting)");
 
 		// Perform some heavy lifting (i.e. database start, check for application
 		// updates, etc. )
@@ -236,9 +254,8 @@ public class WordBuilderGame extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		System.out.println(
-				WordBuilderGame.STEP() + "MyApplication#start (initialize and show primary application stage), thread: "
-						+ Thread.currentThread().getName());
+		logger.info( 
+				WordBuilderGame.STEP() + "MyApplication#start (initialize and show primary application stage)");
 
 		// keep the stage since we will change the scene when "start playing" will
 		// be pushed
@@ -380,9 +397,9 @@ public class WordBuilderGame extends Application {
 
 	private void SetGameLevel() {
 
-		++Level;
+		++CurrentLevel;
 
-		Text gameLevel = new Text("Level " + Level);
+		Text gameLevel = new Text("Level " + CurrentLevel);
 
 		gameLevel.setId("gamelevel");
 
@@ -457,7 +474,7 @@ public class WordBuilderGame extends Application {
 
 			for (int i = 0; i < availableLetters.size(); i++) {
 				if (x == availableLetters.get(i)) {
-					System.out.println("mphka1:" + event.getSource().toString());
+					logger.info( "mphka1:" + event.getSource().toString());
 					char c = charArrayLower.popLetter(i);
 					if (c != CharContainer.EMPTY_CHAR) {
 						charArrayUpper.pushLetter(c);
@@ -465,7 +482,7 @@ public class WordBuilderGame extends Application {
 					updateButtons();
 					return;
 				} else if (x == availablePositions.get(i)) {
-					System.out.println("mphka2:" + event.getSource().toString());
+					logger.info( "mphka2:" + event.getSource().toString());
 					char c = charArrayUpper.popLetter(i);
 					if (c != CharContainer.EMPTY_CHAR) {
 						charArrayLower.pushLetter(c);
@@ -483,14 +500,15 @@ public class WordBuilderGame extends Application {
 				String wordForSearch = validateWords.isValidWord(word);
 				
 			//	validateWords.searchInArrayList(wset,wordForSearch);
-				System.out.println("check1" + event.getSource().toString());
+				logger.info("check1" + event.getSource().toString());
 			} else if (x == resetword) {
-				System.out.println("check2" + event.getSource().toString());
+				logger.info( "check2 " + event.getSource().toString());
 			} else if (x == shuffleword) {
-				charArrayLower.ShuffleContainer(initialLetters);
+				charArrayLower.InitLetters(initialLetters);
+				charArrayLower.ShuffleContainer();
 				charArrayUpper.InitLetters("");
 				updateButtons();
-				System.out.println("check3" + event.getSource().toString());
+				logger.info( "check3 " + event.getSource().toString());
 			}
 
 		}

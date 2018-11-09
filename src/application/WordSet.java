@@ -12,6 +12,9 @@ import java.util.HashMap;
  * @version (a version number or a date)
  */
 public class WordSet {
+	
+	private final static appLogger logger = new appLogger( WordSet.class.getName(), null);
+
     private String language;
     private int size;
     private int minLength;
@@ -89,7 +92,7 @@ public class WordSet {
             }
             fr.close();
         } catch (IOException ioe) {
-            System.out.println("Error reading "+filePath+".");
+        	logger.severe( "Error reading "+filePath+".");
             System.exit(0);
         }
         return w;
@@ -178,7 +181,7 @@ public class WordSet {
     				
     				// Dirty check for words with "invisible" illegal chars (eg english A instead of a greek one)
     				if (word.length() < i) {
-    					System.out.println("*** Η ΛΕΞΗ "+word+" ΘΑ ΕΠΡΕΠΕ ΝΑ ΕΧΕΙ "+i+" ΓΡΑΜΜΑΤΑ! ***");
+    					logger.severe( "*** Η ΛΕΞΗ "+word+" ΘΑ ΕΠΡΕΠΕ ΝΑ ΕΧΕΙ "+i+" ΓΡΑΜΜΑΤΑ! ***");
     				}
     				
     				for (int c=0; c<tempLetters.size(); c++) {
