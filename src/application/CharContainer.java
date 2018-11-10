@@ -222,11 +222,16 @@ public class CharContainer {
 				new Object(){}.getClass().getEnclosingMethod().getName());
 
 		Random r = new Random();
+		int numChars = getHighestIndex();
 		
 		// Scramble the letters using the standard Fisher-Yates shuffle,
-		for( int i=0 ; i<charArray.length ; i++ )
+		for( int i=0 ; i < numChars ; i++ )
 		  {
-		    int j = r.nextInt(charArray.length);
+			int j; 
+			do {
+				j = r.nextInt( numChars);
+			} while (i==j);
+			
 		    // Swap letters
 		    char temp = charArray[i]; 
 		    charArray[i] = charArray[j];  

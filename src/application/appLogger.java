@@ -23,16 +23,15 @@ public class appLogger extends Logger {
 						
 			Date d = new Date( record.getMillis());
 			
-			return String.format( "%4d. %-13s %-10s %-30s %-30s :   %s%n", 
-					record.getSequenceNumber(),
-					df.format(d),
-					"["+ record.getLevel().getName() + "]",
-					record.getLoggerName(),
-					Thread.currentThread().getName(),
-					String.format( "%-30s (%s.%s)", 
-							super.formatMessage( record),
-							record.getSourceClassName(),
-							record.getSourceMethodName())
+			return String.format( "%4d. %-13s %-10s %-30s %-30s :   %-30s (%s.%s)%n", 
+					record.getSequenceNumber(),					// sequence number
+					df.format(d),								// time of logging
+					"["+ record.getLevel().getName() + "]",		// logging level
+					record.getLoggerName(),						// logger name
+					Thread.currentThread().getName(),			// thread name
+					super.formatMessage( record),				// logged message
+					record.getSourceClassName(),				// class name
+					record.getSourceMethodName()				// method name
 					);			
 		}
 	}

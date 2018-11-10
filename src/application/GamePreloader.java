@@ -1,7 +1,5 @@
 package application;
 
-import java.util.logging.Level;
-
 import javafx.application.Platform;
 import javafx.application.Preloader;
 import javafx.geometry.Pos;
@@ -44,8 +42,7 @@ public class GamePreloader extends Preloader {
 		// Constructor is called before everything.
 		pb = new ProgressBar(0.4);
 		root = new BorderPane();
-		logger.log( Level.INFO, "{0} MyPreloader constructor called",
-				WordBuilderGame.STEP());
+		logger.info( "MyPreloader constructor called");
 	}
 
 	@Override
@@ -53,8 +50,7 @@ public class GamePreloader extends Preloader {
 		logger.entering( this.getClass().getName(), 
 				new Object(){}.getClass().getEnclosingMethod().getName());
 
-		logger.log( Level.INFO, "{0} MyPreloader#init (could be used to initialize preloader view)",
-				WordBuilderGame.STEP());
+		logger.info( "MyPreloader#init (could be used to initialize preloader view)");
 
 		// If preloader has complex UI it's initialization can be done in
 		// MyPreloader#init
@@ -85,8 +81,7 @@ public class GamePreloader extends Preloader {
 	public void start(Stage primaryStage) throws Exception {
 		logger.entering( this.getClass().getName(),  
 				new Object(){}.getClass().getEnclosingMethod().getName());
-		logger.log( Level.INFO, "{0} MyPreloader#start (showing preloader stage)",
-				WordBuilderGame.STEP());
+		logger.info( "MyPreloader#start (showing preloader stage)");
 
 		GamePreloadStage = primaryStage;
 
@@ -139,15 +134,15 @@ public class GamePreloader extends Preloader {
 		switch (type) {
 		case BEFORE_LOAD:
 			// Called after MyPreloader#start is called.
-			logger.log( Level.INFO, "{0} BEFORE_LOAD", WordBuilderGame.STEP());
+			logger.info( "BEFORE_LOAD");
 			break;
 		case BEFORE_INIT:
 			// Called before MyApplication#init is called.
-			logger.log( Level.INFO, "{0} BEFORE_INIT", WordBuilderGame.STEP());
+			logger.info( "BEFORE_INIT");
 			break;
 		case BEFORE_START:
 			// Called after MyApplication#init and before MyApplication#start is called.
-			logger.log( Level.INFO, "{0} BEFORE_START", WordBuilderGame.STEP());
+			logger.info( "BEFORE_START");
 
 			GamePreloadStage.hide();
 			break;

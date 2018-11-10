@@ -76,8 +76,6 @@ public class WordBuilderGame extends Application {
 	 */
 	private static final int COUNT_LIMIT = 5000;
 
-	private static int stepCount = 1;
-
 	private BorderPane root;
 
 	private static int CurrentLevel;
@@ -277,16 +275,6 @@ private void pickUpWord() {
 	
 
 	
-	
-	/**
-	 *  Used to demonstrate step counts.
-	 * @return
-	 */
-	public static String STEP() {
-		return stepCount++ + ". ";
-	}
-
-	
 
 	
 	
@@ -297,10 +285,13 @@ private void pickUpWord() {
 
 	
 	
+	
+	
+	
 	public WordBuilderGame() {
 		logger.entering( this.getClass().getName(), "WordBuilderGame constructor");
 		// Constructor is called after BEFORE_LOAD.
-		logger.log( Level.INFO, "{0} MyApplication constructor called", WordBuilderGame.STEP());
+		logger.info( "MyApplication constructor called");
 		// Create down BorderPane
 		root = new BorderPane();
 		availableLetters = new ArrayList<Button>();
@@ -321,7 +312,7 @@ private void pickUpWord() {
 	public void init() throws Exception {
 		logger.entering( this.getClass().getName(),  
 				new Object(){}.getClass().getEnclosingMethod().getName());
-		logger.log( Level.INFO, "{0} MyApplication#init (doing some heavy lifting)", WordBuilderGame.STEP());
+		logger.info( "MyApplication#init (doing some heavy lifting)");
 		
 		pickUpWord();
 
@@ -340,8 +331,7 @@ private void pickUpWord() {
 	public void start(Stage primaryStage) throws Exception {
 		logger.entering( this.getClass().getName(),  
 				new Object(){}.getClass().getEnclosingMethod().getName());
-		logger.log( Level.INFO, "{0} MyApplication#start (initialize and show primary application stage)",
-				WordBuilderGame.STEP());
+		logger.info( "MyApplication#start (initialize and show primary application stage)");
 
 		// keep the stage since we will change the scene when "start playing" will
 		// be pushed
@@ -454,7 +444,7 @@ private void pickUpWord() {
 					chckword = createControlButton("/res/ok.png","Checks if word is in the list!",Color.GREENYELLOW);
 					resetword = createControlButton("/res/reset.png","Resets all actions done so far!",Color.GREENYELLOW);
 					shuffleword = createControlButton("/res/shuffle.png","Shuffle letters!",Color.GREENYELLOW);
-					nextlevel = createControlButton("/res/level.png","Go to next level!",Color.AQUA);
+			 		nextlevel = createControlButton("/res/level.png","Go to next level!",Color.AQUA);
 					
 					HBox hbox = new HBox(chckword, resetword, shuffleword,nextlevel);
 
@@ -580,13 +570,15 @@ private void pickUpWord() {
 
 		@Override
 		public void handle(final ActionEvent event) {
+			
 			logger.entering( this.getClass().getName(),  
 					new Object(){}.getClass().getEnclosingMethod().getName());
+			
 			Button x = (Button) event.getSource();
 
 			for (int i = 0; i < availableLetters.size(); i++) {
 				if (x == availableLetters.get(i)) {
-					logger.log( Level.INFO, "mphka1: {0}", event.getSource().toString());
+					logger.log( Level.INFO, "Lower row letter pushed {0}", event.getSource().toString());
 					char c = charArrayLower.popLetter(i);
 					if (c != CharContainer.EMPTY_CHAR) {
 						charArrayUpper.pushLetter(c);
@@ -596,7 +588,7 @@ private void pickUpWord() {
 							new Object(){}.getClass().getEnclosingMethod().getName());
 					return;
 				} else if (x == availablePositions.get(i)) {
-					logger.log( Level.INFO, "mphka2: {0}", event.getSource().toString());
+					logger.log( Level.INFO, "Upper row letter pushed {0}", event.getSource().toString());
 					char c = charArrayUpper.popLetter(i);
 					if (c != CharContainer.EMPTY_CHAR) {
 						charArrayLower.pushLetter(c);
@@ -624,7 +616,7 @@ private void pickUpWord() {
 				charArrayLower.ShuffleContainer();
 				charArrayUpper.InitLetters("");
 				updateButtons();
-				logger.log( Level.INFO, "check3 {0}", event.getSource().toString());
+				logger.log( Level.INFO, "Shuffle letters pressed {0}", event.getSource().toString());
 			}
 
 			logger.exiting( this.getClass().getName(),  

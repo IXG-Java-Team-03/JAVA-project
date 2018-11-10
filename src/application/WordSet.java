@@ -3,6 +3,7 @@ package application;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
 
 
 /**
@@ -79,6 +80,8 @@ public class WordSet {
      */
     private ArrayList<String> ReadWordFile(String filePath, String lang){
 		
+    	logger.log( Level.INFO, "Read Words File {0}", filePath);
+    	
 		ArrayList<String> w = new ArrayList<String>();
         try {
         	FileInputStream is = new FileInputStream(filePath);
@@ -146,6 +149,9 @@ public class WordSet {
      */
     public WordSet(String lang, int min, int max, String WordFilesDir){
 
+    	logger.log( Level.INFO, "Build word set {0} {1} {2}", 
+    			new Object[]{ lang, min, max} );
+    	
     	minLength = min;
     	maxLength = max;
         language = lang.toUpperCase();
@@ -164,6 +170,9 @@ public class WordSet {
      * @return
      */
     public ArrayList<String> AssembleWordGameSet(String l) {
+    	
+    	logger.log( Level.INFO, "Assemble Word Game Set {0}", l);
+
 
 		// letters: an arraylist of chars to assemble words.
     	ArrayList<Character> letters = new ArrayList<Character>();
