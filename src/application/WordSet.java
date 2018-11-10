@@ -20,10 +20,20 @@ public class WordSet {
     private int minLength;
     private int maxLength;
     
-    public HashMap<Integer, ArrayList<String>> WordsDB;
+    private HashMap<Integer, ArrayList<String>> WordsDB;
+    
+    
 
     
-    /**
+    public HashMap<Integer, ArrayList<String>> getWordsDB() {
+		return WordsDB;
+	}
+
+	public void setWordsDB(HashMap<Integer, ArrayList<String>> wordsDB) {
+		WordsDB = wordsDB;
+	}
+
+	/**
      * Get language value
      * @return language value
      */

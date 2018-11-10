@@ -1,6 +1,8 @@
 package application;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
@@ -55,9 +57,19 @@ public class WordBuilderGame extends Application {
 
 	private final static Button startGame = new Button("Start Playing");
 	private final static Button quitGame = new Button("Quit");
+	
+	
+	private final static String language ="GR";
+	
+	private final static int MINLETTERS = 2;
+	private final static int MAXLETTERS = 5;
+	
 
 	private final static int MAXROWS = 15;
 	private final static int MAXCOLS = 15;
+	
+	
+	private String pickedWord;
 
 	/**
 	 *  Just a counter to create some delay while showing preloader.
@@ -79,6 +91,13 @@ public class WordBuilderGame extends Application {
 	private GridPane gamePane;
 
 	private ArrayList<Button> availableLetters, availablePositions;
+	
+	/**
+	 * organized words in arraylist of different sizes
+	 */
+	private HashMap<Integer, ArrayList<String>> wdb;
+	
+	
 
 	/**
 	 * Container for the upper row
@@ -115,7 +134,7 @@ public class WordBuilderGame extends Application {
 			Label timeSlogan = new Label("Time");
 			timeSlogan.setTextFill(Color.WHITE);
 			timeSlogan.setStyle("-fx-font-size:28px;");
-			// timeSlogan.setStyle("-fx-font-weight:bold");
+			
 
 			Timeline timeline = null;
 			Label timerLabel = new Label();
@@ -195,6 +214,67 @@ public class WordBuilderGame extends Application {
 		STARTTIME = value;
 
 	}
+	
+/**
+ * We will normally need to pick-up a word that will give us the chance to create more words
+ * of different sizes, with max size the size of the word initially picked up
+ */
+	
+	
+private void pickUpWord() {
+		
+		/**
+		 * creates a new wset with greek words
+		 */
+		WordSet wset = new WordSet(language, MINLETTERS, MAXLETTERS, "words");
+		
+		
+		//get the whole set of words
+		HashMap<Integer, ArrayList<String>> wdb = wset.getWordsDB();
+		
+		
+		ArrayList<String> listofMaxletters = wdb.get(MAXLETTERS);
+		
+		
+		Random rand = new Random();
+
+		
+		/**
+		 * random position inside ArrayList
+		 */
+
+		int randomidx = rand.nextInt(listofMaxletters.size() + 1);
+		
+		
+		//shuffle word letters
+		pickedWord = shuffleWord(listofMaxletters.get(randomidx));
+	}
+	
+	
+	
+	
+	private String shuffleWord(String word) {
+		
+		 char[] wordofChars = word.toCharArray();
+		 
+		 
+		 
+		 Random rand = new Random();
+		 
+		 for (int i = wordofChars.length - 1; i > 0; i--) {
+	            int r = rand.nextInt(i + 1);
+	            char tmp = wordofChars[i];
+	            wordofChars[i] = wordofChars[r];
+	            wordofChars[r] = tmp;
+	        }
+		 
+		 
+		
+		return String.valueOf(wordofChars);
+		
+	}
+	
+	
 
 	
 	
@@ -242,6 +322,8 @@ public class WordBuilderGame extends Application {
 		logger.entering( this.getClass().getName(),  
 				new Object(){}.getClass().getEnclosingMethod().getName());
 		logger.log( Level.INFO, "{0} MyApplication#init (doing some heavy lifting)", WordBuilderGame.STEP());
+		
+		pickUpWord();
 
 		// Perform some heavy lifting (i.e. database start, check for application
 		// updates, etc. )
@@ -366,7 +448,7 @@ public class WordBuilderGame extends Application {
 
 					SetScore();
 
-					createLetterSeqBut("KOSSSTA");
+					createLetterSeqBut(pickedWord);
 
                     //create the 4 control buttons: check word, shuffle, reset, next level
 					chckword = createControlButton("/res/ok.png","Checks if word is in the list!",Color.GREENYELLOW);
