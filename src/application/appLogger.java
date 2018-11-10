@@ -21,7 +21,7 @@ public class appLogger extends Logger {
 		
 		@Override
 		public synchronized String format( LogRecord record) {
-			
+						
 			Date d = new Date( record.getMillis());
 			
 			return String.format( "%-13s %-10s %-30s %-30s :   %s%n", 
@@ -29,7 +29,7 @@ public class appLogger extends Logger {
 					"["+ record.getLevel().getName() + "]",
 					record.getLoggerName(),
 					Thread.currentThread().getName(),
-					record.getMessage()
+					super.formatMessage( record)
 					);
 		}
 	}

@@ -1,5 +1,7 @@
 package application;
 
+import java.util.logging.Level;
+
 import javafx.application.Platform;
 import javafx.application.Preloader;
 import javafx.geometry.Pos;
@@ -42,12 +44,14 @@ public class GamePreloader extends Preloader {
 		// Constructor is called before everything.
 		pb = new ProgressBar(0.4);
 		root = new BorderPane();
-		logger.info( WordBuilderGame.STEP() + "MyPreloader constructor called");
+		logger.log( Level.INFO, "{0} MyPreloader constructor called",
+				WordBuilderGame.STEP());
 	}
 
 	@Override
 	public void init() throws Exception {
-		logger.info( WordBuilderGame.STEP() + "MyPreloader#init (could be used to initialize preloader view)");
+		logger.log( Level.INFO, "{0} MyPreloader#init (could be used to initialize preloader view)",
+				WordBuilderGame.STEP());
 
 		// If preloader has complex UI it's initialization can be done in
 		// MyPreloader#init
@@ -74,7 +78,8 @@ public class GamePreloader extends Preloader {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		logger.info( WordBuilderGame.STEP() + "MyPreloader#start (showing preloader stage)");
+		logger.log( Level.INFO, "{0} MyPreloader#start (showing preloader stage)",
+				WordBuilderGame.STEP());
 
 		GamePreloadStage = primaryStage;
 
@@ -125,15 +130,15 @@ public class GamePreloader extends Preloader {
 		switch (type) {
 		case BEFORE_LOAD:
 			// Called after MyPreloader#start is called.
-			logger.info( WordBuilderGame.STEP() + "BEFORE_LOAD");
+			logger.log( Level.INFO, "{0} BEFORE_LOAD", WordBuilderGame.STEP());
 			break;
 		case BEFORE_INIT:
 			// Called before MyApplication#init is called.
-			logger.info( WordBuilderGame.STEP() + "BEFORE_INIT");
+			logger.log( Level.INFO, "{0} BEFORE_INIT", WordBuilderGame.STEP());
 			break;
 		case BEFORE_START:
 			// Called after MyApplication#init and before MyApplication#start is called.
-			logger.info( WordBuilderGame.STEP() + "BEFORE_START");
+			logger.log( Level.INFO, "{0} BEFORE_START", WordBuilderGame.STEP());
 
 			GamePreloadStage.hide();
 			break;
