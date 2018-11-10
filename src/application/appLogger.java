@@ -13,17 +13,17 @@ import java.util.logging.Logger;
 
 
 public class appLogger extends Logger {
-	
+
 	private class singleLineFormatter extends Formatter {
-		
+
 		private final DateFormat df = new SimpleDateFormat("HH:mm:ss.SSS");
-		
+
 		@Override
 		public synchronized String format( LogRecord record) {
-						
+
 			Date d = new Date( record.getMillis());
-			
-			return String.format( "%4d. %-13s %-10s %-30s %-30s :   %-30s (%s.%s)%n", 
+
+			return String.format( "%4d. %-13s %-10s %-20s %-30s :   %-30s (%s.%s)%n",
 					record.getSequenceNumber(),					// sequence number
 					df.format(d),								// time of logging
 					"["+ record.getLevel().getName() + "]",		// logging level
@@ -32,10 +32,10 @@ public class appLogger extends Logger {
 					super.formatMessage( record),				// logged message
 					record.getSourceClassName(),				// class name
 					record.getSourceMethodName()				// method name
-					);			
+					);
 		}
 	}
-	
+
 	@Override
 	public void setLevel( Level l) {
 		Handler[] handlers = this.getHandlers();
@@ -45,8 +45,8 @@ public class appLogger extends Logger {
 		super.setLevel( l);		// set the logger level
 
 	}
-	
-	
+
+
 	protected appLogger(String name, String resourceBundleName) {
 		super(name, resourceBundleName);
 
@@ -56,6 +56,6 @@ public class appLogger extends Logger {
 
 //		setLevel( Level.ALL);		// ----- debugging logging level
 	}
-	
+
 
 }

@@ -1,25 +1,25 @@
 /**
- * 
+ *
  */
 package application;
 
 import java.util.Random;
 
 /**
- * 
+ *
  * @author nkot
  *
  */
 public class CharContainer {
 
-	private final static appLogger logger = new appLogger( CharContainer.class.getName(), null);
+	private final static appLogger logger = new appLogger( "CharContainer", null);
 
 	public static final int MAX_CHARACTERS = 7;
 	public static final char EMPTY_CHAR = 0;
 
 	private final char[] charArray;
-	
-	
+
+
 	/**
 	 * Default constructor
 	 */
@@ -31,36 +31,33 @@ public class CharContainer {
 	}
 
 	/**
-	 * Constructor with initial data 
+	 * Constructor with initial data
 	 * @param letters Initial letters to populate the array
 	 */
 	public CharContainer( String letters) {
 		charArray = new char[MAX_CHARACTERS];
 		InitLetters( letters);
 	}
-	
+
 	/**
 	 * Insert the letters in the string into the array
 	 * @param letters Initial letters to populate the array
 	 */
 	public void InitLetters( String letters) {
 
-		logger.entering( this.getClass().getName(),  
-				new Object(){}.getClass().getEnclosingMethod().getName(),
-				letters);
+		logger.entering( "CharContainer", "InitLetters", letters);
 
 		int numChars = Math.min( MAX_CHARACTERS, letters.length());		// calculate number of characters to set
-		
-		System.arraycopy( letters.toCharArray(), 0,					// source array 
+
+		System.arraycopy( letters.toCharArray(), 0,					// source array
 						  charArray, 0, 							// target array
 						  numChars);								// number of elements
-		
+
 		for( int i = numChars; i < MAX_CHARACTERS; i++) {
 			charArray[i] = EMPTY_CHAR;
 		}
 
-		logger.exiting( this.getClass().getName(),  
-				new Object(){}.getClass().getEnclosingMethod().getName());
+		logger.exiting( "CharContainer", "InitLetters");
 	}
 
 
@@ -70,9 +67,7 @@ public class CharContainer {
 	 */
 	public void pushLetter(char letter) {
 
-		logger.entering( this.getClass().getName(),  
-				new Object(){}.getClass().getEnclosingMethod().getName(),
-				letter);
+		logger.entering( "CharContainer", "pushLetter", letter);
 
 		int insertPosition = -1;
 		for( int i = 0; i < MAX_CHARACTERS; i++) {
@@ -85,8 +80,7 @@ public class CharContainer {
 			charArray[insertPosition] = letter;			// Store the character in the array
 		}
 
-		logger.exiting( this.getClass().getName(),  
-				new Object(){}.getClass().getEnclosingMethod().getName());
+		logger.exiting( "CharContainer", "pushLetter");
 	}
 
 
@@ -97,27 +91,22 @@ public class CharContainer {
 	 */
 	public char popLetter() {
 
-		logger.entering( this.getClass().getName(),  
-				new Object(){}.getClass().getEnclosingMethod().getName());
+		logger.entering( "CharContainer", "popLetter");
 
 		int fetchPosition = getHighestIndex();
 		if( fetchPosition != -1) {
 			char retval = charArray[fetchPosition];
 			charArray[fetchPosition] = EMPTY_CHAR;		// Empty the last position in the array
 
-			logger.exiting( this.getClass().getName(),  
-					new Object(){}.getClass().getEnclosingMethod().getName());
-
+			logger.exiting( "CharContainer", "popLetter");
 			return retval;								// return that character back
 		}
 
-		logger.exiting( this.getClass().getName(),  
-				new Object(){}.getClass().getEnclosingMethod().getName());
-
+		logger.exiting( "CharContainer", "popLetter");
 		return EMPTY_CHAR;
 	}
-	
-	
+
+
 	/**
 	 * Get the letter at the specified position. <br>
 	 * If there is no letter at this position, return EMPTY_CHAR value.
@@ -127,29 +116,25 @@ public class CharContainer {
 	 */
 	public char popLetter(int position) {
 
-		logger.entering( this.getClass().getName(),  
-				new Object(){}.getClass().getEnclosingMethod().getName(),
-				position);
+		logger.entering( "CharContainer", "popLetter", position);
 
 		if( position >=0 && position < MAX_CHARACTERS && charArray[position] != EMPTY_CHAR) {
 			char retval = charArray[position];
 			charArray[position] = EMPTY_CHAR;			// Empty the last position in the array
 
-			logger.exiting( this.getClass().getName(),  
-					new Object(){}.getClass().getEnclosingMethod().getName());
+			logger.exiting( "CharContainer", "popLetter");
 
 			return retval;								// return that character back
 		}
 
-		logger.exiting( this.getClass().getName(),  
-				new Object(){}.getClass().getEnclosingMethod().getName());
+		logger.exiting( "CharContainer", "popLetter");
 
 		return EMPTY_CHAR;
 	}
-	
-	
-	
-	
+
+
+
+
 	/**
 	 * Delete one letter at the specified position. <br>
 	 * The array is compacted, closing the space at the specified position
@@ -157,14 +142,12 @@ public class CharContainer {
 	 */
 	public char removeLetter( int position) {
 
-		logger.entering( this.getClass().getName(),  
-				new Object(){}.getClass().getEnclosingMethod().getName(),
-				position);
+		logger.entering( "CharContainer", "removeLetter", position);
 
 		char retval = EMPTY_CHAR;
 		if( position >=0 && position < MAX_CHARACTERS && charArray[position] != EMPTY_CHAR) {
 			retval = charArray[position];
-			
+
 			System.arraycopy(
 					charArray, position+1, 				// source range
 					charArray, position, 				// target range
@@ -173,14 +156,13 @@ public class CharContainer {
 			charArray[MAX_CHARACTERS-1] = EMPTY_CHAR;
 		}
 
-		logger.exiting( this.getClass().getName(),  
-				new Object(){}.getClass().getEnclosingMethod().getName());
+		logger.exiting( "CharContainer", "removeLetter");
 
 		return retval;
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Get the highest index of the non-empty stored letters (length-1)
 	 * @return The index of the rightmost non-empty stored letter.<br>
@@ -193,9 +175,9 @@ public class CharContainer {
 		}
 		return numChars;
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Return a string representation of the array data
 	 */
@@ -212,36 +194,34 @@ public class CharContainer {
 	}
 
 
-	
+
 	/**
 	 * Shuffle the characters of the array
 	 */
 	 public void ShuffleContainer() {
-		 
-		logger.entering( this.getClass().getName(),  
-				new Object(){}.getClass().getEnclosingMethod().getName());
+
+		logger.entering( "CharContainer", "ShuffleContainer");
 
 		Random r = new Random();
 		int numChars = getHighestIndex();
-		
+
 		// Scramble the letters using the standard Fisher-Yates shuffle,
 		for( int i=0 ; i < numChars ; i++ )
 		  {
-			int j; 
+			int j;
 			do {
 				j = r.nextInt( numChars);
 			} while (i==j);
-			
+
 		    // Swap letters
-		    char temp = charArray[i]; 
-		    charArray[i] = charArray[j];  
+		    char temp = charArray[i];
+		    charArray[i] = charArray[j];
 		    charArray[j] = temp;
 		  }
 
-		logger.exiting( this.getClass().getName(),  
-				new Object(){}.getClass().getEnclosingMethod().getName());
+		logger.exiting( "CharContainer", "ShuffleContainer");
 	 }
-	
-	
+
+
 }
 

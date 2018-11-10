@@ -18,13 +18,13 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 /**
- * 
+ *
  * @author soco
  *
  */
 public class GamePreloader extends Preloader {
 
-	private final static appLogger logger = new appLogger( GamePreloader.class.getName(), null);
+	private final static appLogger logger = new appLogger( "GamePreloader", null);
 
 	private static BorderPane root;
 	private ProgressBar pb;
@@ -47,8 +47,7 @@ public class GamePreloader extends Preloader {
 
 	@Override
 	public void init() throws Exception {
-		logger.entering( this.getClass().getName(), 
-				new Object(){}.getClass().getEnclosingMethod().getName());
+		logger.entering( "GamePreloader", "init");
 
 		logger.info( "MyPreloader#init (could be used to initialize preloader view)");
 
@@ -73,14 +72,12 @@ public class GamePreloader extends Preloader {
 
 		});
 
-		logger.exiting( this.getClass().getName(),  
-				new Object(){}.getClass().getEnclosingMethod().getName());
+		logger.exiting( "GamePreloader", "init");
 	}
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		logger.entering( this.getClass().getName(),  
-				new Object(){}.getClass().getEnclosingMethod().getName());
+		logger.entering( "GamePreloader", "start");
 		logger.info( "MyPreloader#start (showing preloader stage)");
 
 		GamePreloadStage = primaryStage;
@@ -110,8 +107,7 @@ public class GamePreloader extends Preloader {
 		primaryStage.setResizable(false);
 		primaryStage.show();
 
-		logger.exiting( this.getClass().getName(),  
-				new Object(){}.getClass().getEnclosingMethod().getName());
+		logger.exiting( "GamePreloader", "start");
 		// add actions for each Button when clicked
 		// hanbleButtonAction(startGame);
 		// hanbleButtonAction(quitGame);

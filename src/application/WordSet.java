@@ -8,24 +8,24 @@ import java.util.logging.Level;
 
 /**
  * Write a description of WordSet here.
- * 
+ *
  * @author Yiorgos Halkos
  * @version (a version number or a date)
  */
 public class WordSet {
-	
-	private final static appLogger logger = new appLogger( WordSet.class.getName(), null);
+
+	private final static appLogger logger = new appLogger( "WordSet", null);
 
     private String language;
     private int size;
     private int minLength;
     private int maxLength;
-    
-    private HashMap<Integer, ArrayList<String>> WordsDB;
-    
-    
 
-    
+    private HashMap<Integer, ArrayList<String>> WordsDB;
+
+
+
+
     public HashMap<Integer, ArrayList<String>> getWordsDB() {
 		return WordsDB;
 	}
@@ -50,7 +50,7 @@ public class WordSet {
     	return minLength;
 	}
 
-    
+
     /**
      * Get maximum length
      * @return
@@ -68,7 +68,7 @@ public class WordSet {
     	return size;
 	}
 
-    
+
     /**
      * Returns an ArrayList with words from a text file
      * Words can be separated by any non-letter character
@@ -79,9 +79,9 @@ public class WordSet {
      * @return			An ArrayList with the words
      */
     private ArrayList<String> ReadWordFile(String filePath, String lang){
-		
+
     	logger.log( Level.INFO, "Read Words File {0}", filePath);
-    	
+
 		ArrayList<String> w = new ArrayList<String>();
         try {
         	FileInputStream is = new FileInputStream(filePath);
@@ -110,11 +110,11 @@ public class WordSet {
         }
         return w;
     }
-    
-    
+
+
     /**
      * Check if that is a valid letter
-     * @param c		Input character 
+     * @param c		Input character
      * @param lang	Language selection (GR or EN)
      * @return		If the character is valid
      */
@@ -126,16 +126,16 @@ public class WordSet {
         if (lang.equals("GR")) {
             alphabet = "&#913;ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ";
         }
-        
+
         if (alphabet.indexOf(Character.toUpperCase(c)) > 0) {
         	return true;
         }
         return false;
     }
-    
-    
-    
-    
+
+
+
+
     /**
      * Reads from a directory where word files exist.
      * @param lang Language. Used to check validity of characters AND to select the
@@ -149,9 +149,9 @@ public class WordSet {
      */
     public WordSet(String lang, int min, int max, String WordFilesDir){
 
-    	logger.log( Level.INFO, "Build word set {0} {1} {2}", 
+    	logger.log( Level.INFO, "Build word set {0} {1} {2}",
     			new Object[]{ lang, min, max} );
-    	
+
     	minLength = min;
     	maxLength = max;
         language = lang.toUpperCase();
@@ -161,16 +161,16 @@ public class WordSet {
             WordsDB.put(i,ReadWordFile(WordFilesDir+"/"+language+"-"+i+".txt",language));
         }
     }
-    
-    
-    
+
+
+
     /**
      * Breaks the input string in letters and finds all words that can be created with them.
-     * @param l 
+     * @param l
      * @return
      */
     public ArrayList<String> AssembleWordGameSet(String l) {
-    	
+
     	logger.log( Level.INFO, "Assemble Word Game Set {0}", l);
 
 
@@ -179,32 +179,32 @@ public class WordSet {
     	for (int i=0;i<l.length();i++) {
     		letters.add(l.charAt(i));
     	}
-    	
+
     	ArrayList<String> wset = new ArrayList<String>();
-    	
+
     	// For each set i in WordsDB (each set consists of words with the same size)
     	for (int i=maxLength;i>=minLength;i--) {
     		// For each word in the set
     		for (String word : WordsDB.get(i)) {
-    			
+
     			// A bool to check validity
     			boolean invalid = false;
-    			
+
     			// Create a temp ArrayList to keep the original one intact.
         		ArrayList<Character> tempLetters = new ArrayList<>(letters);
-        		
+
     			// For each character in word, check if it exists in tempLetters
     			// If yes, remove it from there (this way we also check duplicate occurencies).
     			// If all letters of the word exist in tempLetters, it is a valid choice.
     			for (int w=0; w<word.length(); w++) {
-    				
+
     				// Dirty check for words with "invisible" illegal chars (eg english A instead of a greek one)
     				if (word.length() < i) {
     					logger.severe( "*** Η ΛΕΞΗ "+word+" ΘΑ ΕΠΡΕΠΕ ΝΑ ΕΧΕΙ "+i+" ΓΡΑΜΜΑΤΑ! ***");
     				}
-    				
+
     				for (int c=0; c<tempLetters.size(); c++) {
-    					
+
     					//System.out.println(tempLetters.get(c)+" "+(int)tempLetters.get(c)+" - "+word.charAt(w)+" "+(int)word.charAt(w));
     					if (tempLetters.get(c).equals(word.charAt(w))) {
     						tempLetters.remove(c);
@@ -220,7 +220,7 @@ public class WordSet {
     						break;
     					}
     				}
-    				
+
     				// Word cannot be assembled
     				if (invalid) {
     					break;

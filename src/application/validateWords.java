@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 /**
  * Write a description of validateWords here.
- * 
+ *
  * @author (Aris)
  * @version (a version number or a date)
  */
 public class validateWords {
 
-	private final static appLogger logger = new appLogger( validateWords.class.getName(), null);
+	private final static appLogger logger = new appLogger( "validateWords", null);
 
 	/**
 	 * check if the given word has a valid format - only letters
@@ -50,8 +50,8 @@ public class validateWords {
 		}
 	}
 
-	
-	
+
+
 	/**
 	 * check if the word is valid to be searched in the ArrayList
 	 */
@@ -79,9 +79,9 @@ public class validateWords {
 		return "";
 	}
 
-	
-	
-	
+
+
+
 	/**
 	 * Check if the word exists in the arrayList of valid words
 	 */
