@@ -14,7 +14,6 @@ import java.util.logging.Logger;
 
 public class appLogger extends Logger {
 	
-
 	private class singleLineFormatter extends Formatter {
 		
 		private final DateFormat df = new SimpleDateFormat("HH:mm:ss.SSS");
@@ -24,24 +23,39 @@ public class appLogger extends Logger {
 						
 			Date d = new Date( record.getMillis());
 			
-			return String.format( "%-13s %-10s %-30s %-30s :   %s%n", 
+			return String.format( "%4d. %-13s %-10s %-30s %-30s :   %s%n", 
+					record.getSequenceNumber(),
 					df.format(d),
 					"["+ record.getLevel().getName() + "]",
 					record.getLoggerName(),
 					Thread.currentThread().getName(),
-					super.formatMessage( record)
-					);
+					String.format( "%-30s (%s.%s)", 
+							super.formatMessage( record),
+							record.getSourceClassName(),
+							record.getSourceMethodName())
+					);			
 		}
+	}
+	
+	@Override
+	public void setLevel( Level l) {
+		Handler[] handlers = this.getHandlers();
+		for( Handler h : handlers) {
+			h.setLevel( l);		// set the handler level
+		}
+		super.setLevel( l);		// set the logger level
+
 	}
 	
 	
 	protected appLogger(String name, String resourceBundleName) {
 		super(name, resourceBundleName);
 
-		this.setLevel( Level.INFO);
 		Handler ch = new ConsoleHandler();
 		ch.setFormatter( new singleLineFormatter());
 		this.addHandler( ch);
+
+//		setLevel( Level.ALL);		// ----- debugging logging level
 	}
 	
 

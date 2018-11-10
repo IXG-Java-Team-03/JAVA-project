@@ -17,6 +17,8 @@ public class validateWords {
 	 */
 	public static String isValidFormat(String word) {
 
+		logger.entering( "validateWords", "isValidFormat");
+
 		StringBuilder sbWord = new StringBuilder(word);
 		String newWord = "";
 
@@ -38,10 +40,12 @@ public class validateWords {
 		// check if the trimmed word is valid - without any empty character inside
 		if (newWord.length() < 3 || newWord.indexOf(ch) != -1) {
 			logger.info( "Invalid format. Try again");
+			logger.exiting( "validateWords", "isValidFormat");
 			return "";
 		} else {
 
 			logger.info("Valid Format = " + newWord);
+			logger.exiting( "validateWords", "isValidFormat");
 			return newWord;
 		}
 	}
@@ -52,6 +56,8 @@ public class validateWords {
 	 * check if the word is valid to be searched in the ArrayList
 	 */
 	public static String isValidWord(String word) {
+
+		logger.entering( "validateWords", "isValidWord");
 
 		// call method wordForSearch to check the validity of the word format
 		String wordForSearch = isValidFormat(word);
@@ -65,9 +71,11 @@ public class validateWords {
 		else {
 
 			logger.info( "The word that should be checked if valid = " + wordForSearch);
+			logger.exiting( "validateWords", "isValidWord");
 
 			return wordForSearch;
 		}
+		logger.exiting( "validateWords", "isValidWord");
 		return "";
 	}
 

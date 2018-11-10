@@ -50,6 +50,9 @@ public class GamePreloader extends Preloader {
 
 	@Override
 	public void init() throws Exception {
+		logger.entering( this.getClass().getName(), 
+				new Object(){}.getClass().getEnclosingMethod().getName());
+
 		logger.log( Level.INFO, "{0} MyPreloader#init (could be used to initialize preloader view)",
 				WordBuilderGame.STEP());
 
@@ -74,10 +77,14 @@ public class GamePreloader extends Preloader {
 
 		});
 
+		logger.exiting( this.getClass().getName(),  
+				new Object(){}.getClass().getEnclosingMethod().getName());
 	}
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		logger.entering( this.getClass().getName(),  
+				new Object(){}.getClass().getEnclosingMethod().getName());
 		logger.log( Level.INFO, "{0} MyPreloader#start (showing preloader stage)",
 				WordBuilderGame.STEP());
 
@@ -108,6 +115,8 @@ public class GamePreloader extends Preloader {
 		primaryStage.setResizable(false);
 		primaryStage.show();
 
+		logger.exiting( this.getClass().getName(),  
+				new Object(){}.getClass().getEnclosingMethod().getName());
 		// add actions for each Button when clicked
 		// hanbleButtonAction(startGame);
 		// hanbleButtonAction(quitGame);

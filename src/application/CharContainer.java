@@ -12,6 +12,8 @@ import java.util.Random;
  */
 public class CharContainer {
 
+	private final static appLogger logger = new appLogger( CharContainer.class.getName(), null);
+
 	public static final int MAX_CHARACTERS = 7;
 	public static final char EMPTY_CHAR = 0;
 
@@ -42,7 +44,11 @@ public class CharContainer {
 	 * @param letters Initial letters to populate the array
 	 */
 	public void InitLetters( String letters) {
-		
+
+		logger.entering( this.getClass().getName(),  
+				new Object(){}.getClass().getEnclosingMethod().getName(),
+				letters);
+
 		int numChars = Math.min( MAX_CHARACTERS, letters.length());		// calculate number of characters to set
 		
 		System.arraycopy( letters.toCharArray(), 0,					// source array 
@@ -52,6 +58,9 @@ public class CharContainer {
 		for( int i = numChars; i < MAX_CHARACTERS; i++) {
 			charArray[i] = EMPTY_CHAR;
 		}
+
+		logger.exiting( this.getClass().getName(),  
+				new Object(){}.getClass().getEnclosingMethod().getName());
 	}
 
 
@@ -60,6 +69,11 @@ public class CharContainer {
 	 * @param letter The input letter
 	 */
 	public void pushLetter(char letter) {
+
+		logger.entering( this.getClass().getName(),  
+				new Object(){}.getClass().getEnclosingMethod().getName(),
+				letter);
+
 		int insertPosition = -1;
 		for( int i = 0; i < MAX_CHARACTERS; i++) {
 			if( charArray[i] == EMPTY_CHAR) {
@@ -70,6 +84,9 @@ public class CharContainer {
 		if( insertPosition != -1) {
 			charArray[insertPosition] = letter;			// Store the character in the array
 		}
+
+		logger.exiting( this.getClass().getName(),  
+				new Object(){}.getClass().getEnclosingMethod().getName());
 	}
 
 
@@ -79,12 +96,24 @@ public class CharContainer {
 	 * <li> EMPTY_CHAR if nothing is stored in the container</li></ul>
 	 */
 	public char popLetter() {
+
+		logger.entering( this.getClass().getName(),  
+				new Object(){}.getClass().getEnclosingMethod().getName());
+
 		int fetchPosition = getHighestIndex();
 		if( fetchPosition != -1) {
 			char retval = charArray[fetchPosition];
 			charArray[fetchPosition] = EMPTY_CHAR;		// Empty the last position in the array
+
+			logger.exiting( this.getClass().getName(),  
+					new Object(){}.getClass().getEnclosingMethod().getName());
+
 			return retval;								// return that character back
 		}
+
+		logger.exiting( this.getClass().getName(),  
+				new Object(){}.getClass().getEnclosingMethod().getName());
+
 		return EMPTY_CHAR;
 	}
 	
@@ -97,11 +126,24 @@ public class CharContainer {
 	 * <li> EMPTY_CHAR if nothing is stored at this position</li></ul>
 	 */
 	public char popLetter(int position) {
+
+		logger.entering( this.getClass().getName(),  
+				new Object(){}.getClass().getEnclosingMethod().getName(),
+				position);
+
 		if( position >=0 && position < MAX_CHARACTERS && charArray[position] != EMPTY_CHAR) {
 			char retval = charArray[position];
 			charArray[position] = EMPTY_CHAR;			// Empty the last position in the array
+
+			logger.exiting( this.getClass().getName(),  
+					new Object(){}.getClass().getEnclosingMethod().getName());
+
 			return retval;								// return that character back
 		}
+
+		logger.exiting( this.getClass().getName(),  
+				new Object(){}.getClass().getEnclosingMethod().getName());
+
 		return EMPTY_CHAR;
 	}
 	
@@ -114,6 +156,11 @@ public class CharContainer {
 	 * @param position The position to delete one letter
 	 */
 	public char removeLetter( int position) {
+
+		logger.entering( this.getClass().getName(),  
+				new Object(){}.getClass().getEnclosingMethod().getName(),
+				position);
+
 		char retval = EMPTY_CHAR;
 		if( position >=0 && position < MAX_CHARACTERS && charArray[position] != EMPTY_CHAR) {
 			retval = charArray[position];
@@ -125,6 +172,10 @@ public class CharContainer {
 
 			charArray[MAX_CHARACTERS-1] = EMPTY_CHAR;
 		}
+
+		logger.exiting( this.getClass().getName(),  
+				new Object(){}.getClass().getEnclosingMethod().getName());
+
 		return retval;
 	}
 	
@@ -167,6 +218,9 @@ public class CharContainer {
 	 */
 	 public void ShuffleContainer() {
 		 
+		logger.entering( this.getClass().getName(),  
+				new Object(){}.getClass().getEnclosingMethod().getName());
+
 		Random r = new Random();
 		
 		// Scramble the letters using the standard Fisher-Yates shuffle,
@@ -178,6 +232,9 @@ public class CharContainer {
 		    charArray[i] = charArray[j];  
 		    charArray[j] = temp;
 		  }
+
+		logger.exiting( this.getClass().getName(),  
+				new Object(){}.getClass().getEnclosingMethod().getName());
 	 }
 	
 	

@@ -68,8 +68,8 @@ public class WordSet {
      * @return			An ArrayList with the words
      */
     private ArrayList<String> ReadWordFile(String filePath, String lang){
-
-        ArrayList<String> w = new ArrayList<String>();
+		
+		ArrayList<String> w = new ArrayList<String>();
         try {
         	FileInputStream is = new FileInputStream(filePath);
         	InputStreamReader isr = new InputStreamReader(is, "UTF8");
@@ -154,8 +154,8 @@ public class WordSet {
      * @return
      */
     public ArrayList<String> AssembleWordGameSet(String l) {
-    	
-    	// letters: an arraylist of chars to assemble words.
+
+		// letters: an arraylist of chars to assemble words.
     	ArrayList<Character> letters = new ArrayList<Character>();
     	for (int i=0;i<l.length();i++) {
     		letters.add(l.charAt(i));

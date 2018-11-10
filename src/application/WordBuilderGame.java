@@ -218,7 +218,7 @@ public class WordBuilderGame extends Application {
 	
 	
 	public WordBuilderGame() {
-		logger.entering( this.getClass().getName(), "WordBuilderGame");
+		logger.entering( this.getClass().getName(), "WordBuilderGame constructor");
 		// Constructor is called after BEFORE_LOAD.
 		logger.log( Level.INFO, "{0} MyApplication constructor called", WordBuilderGame.STEP());
 		// Create down BorderPane
@@ -234,10 +234,13 @@ public class WordBuilderGame extends Application {
 		startGame.setPrefWidth(200.0);
 		quitGame.setPrefWidth(200.0);
 
+		logger.exiting( this.getClass().getName(), "WordBuilderGame constructor");
 	}
 
 	@Override
 	public void init() throws Exception {
+		logger.entering( this.getClass().getName(),  
+				new Object(){}.getClass().getEnclosingMethod().getName());
 		logger.log( Level.INFO, "{0} MyApplication#init (doing some heavy lifting)", WordBuilderGame.STEP());
 
 		// Perform some heavy lifting (i.e. database start, check for application
@@ -247,10 +250,14 @@ public class WordBuilderGame extends Application {
 			LauncherImpl.notifyPreloader(this, new Preloader.ProgressNotification(progress));
 
 		}
+		logger.exiting( this.getClass().getName(),  
+				new Object(){}.getClass().getEnclosingMethod().getName());
 	}
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		logger.entering( this.getClass().getName(),  
+				new Object(){}.getClass().getEnclosingMethod().getName());
 		logger.log( Level.INFO, "{0} MyApplication#start (initialize and show primary application stage)",
 				WordBuilderGame.STEP());
 
@@ -294,10 +301,14 @@ public class WordBuilderGame extends Application {
 		handleButtonAction(startGame);
 		handleButtonAction(quitGame);
 
+		logger.exiting( this.getClass().getName(),  
+				new Object(){}.getClass().getEnclosingMethod().getName());
 	}
 
 	public void handleButtonAction(Button btn) {
 
+		logger.entering( this.getClass().getName(),  
+				new Object(){}.getClass().getEnclosingMethod().getName());
 		btn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -390,9 +401,14 @@ public class WordBuilderGame extends Application {
 
 			}
 		});
+		logger.exiting( this.getClass().getName(),  
+				new Object(){}.getClass().getEnclosingMethod().getName());
 	}
 
 	private void SetGameLevel() {
+
+		logger.entering( this.getClass().getName(),  
+				new Object(){}.getClass().getEnclosingMethod().getName());
 
 		++CurrentLevel;
 
@@ -410,9 +426,14 @@ public class WordBuilderGame extends Application {
 
 		gamePane.add(gameLevel, (MAXCOLS / 2)+1, 0, 1, 1);
 
+		logger.exiting( this.getClass().getName(),  
+				new Object(){}.getClass().getEnclosingMethod().getName());
 	}
 
 	private void SetScore() {
+
+		logger.entering( this.getClass().getName(),  
+				new Object(){}.getClass().getEnclosingMethod().getName());
 
 		Label scoreSlogan = new Label("Score");
 		scoreSlogan.setTextFill(Color.WHITE);
@@ -430,9 +451,14 @@ public class WordBuilderGame extends Application {
 
 		gamePane.add(hb, MAXCOLS - 4, 1, 2, 1);
 
+		logger.exiting( this.getClass().getName(),  
+				new Object(){}.getClass().getEnclosingMethod().getName());
 	}
 
 	void updateButtons() {
+
+		logger.entering( this.getClass().getName(),  
+				new Object(){}.getClass().getEnclosingMethod().getName());
 
 		char[] letters1 = charArrayLower.toString().toCharArray();
 		char[] letters2 = charArrayUpper.toString().toCharArray();
@@ -461,12 +487,19 @@ public class WordBuilderGame extends Application {
 				b.setText(String.valueOf(EmptyLabel));
 			}
 		}
+		logger.exiting( this.getClass().getName(),  
+				new Object(){}.getClass().getEnclosingMethod().getName());
 	}
 
+	
+	
+	
 	final EventHandler<ActionEvent> myHandler = new EventHandler<ActionEvent>() {
 
 		@Override
 		public void handle(final ActionEvent event) {
+			logger.entering( this.getClass().getName(),  
+					new Object(){}.getClass().getEnclosingMethod().getName());
 			Button x = (Button) event.getSource();
 
 			for (int i = 0; i < availableLetters.size(); i++) {
@@ -477,6 +510,8 @@ public class WordBuilderGame extends Application {
 						charArrayUpper.pushLetter(c);
 					}
 					updateButtons();
+					logger.exiting( this.getClass().getName(),  
+							new Object(){}.getClass().getEnclosingMethod().getName());
 					return;
 				} else if (x == availablePositions.get(i)) {
 					logger.log( Level.INFO, "mphka2: {0}", event.getSource().toString());
@@ -485,6 +520,8 @@ public class WordBuilderGame extends Application {
 						charArrayLower.pushLetter(c);
 					}
 					updateButtons();
+					logger.exiting( this.getClass().getName(),  
+							new Object(){}.getClass().getEnclosingMethod().getName());
 					return;
 				}
 
@@ -508,11 +545,19 @@ public class WordBuilderGame extends Application {
 				logger.log( Level.INFO, "check3 {0}", event.getSource().toString());
 			}
 
+			logger.exiting( this.getClass().getName(),  
+					new Object(){}.getClass().getEnclosingMethod().getName());
 		}
 	};
 
+	
+	
+	
 	private void setGridPaneRowsCols(GridPane gpane, int rows, int cols) {
 
+		logger.entering( this.getClass().getName(),  
+				new Object(){}.getClass().getEnclosingMethod().getName());
+		
 		final int numCols = cols;
 		final int numRows = rows;
 
@@ -533,9 +578,17 @@ public class WordBuilderGame extends Application {
 			gpane.getRowConstraints().add(rowConst);
 		}
 
+		logger.exiting( this.getClass().getName(),  
+				new Object(){}.getClass().getEnclosingMethod().getName());
 	}
+	
+	
+	
 
 	private void createLetterSeqBut(String letters) {
+
+		logger.entering( this.getClass().getName(),  
+				new Object(){}.getClass().getEnclosingMethod().getName());
 
 		if (letters != null) {
 
@@ -567,6 +620,8 @@ public class WordBuilderGame extends Application {
 
 		}
 
+		logger.exiting( this.getClass().getName(),  
+				new Object(){}.getClass().getEnclosingMethod().getName());
 	}
 
 	private Button createNewButton(String slogan) {
