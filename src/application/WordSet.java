@@ -14,7 +14,8 @@ import java.util.logging.Level;
  */
 public class WordSet {
 
-	private final static appLogger logger = new appLogger( "WordSet", null);
+	private final static String className = WordSet.class.getSimpleName();
+	private final static appLogger logger = new appLogger( className, null);
 
     private String language;
     private int size;

@@ -24,7 +24,8 @@ import javafx.stage.Stage;
  */
 public class GamePreloader extends Preloader {
 
-	private final static appLogger logger = new appLogger( "GamePreloader", null);
+	private final static String className = GamePreloader.class.getSimpleName();
+	private final static appLogger logger = new appLogger( className, null);
 
 	private static BorderPane root;
 	private ProgressBar pb;
@@ -47,7 +48,7 @@ public class GamePreloader extends Preloader {
 
 	@Override
 	public void init() throws Exception {
-		logger.entering( "GamePreloader", "init");
+		logger.entering( className, "init");
 
 		logger.info( "MyPreloader#init (could be used to initialize preloader view)");
 
@@ -72,12 +73,12 @@ public class GamePreloader extends Preloader {
 
 		});
 
-		logger.exiting( "GamePreloader", "init");
+		logger.exiting( className, "init");
 	}
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		logger.entering( "GamePreloader", "start");
+		logger.entering( className, "start");
 		logger.info( "MyPreloader#start (showing preloader stage)");
 
 		GamePreloadStage = primaryStage;
@@ -107,13 +108,14 @@ public class GamePreloader extends Preloader {
 		primaryStage.setResizable(false);
 		primaryStage.show();
 
-		logger.exiting( "GamePreloader", "start");
+		logger.exiting( className, "start");
 		// add actions for each Button when clicked
 		// hanbleButtonAction(startGame);
 		// hanbleButtonAction(quitGame);
 
 	}
 
+	
 	@Override
 	public void handleApplicationNotification(PreloaderNotification info) {
 		// Handle application notification in this point (see MyApplication#init).
@@ -123,6 +125,7 @@ public class GamePreloader extends Preloader {
 		}
 	}
 
+	
 	@Override
 	public void handleStateChangeNotification(StateChangeNotification info) {
 		// Handle state change notifications.

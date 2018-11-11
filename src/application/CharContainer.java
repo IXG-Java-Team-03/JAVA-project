@@ -12,7 +12,8 @@ import java.util.Random;
  */
 public class CharContainer {
 
-	private final static appLogger logger = new appLogger( "CharContainer", null);
+	private final static String className = CharContainer.class.getSimpleName();
+	private final static appLogger logger = new appLogger( className, null);
 
 	public static final int MAX_CHARACTERS = 7;
 	public static final char EMPTY_CHAR = 0;
@@ -45,7 +46,7 @@ public class CharContainer {
 	 */
 	public void InitLetters( String letters) {
 
-		logger.entering( "CharContainer", "InitLetters", letters);
+		logger.entering( className, "InitLetters", letters);
 
 		int numChars = Math.min( MAX_CHARACTERS, letters.length());		// calculate number of characters to set
 
@@ -57,7 +58,7 @@ public class CharContainer {
 			charArray[i] = EMPTY_CHAR;
 		}
 
-		logger.exiting( "CharContainer", "InitLetters");
+		logger.exiting( className, "InitLetters");
 	}
 
 
@@ -67,7 +68,7 @@ public class CharContainer {
 	 */
 	public void pushLetter(char letter) {
 
-		logger.entering( "CharContainer", "pushLetter", letter);
+		logger.entering( className, "pushLetter", letter);
 
 		int insertPosition = -1;
 		for( int i = 0; i < MAX_CHARACTERS; i++) {
@@ -80,7 +81,7 @@ public class CharContainer {
 			charArray[insertPosition] = letter;			// Store the character in the array
 		}
 
-		logger.exiting( "CharContainer", "pushLetter");
+		logger.exiting( className, "pushLetter");
 	}
 
 
@@ -91,18 +92,18 @@ public class CharContainer {
 	 */
 	public char popLetter() {
 
-		logger.entering( "CharContainer", "popLetter");
+		logger.entering( className, "popLetter");
 
 		int fetchPosition = getHighestIndex();
 		if( fetchPosition != -1) {
 			char retval = charArray[fetchPosition];
 			charArray[fetchPosition] = EMPTY_CHAR;		// Empty the last position in the array
 
-			logger.exiting( "CharContainer", "popLetter");
+			logger.exiting( className, "popLetter");
 			return retval;								// return that character back
 		}
 
-		logger.exiting( "CharContainer", "popLetter");
+		logger.exiting( className, "popLetter");
 		return EMPTY_CHAR;
 	}
 
@@ -116,18 +117,18 @@ public class CharContainer {
 	 */
 	public char popLetter(int position) {
 
-		logger.entering( "CharContainer", "popLetter", position);
+		logger.entering( className, "popLetter", position);
 
 		if( position >=0 && position < MAX_CHARACTERS && charArray[position] != EMPTY_CHAR) {
 			char retval = charArray[position];
 			charArray[position] = EMPTY_CHAR;			// Empty the last position in the array
 
-			logger.exiting( "CharContainer", "popLetter");
+			logger.exiting( className, "popLetter");
 
 			return retval;								// return that character back
 		}
 
-		logger.exiting( "CharContainer", "popLetter");
+		logger.exiting( className, "popLetter");
 
 		return EMPTY_CHAR;
 	}
@@ -142,7 +143,7 @@ public class CharContainer {
 	 */
 	public char removeLetter( int position) {
 
-		logger.entering( "CharContainer", "removeLetter", position);
+		logger.entering( className, "removeLetter", position);
 
 		char retval = EMPTY_CHAR;
 		if( position >=0 && position < MAX_CHARACTERS && charArray[position] != EMPTY_CHAR) {
@@ -156,7 +157,7 @@ public class CharContainer {
 			charArray[MAX_CHARACTERS-1] = EMPTY_CHAR;
 		}
 
-		logger.exiting( "CharContainer", "removeLetter");
+		logger.exiting( className, "removeLetter");
 
 		return retval;
 	}
@@ -200,7 +201,7 @@ public class CharContainer {
 	 */
 	 public void ShuffleContainer() {
 
-		logger.entering( "CharContainer", "ShuffleContainer");
+		logger.entering( className, "ShuffleContainer");
 
 		Random r = new Random();
 		int numChars = getHighestIndex();
@@ -219,7 +220,7 @@ public class CharContainer {
 		    charArray[j] = temp;
 		  }
 
-		logger.exiting( "CharContainer", "ShuffleContainer");
+		logger.exiting( className, "ShuffleContainer");
 	 }
 
 

@@ -53,7 +53,8 @@ import javafx.util.Duration;
  */
 public class WordBuilderGame extends Application {
 
-	private final static appLogger logger = new appLogger( "WordBuilderGame", null);
+	private final static String className = WordBuilderGame.class.getSimpleName();
+	private final static appLogger logger = new appLogger( className, null);
 
 	private final static Button startGame = new Button("Start Playing");
 	private final static Button quitGame = new Button("Quit");
@@ -289,7 +290,7 @@ private void pickUpWord() {
 
 
 	public WordBuilderGame() {
-		logger.entering( "WordBuilderGame", "WordBuilderGame constructor");
+		logger.entering( className, "WordBuilderGame constructor");
 		// Constructor is called after BEFORE_LOAD.
 		logger.info( "MyApplication constructor called");
 		// Create down BorderPane
@@ -305,12 +306,12 @@ private void pickUpWord() {
 		startGame.setPrefWidth(200.0);
 		quitGame.setPrefWidth(200.0);
 
-		logger.exiting( "WordBuilderGame", "WordBuilderGame constructor");
+		logger.exiting( className, "WordBuilderGame constructor");
 	}
 
 	@Override
 	public void init() throws Exception {
-		logger.entering( "WordBuilderGame", "init");
+		logger.entering( className, "init");
 		logger.info( "MyApplication#init (doing some heavy lifting)");
 
 		pickUpWord();
@@ -322,12 +323,12 @@ private void pickUpWord() {
 			LauncherImpl.notifyPreloader(this, new Preloader.ProgressNotification(progress));
 
 		}
-		logger.exiting( "WordBuilderGame", "init");
+		logger.exiting( className, "init");
 	}
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		logger.entering( "WordBuilderGame", "start");
+		logger.entering( className, "start");
 		logger.info( "MyApplication#start (initialize and show primary application stage)");
 
 		// keep the stage since we will change the scene when "start playing" will
@@ -370,12 +371,12 @@ private void pickUpWord() {
 		handleButtonAction(startGame);
 		handleButtonAction(quitGame);
 
-		logger.exiting( "WordBuilderGame", "start");
+		logger.exiting( className, "start");
 	}
 
 	public void handleButtonAction(Button btn) {
 
-		logger.entering( "WordBuilderGame", "handleButtonAction");
+		logger.entering( className, "handleButtonAction");
 		btn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -468,12 +469,12 @@ private void pickUpWord() {
 
 			}
 		});
-		logger.exiting( "WordBuilderGame", "handleButtonAction");
+		logger.exiting( className, "handleButtonAction");
 	}
 
 	private void SetGameLevel() {
 
-		logger.entering( "WordBuilderGame", "SetGameLevel");
+		logger.entering( className, "SetGameLevel");
 
 		++CurrentLevel;
 
@@ -491,12 +492,12 @@ private void pickUpWord() {
 
 		gamePane.add(gameLevel, (MAXCOLS / 2)+1, 0, 1, 1);
 
-		logger.exiting( "WordBuilderGame", "SetGameLevel");
+		logger.exiting( className, "SetGameLevel");
 	}
 
 	private void SetScore() {
 
-		logger.entering( "WordBuilderGame", "SetScore");
+		logger.entering( className, "SetScore");
 
 		Label scoreSlogan = new Label("Score");
 		scoreSlogan.setTextFill(Color.WHITE);
@@ -514,12 +515,12 @@ private void pickUpWord() {
 
 		gamePane.add(hb, MAXCOLS - 4, 1, 2, 1);
 
-		logger.exiting( "WordBuilderGame", "SetScore");
+		logger.exiting( className, "SetScore");
 	}
 
 	void updateButtons() {
 
-		logger.entering( "WordBuilderGame", "updateButtons");
+		logger.entering( className, "updateButtons");
 
 		char[] letters1 = charArrayLower.toString().toCharArray();
 		char[] letters2 = charArrayUpper.toString().toCharArray();
@@ -548,7 +549,7 @@ private void pickUpWord() {
 				b.setText(String.valueOf(EmptyLabel));
 			}
 		}
-		logger.exiting( "WordBuilderGame", "updateButtons");
+		logger.exiting( className, "updateButtons");
 	}
 
 
@@ -559,7 +560,7 @@ private void pickUpWord() {
 		@Override
 		public void handle(final ActionEvent event) {
 
-			logger.entering( "WordBuilderGame", "buttons event handler");
+			logger.entering( className, "buttons event handler");
 
 			Button x = (Button) event.getSource();
 
@@ -571,7 +572,7 @@ private void pickUpWord() {
 						charArrayUpper.pushLetter(c);
 					}
 					updateButtons();
-					logger.exiting( "WordBuilderGame", "buttons event handler");
+					logger.exiting( className, "buttons event handler");
 					return;
 				} else if (x == availablePositions.get(i)) {
 					logger.log( Level.INFO, "Upper row letter pushed {0}", event.getSource().toString());
@@ -580,7 +581,7 @@ private void pickUpWord() {
 						charArrayLower.pushLetter(c);
 					}
 					updateButtons();
-					logger.exiting( "WordBuilderGame", "buttons event handler");
+					logger.exiting( className, "buttons event handler");
 					return;
 				}
 
@@ -604,7 +605,7 @@ private void pickUpWord() {
 				logger.log( Level.INFO, "Shuffle letters pressed {0}", event.getSource().toString());
 			}
 
-			logger.exiting( "WordBuilderGame", "buttons event handler");
+			logger.exiting( className, "buttons event handler");
 		}
 	};
 
@@ -613,7 +614,7 @@ private void pickUpWord() {
 
 	private void setGridPaneRowsCols(GridPane gpane, int rows, int cols) {
 
-		logger.entering( "WordBuilderGame", "setGridPaneRowsCols");
+		logger.entering( className, "setGridPaneRowsCols");
 
 		final int numCols = cols;
 		final int numRows = rows;
@@ -635,7 +636,7 @@ private void pickUpWord() {
 			gpane.getRowConstraints().add(rowConst);
 		}
 
-		logger.exiting( "WordBuilderGame", "setGridPaneRowsCols");
+		logger.exiting( className, "setGridPaneRowsCols");
 	}
 
 
@@ -643,7 +644,7 @@ private void pickUpWord() {
 
 	private void createLetterSeqBut(String letters) {
 
-		logger.entering( "WordBuilderGame", "createLetterSeqBut");
+		logger.entering( className, "createLetterSeqBut");
 
 		if (letters != null) {
 
@@ -675,7 +676,7 @@ private void pickUpWord() {
 
 		}
 
-		logger.exiting( "WordBuilderGame", "createLetterSeqBut");
+		logger.exiting( className, "createLetterSeqBut");
 	}
 
 	private Button createNewButton(String slogan) {

@@ -10,14 +10,15 @@ import java.util.ArrayList;
  */
 public class validateWords {
 
-	private final static appLogger logger = new appLogger( "validateWords", null);
+	private final static String className = validateWords.class.getSimpleName();
+	private final static appLogger logger = new appLogger( className, null);
 
 	/**
 	 * check if the given word has a valid format - only letters
 	 */
 	public static String isValidFormat(String word) {
 
-		logger.entering( "validateWords", "isValidFormat");
+		logger.entering( className, "isValidFormat");
 
 		StringBuilder sbWord = new StringBuilder(word);
 		String newWord = "";
@@ -40,12 +41,12 @@ public class validateWords {
 		// check if the trimmed word is valid - without any empty character inside
 		if (newWord.length() < 3 || newWord.indexOf(ch) != -1) {
 			logger.info( "Invalid format. Try again");
-			logger.exiting( "validateWords", "isValidFormat");
+			logger.exiting( className, "isValidFormat");
 			return "";
 		} else {
 
 			logger.info("Valid Format = " + newWord);
-			logger.exiting( "validateWords", "isValidFormat");
+			logger.exiting( className, "isValidFormat");
 			return newWord;
 		}
 	}
@@ -57,7 +58,7 @@ public class validateWords {
 	 */
 	public static String isValidWord(String word) {
 
-		logger.entering( "validateWords", "isValidWord");
+		logger.entering( className, "isValidWord");
 
 		// call method wordForSearch to check the validity of the word format
 		String wordForSearch = isValidFormat(word);
@@ -71,11 +72,11 @@ public class validateWords {
 		else {
 
 			logger.info( "The word that should be checked if valid = " + wordForSearch);
-			logger.exiting( "validateWords", "isValidWord");
+			logger.exiting( className, "isValidWord");
 
 			return wordForSearch;
 		}
-		logger.exiting( "validateWords", "isValidWord");
+		logger.exiting( className, "isValidWord");
 		return "";
 	}
 
