@@ -1,5 +1,6 @@
 package application;
 
+import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 
 /**
@@ -10,7 +11,7 @@ import java.util.ArrayList;
  */
 public class validateWords {
 
-	private final static String className = validateWords.class.getSimpleName();
+	private final static String className = MethodHandles.lookup().lookupClass().getSimpleName();
 	private final static appLogger logger = new appLogger( className, null);
 
 	/**

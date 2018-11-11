@@ -1,5 +1,6 @@
 package application;
 
+import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -53,7 +54,7 @@ import javafx.util.Duration;
  */
 public class WordBuilderGame extends Application {
 
-	private final static String className = WordBuilderGame.class.getSimpleName();
+	private final static String className = MethodHandles.lookup().lookupClass().getSimpleName();
 	private final static appLogger logger = new appLogger( className, null);
 
 	private final static Button startGame = new Button("Start Playing");

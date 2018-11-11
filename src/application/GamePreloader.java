@@ -1,5 +1,7 @@
 package application;
 
+import java.lang.invoke.MethodHandles;
+
 import javafx.application.Platform;
 import javafx.application.Preloader;
 import javafx.geometry.Pos;
@@ -24,9 +26,9 @@ import javafx.stage.Stage;
  */
 public class GamePreloader extends Preloader {
 
-	private final static String className = GamePreloader.class.getSimpleName();
+	private final static String className = MethodHandles.lookup().lookupClass().getSimpleName();
 	private final static appLogger logger = new appLogger( className, null);
-
+	
 	private static BorderPane root;
 	private ProgressBar pb;
 	private Label progress;
@@ -49,7 +51,7 @@ public class GamePreloader extends Preloader {
 	@Override
 	public void init() throws Exception {
 		logger.entering( className, "init");
-
+		
 		logger.info( "MyPreloader#init (could be used to initialize preloader view)");
 
 		// If preloader has complex UI it's initialization can be done in

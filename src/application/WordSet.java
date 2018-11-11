@@ -1,6 +1,7 @@
 package application;
 
 import java.io.*;
+import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -14,7 +15,7 @@ import java.util.logging.Level;
  */
 public class WordSet {
 
-	private final static String className = WordSet.class.getSimpleName();
+	private final static String className = MethodHandles.lookup().lookupClass().getSimpleName();
 	private final static appLogger logger = new appLogger( className, null);
 
     private String language;

@@ -3,6 +3,7 @@
  */
 package application;
 
+import java.lang.invoke.MethodHandles;
 import java.util.Random;
 
 /**
@@ -12,7 +13,7 @@ import java.util.Random;
  */
 public class CharContainer {
 
-	private final static String className = CharContainer.class.getSimpleName();
+	private final static String className = MethodHandles.lookup().lookupClass().getSimpleName();
 	private final static appLogger logger = new appLogger( className, null);
 
 	public static final int MAX_CHARACTERS = 7;
