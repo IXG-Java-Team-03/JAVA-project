@@ -223,21 +223,19 @@ public class WordBuilderGame extends Application {
 
 private void pickUpWord() {
 
+		logger.entering( className, "pickUpWord");
+	
 		/**
 		 * creates a new wset with greek words
 		 */
 		WordSet wset = new WordSet(language, MINLETTERS, MAXLETTERS, "words");
 
-
-		//get the whole set of words
+		// get the whole set of words
 		HashMap<Integer, ArrayList<String>> wdb = wset.getWordsDB();
-
 
 		ArrayList<String> listofMaxletters = wdb.get(MAXLETTERS);
 
-
 		Random rand = new Random();
-
 
 		/**
 		 * random position inside ArrayList
@@ -245,9 +243,11 @@ private void pickUpWord() {
 
 		int randomidx = rand.nextInt(listofMaxletters.size() + 1);
 
-
-		//shuffle word letters
+		// shuffle word letters
 		pickedWord = shuffleWord(listofMaxletters.get(randomidx));
+
+		logger.exiting( className, "pickUpWord");
+
 	}
 
 
@@ -255,23 +255,22 @@ private void pickUpWord() {
 
 	private String shuffleWord(String word) {
 
-		 char[] wordofChars = word.toCharArray();
+		logger.entering( className, "shuffleWord");
 
+		char[] wordofChars = word.toCharArray();
 
+		Random rand = new Random();
 
-		 Random rand = new Random();
+		for (int i = wordofChars.length - 1; i > 0; i--) {
+			int r = rand.nextInt(i + 1);
+			char tmp = wordofChars[i];
+			wordofChars[i] = wordofChars[r];
+			wordofChars[r] = tmp;
+		}
 
-		 for (int i = wordofChars.length - 1; i > 0; i--) {
-	            int r = rand.nextInt(i + 1);
-	            char tmp = wordofChars[i];
-	            wordofChars[i] = wordofChars[r];
-	            wordofChars[r] = tmp;
-	        }
-
-
+		logger.exiting( className, "shuffleWord");
 
 		return String.valueOf(wordofChars);
-
 	}
 
 
@@ -291,7 +290,9 @@ private void pickUpWord() {
 
 
 	public WordBuilderGame() {
+		
 		logger.entering( className, "WordBuilderGame constructor");
+		
 		// Constructor is called after BEFORE_LOAD.
 		logger.info( "MyApplication constructor called");
 		// Create down BorderPane
@@ -309,9 +310,13 @@ private void pickUpWord() {
 
 		logger.exiting( className, "WordBuilderGame constructor");
 	}
+	
+	
+	
 
 	@Override
 	public void init() throws Exception {
+		
 		logger.entering( className, "init");
 		logger.info( "MyApplication#init (doing some heavy lifting)");
 
@@ -329,6 +334,7 @@ private void pickUpWord() {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		
 		logger.entering( className, "start");
 		logger.info( "MyApplication#start (initialize and show primary application stage)");
 
@@ -343,8 +349,6 @@ private void pickUpWord() {
 
 			// set the log at the center of the center
 			root.setCenter(box);
-
-
 
 			BorderPane border = new BorderPane();
 

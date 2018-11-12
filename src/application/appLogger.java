@@ -23,7 +23,7 @@ public class appLogger extends Logger {
 
 			Date d = new Date( record.getMillis());
 
-			return String.format( "%4d. %-13s %-10s %-20s %-30s :   %-30s (%s.%s)%n",
+			String retval = String.format( "%4d. %-13s %-10s %-20s %-30s :   %-30s (%s.%s)%n",
 					record.getSequenceNumber(),					// sequence number
 					df.format(d),								// time of logging
 					"["+ record.getLevel().getName() + "]",		// logging level
@@ -33,6 +33,16 @@ public class appLogger extends Logger {
 					record.getSourceClassName(),				// class name
 					record.getSourceMethodName()				// method name
 					);
+			
+			if( record.getThrown() != null) {
+				Throwable th = record.getThrown();
+				retval = retval + String.format( "%96s", " ") + th.toString() + "\n";
+				StackTraceElement[] elements = th.getStackTrace();
+				for( StackTraceElement el : elements) {
+					retval = retval + String.format( "%96s", " ") + el.toString() + "\n";
+				}
+			}
+			return retval;
 		}
 	}
 
