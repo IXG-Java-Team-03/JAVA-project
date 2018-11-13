@@ -2,6 +2,7 @@ package application;
 
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -69,9 +70,19 @@ public class WordBuilderGame extends Application {
 
 	private final static int MAXROWS = 15;
 	private final static int MAXCOLS = 15;
+	
+	private final static int NOFDEFAULTWORDSCURLEVEL = 4;
 
 
 	private String pickedWord;
+	
+	/**
+	 * Words that can be constructed, using letters of pickedWord
+	 */
+	
+	private ArrayList<String> foundWords;
+	
+	
 
 	/**
 	 *  Just a counter to create some delay while showing preloader.
@@ -123,6 +134,12 @@ public class WordBuilderGame extends Application {
 	private Stage applicationStage;
 
 
+	
+	
+	
+	
+	
+	
 	private HBox createTimer() {
 
 		if (STARTTIME != 0) {
@@ -245,6 +262,10 @@ private void pickUpWord() {
 
 		// shuffle word letters
 		pickedWord = shuffleWord(listofMaxletters.get(randomidx));
+		
+		
+		//extract all words that can be constructed with "pickedWord" letters
+		foundWords = wset.AssembleWordGameSet(pickedWord);
 
 		logger.exiting( className, "pickUpWord");
 
@@ -319,6 +340,7 @@ private void pickUpWord() {
 		
 		logger.entering( className, "init");
 		logger.info( "MyApplication#init (doing some heavy lifting)");
+		
 
 		pickUpWord();
 
@@ -379,6 +401,8 @@ private void pickUpWord() {
 		logger.exiting( className, "start");
 	}
 
+	
+	
 	public void handleButtonAction(Button btn) {
 
 		logger.entering( className, "handleButtonAction");
@@ -389,77 +413,9 @@ private void pickUpWord() {
 				switch (btn.getText()) {
 
 				case "Start Playing":
-					// fill in with code to generate the new
-					// Stage, pre-processing word data
-					// and fill in progress bar
-					// ((Node)(e.getSource())).getScene().getWindow().hide();
-
-					gamePane = new GridPane();
-
-					setGridPaneRowsCols(gamePane, MAXROWS, MAXCOLS);
-
-					// it shows the grid of cols and rows
-					//gamePane.setGridLinesVisible(true);
-
-					gamePane.setPadding(new Insets(10, 10, 10, 10));
-
-					Label WlistLabel = new Label("Words");
-					WlistLabel.setTextFill(Color.WHITE);
-					WlistLabel.setStyle("-fx-font-size: 34px;");
-					WlistLabel.setAlignment(Pos.CENTER_LEFT);
-
-					GridPane.setHalignment(WlistLabel, HPos.CENTER);
-
-					gamePane.add(WlistLabel, 0, 1, 2, 1);
-
-					SetGameLevel();
-
-					// on the left we will need a list of words to be found
-					ListView<String> wordsList = new ListView<String>();
-
-					// ***********************This is just an example**************
-					// here we will call a function that will return the found words
-					// with a dash replacing each word letter
-					String[] exampleWords = { "- - - - - - -", "- - -", "- - -", "- - - - -", "- - - - -", "- -", "- -",
-							"- - -", "- - -","- - - - - - -" };
-
-					wordsList.setItems(FXCollections.observableArrayList(exampleWords));
-					// wordsList.setBackground(value);
-
-					wordsList.setMouseTransparent(true);
-					wordsList.setFocusTraversable(false);
-
-					gamePane.add(wordsList, 0, 2, 3, MAXROWS - 2); // spans 1 column, 4 rows
-
-					// create and add the timer
-					HBox hbtimer = createTimer();
-					//hbtimer.setPadding(new Insets(10));
-
-					gamePane.add(hbtimer, MAXCOLS - 4, 2, 2, 1); // spans 2 columns and 2 rows (the last two elements)
-
-					SetScore();
-
-					createLetterSeqBut(pickedWord);
-
-                    //create the 4 control buttons: check word, shuffle, reset, next level
-					chckword = createControlButton("/res/ok.png","Checks if word is in the list!",Color.GREENYELLOW);
-					resetword = createControlButton("/res/reset.png","Resets all actions done so far!",Color.GREENYELLOW);
-					shuffleword = createControlButton("/res/shuffle.png","Shuffle letters!",Color.GREENYELLOW);
-			 		nextlevel = createControlButton("/res/level.png","Go to next level!",Color.AQUA);
-
-					HBox hbox = new HBox(chckword, resetword, shuffleword,nextlevel);
-
-					gamePane.add(hbox, MAXCOLS - 5, MAXROWS - 1, 1, 1);
-
-
-					scene = new Scene(gamePane, GamePreloader.WIDTH, GamePreloader.HEIGHT);
-
-					scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-
-					applicationStage.setTitle("World Builder");
-					applicationStage.setScene(scene);
-					applicationStage.show();
-
+					
+					createLevel(NOFDEFAULTWORDSCURLEVEL);
+					
 					break;
 
 				case "Quit":
@@ -477,6 +433,101 @@ private void pickUpWord() {
 		logger.exiting( className, "handleButtonAction");
 	}
 
+	private String[] maxWordsForCurrentLevel(int numofWordstoFound) {
+		
+		int maxsize = 0;
+		
+		if(foundWords.size()<numofWordstoFound)
+			maxsize = foundWords.size();
+		else
+			maxsize = numofWordstoFound;
+			System.out.println("SWSTO");
+		
+		
+		
+		return Arrays.copyOfRange(foundWords.toArray(new String[0]),0,maxsize);
+	}
+	
+	
+	private void createLevel(int numofWordstoFound) {
+		
+		
+		// fill in with code to generate the new
+		// Stage, pre-processing word data
+		// and fill in progress bar
+		// ((Node)(e.getSource())).getScene().getWindow().hide();
+
+		gamePane = new GridPane();
+
+		setGridPaneRowsCols(gamePane, MAXROWS, MAXCOLS);
+
+		// it shows the grid of cols and rows
+		//gamePane.setGridLinesVisible(true);
+
+		gamePane.setPadding(new Insets(10, 10, 10, 10));
+
+		Label WlistLabel = new Label("Words");
+		WlistLabel.setTextFill(Color.WHITE);
+		WlistLabel.setStyle("-fx-font-size: 34px;");
+		WlistLabel.setAlignment(Pos.CENTER_LEFT);
+
+		GridPane.setHalignment(WlistLabel, HPos.CENTER);
+
+		gamePane.add(WlistLabel, 0, 1, 2, 1);
+
+		SetGameLevel();
+
+		// on the left we will need a list of words to be found
+		ListView<String> wordsList = new ListView<String>();
+
+		// ***********************This is just an example**************
+		// here we will call a function that will return the found words
+		// with a dash replacing each word letter
+		String[] wordsToShowUp = maxWordsForCurrentLevel(numofWordstoFound);
+		
+
+		wordsList.setItems(FXCollections.observableArrayList(wordsToShowUp));
+		// wordsList.setBackground(value);
+
+		wordsList.setMouseTransparent(true);
+		wordsList.setFocusTraversable(false);
+
+		gamePane.add(wordsList, 0, 2, 3, MAXROWS - 2); // spans 1 column, 4 rows
+
+		// create and add the timer
+		HBox hbtimer = createTimer();
+		//hbtimer.setPadding(new Insets(10));
+
+		gamePane.add(hbtimer, MAXCOLS - 4, 2, 2, 1); // spans 2 columns and 2 rows (the last two elements)
+
+		SetScore();
+
+		createLetterSeqBut(pickedWord);
+
+        //create the 4 control buttons: check word, shuffle, reset, next level
+		chckword = createControlButton("/res/ok.png","Checks if word is in the list!",Color.GREENYELLOW);
+		resetword = createControlButton("/res/reset.png","Resets all actions done so far!",Color.GREENYELLOW);
+		shuffleword = createControlButton("/res/shuffle.png","Shuffle letters!",Color.GREENYELLOW);
+ 		nextlevel = createControlButton("/res/level.png","Go to next level!",Color.AQUA);
+
+		HBox hbox = new HBox(chckword, resetword, shuffleword,nextlevel);
+
+		gamePane.add(hbox, MAXCOLS - 5, MAXROWS - 1, 1, 1);
+
+
+		scene = new Scene(gamePane, GamePreloader.WIDTH, GamePreloader.HEIGHT);
+
+		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+
+		applicationStage.setTitle("World Builder");
+		applicationStage.setScene(scene);
+		applicationStage.show();
+		
+		
+	}
+	
+	
+	
 	private void SetGameLevel() {
 
 		logger.entering( className, "SetGameLevel");
