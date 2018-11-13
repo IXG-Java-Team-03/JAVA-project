@@ -23,6 +23,6 @@ public class InvalidWordException extends Exception {
 	 */
 	@Override
 	public String toString() {
-		return "Invalid word : " + message;
+		return "Invalid Word Exception : " + message;
 	}
 }
