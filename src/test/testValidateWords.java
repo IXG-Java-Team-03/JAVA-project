@@ -24,23 +24,12 @@ public class testValidateWords {
 	public void testIsValidFormat() {
 		
 		String ch = ( (Character)WordBuilderGame.EmptyLabel).toString();
-		String returnVal = "";
-		try {
-			returnVal = validateWords.isValidFormat( ch + ch + "Ari" + ch + "s");
-		} catch (InvalidWordException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		assertEquals( "", returnVal);
 
-		returnVal = "";
-		try {
-			returnVal = validateWords.isValidFormat( ch + ch + "Ari" + ch);
-		} catch (InvalidWordException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		assertEquals( "Ari", returnVal);
+		boolean returnVal = validateWords.isValidFormat( ch + ch + "Ari" + ch + "s");
+		assertFalse( returnVal);
+
+		returnVal = validateWords.isValidFormat( ch + ch + "Ari" + ch);
+		assertTrue( returnVal);
 	}
 	
 /*

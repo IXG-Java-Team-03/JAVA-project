@@ -15,13 +15,8 @@ public class validateWords {
 	private final static String className = MethodHandles.lookup().lookupClass().getSimpleName();
 	private final static appLogger logger = new appLogger( className, null);
 
-	/**
-	 * check if the given word has a valid format - only letters
-	 */
-	public static String isValidFormat(String word) throws InvalidWordException {
-
-		logger.entering( className, "isValidFormat", word);
-
+	
+	private static String trimWord( String word) {
 		StringBuilder sbWord = new StringBuilder(word);
 		String newWord = "";
 
@@ -35,21 +30,34 @@ public class validateWords {
 		newWord = sbWord.substring(i);
 
 		// trim all empty characters after the last letter if any
-		for (i = newWord.length(); i >= 0 && newWord.charAt(i - 1) == ch; i--)
+		for (i = newWord.length()-1; i>=0 && newWord.charAt(i) == ch; i--)
 			;
 
-        newWord = newWord.substring(0, i);
+		if( i>0) {
+			newWord = newWord.substring(0, i+1);
+		}
+		return newWord;
+	}
+	
+	/**
+	 * check if the given word has a valid format - only letters
+	 */
+	public static boolean isValidFormat(String word) {
 
+		logger.entering( className, "isValidFormat", word);
+
+		char ch = CharContainer.EMPTY_CHAR;
+		
 		// check if the trimmed word is valid - without any empty character inside
-		if (newWord.length() < 3 || newWord.indexOf(ch) != -1) {
+		if (word.length() < 3 || word.indexOf(ch) != -1) {
 			logger.info( "Invalid format. Try again");
 			logger.exiting( className, "isValidFormat");
-			throw new InvalidWordException( "Invalid format. ("+ newWord +")   Try again");
+			return false;
 		} else {
 
-			logger.info("Valid Format = " + newWord);
+			logger.info("Valid Format = " + word);
 			logger.exiting( className, "isValidFormat");
-			return newWord;
+			return true;
 		}
 	}
 
@@ -63,22 +71,17 @@ public class validateWords {
 		logger.entering( className, "isValidWord", word);
 
 		// call method wordForSearch to check the validity of the word format
-		String wordForSearch = isValidFormat(word);
+		String newWord = trimWord( word);
+		boolean isValid = isValidFormat(newWord);
+		
+		if( !isValid) {
+			throw new InvalidWordException( "Invalid format. Try again");
+		}
 
-		// if empty print error
-//		if (wordForSearch == "") {
-//			logger.info( "Invalid format. Try again");
-//			logger.exiting( className, "isValidWord");
-//			throw new InvalidWordException( "Invalid format. Try again");
-//		}
-//		// return the valid word to be searched
-//		else {
+		logger.info( "The word that should be checked if valid = " + newWord);
+		logger.exiting( className, "isValidWord");
 
-			logger.info( "The word that should be checked if valid = " + wordForSearch);
-			logger.exiting( className, "isValidWord");
-
-			return wordForSearch;
-//		}
+		return newWord;
 		
 	}
 

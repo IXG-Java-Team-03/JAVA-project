@@ -64,7 +64,7 @@ public class appLogger extends Logger {
 		ch.setFormatter( new singleLineFormatter());
 		this.addHandler( ch);
 
-//		setLevel( Level.ALL);		// ----- debugging logging level
+		setLevel( Level.ALL);		// ----- debugging logging level
 	}
 
 

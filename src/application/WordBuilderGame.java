@@ -661,8 +661,10 @@ private void pickUpWord() {
 					////////////////////////////////////////////////////////////////////////////
 				}
 
-			//	validateWords.searchInArrayList(wset,wordForSearch);
+				validateWords.searchInArrayList(foundWords,wordForSearch);
+
 				logger.log( Level.INFO, "check1 {0}", event.getSource().toString());
+
 			} else if (x == resetword) {
 				logger.log( Level.INFO, "check2 {0}", event.getSource().toString());
 			} else if (x == shuffleword) {
