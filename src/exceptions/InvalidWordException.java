@@ -17,6 +17,7 @@ public class InvalidWordException extends Exception {
 	public InvalidWordException( String message) {
 		this.message = message;
 	}
+
 	
 	/**
 	 * This formats the exception in a string format

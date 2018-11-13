@@ -20,7 +20,7 @@ public class validateWords {
 	 */
 	public static String isValidFormat(String word) throws InvalidWordException {
 
-		logger.entering( className, "isValidFormat");
+		logger.entering( className, "isValidFormat", word);
 
 		StringBuilder sbWord = new StringBuilder(word);
 		String newWord = "";
@@ -44,7 +44,7 @@ public class validateWords {
 		if (newWord.length() < 3 || newWord.indexOf(ch) != -1) {
 			logger.info( "Invalid format. Try again");
 			logger.exiting( className, "isValidFormat");
-			throw new InvalidWordException( "Invalid format. Try again");
+			throw new InvalidWordException( "Invalid format. ("+ newWord +")   Try again");
 		} else {
 
 			logger.info("Valid Format = " + newWord);
@@ -60,7 +60,7 @@ public class validateWords {
 	 */
 	public static String isValidWord(String word) throws InvalidWordException {
 
-		logger.entering( className, "isValidWord");
+		logger.entering( className, "isValidWord", word);
 
 		// call method wordForSearch to check the validity of the word format
 		String wordForSearch = isValidFormat(word);
