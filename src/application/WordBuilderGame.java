@@ -10,6 +10,7 @@ import java.util.logging.Level;
 
 import com.sun.javafx.application.LauncherImpl;
 
+import exceptions.InvalidWordException;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -647,7 +648,18 @@ private void pickUpWord() {
 				//validate word - aris
 				String word = charArrayUpper.toString();
 
-				String wordForSearch = validateWords.isValidWord(word);
+				String wordForSearch;
+				try {
+					wordForSearch = validateWords.isValidWord(word);
+				}
+				catch (InvalidWordException ex) {
+					wordForSearch = "";
+					logger.throwing( className, "buttons event handler", ex);
+					
+					////////////////////////////////////////////////////////////////////////////
+					// EDW MPOREI NA PAEI ENAS DIALOG POY NA LEEI OTI H LEXH EINAI INVALID
+					////////////////////////////////////////////////////////////////////////////
+				}
 
 			//	validateWords.searchInArrayList(wset,wordForSearch);
 				logger.log( Level.INFO, "check1 {0}", event.getSource().toString());

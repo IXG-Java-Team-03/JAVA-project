@@ -2,6 +2,7 @@ package application;
 
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
+import exceptions.InvalidWordException;
 
 /**
  * Write a description of validateWords here.
@@ -17,7 +18,7 @@ public class validateWords {
 	/**
 	 * check if the given word has a valid format - only letters
 	 */
-	public static String isValidFormat(String word) {
+	public static String isValidFormat(String word) throws InvalidWordException {
 
 		logger.entering( className, "isValidFormat");
 
@@ -43,7 +44,7 @@ public class validateWords {
 		if (newWord.length() < 3 || newWord.indexOf(ch) != -1) {
 			logger.info( "Invalid format. Try again");
 			logger.exiting( className, "isValidFormat");
-			return "";
+			throw new InvalidWordException( "Invalid format. Try again");
 		} else {
 
 			logger.info("Valid Format = " + newWord);
@@ -57,7 +58,7 @@ public class validateWords {
 	/**
 	 * check if the word is valid to be searched in the ArrayList
 	 */
-	public static String isValidWord(String word) {
+	public static String isValidWord(String word) throws InvalidWordException {
 
 		logger.entering( className, "isValidWord");
 
@@ -67,7 +68,8 @@ public class validateWords {
 		// if empty print error
 		if (wordForSearch == "") {
 			logger.info( "Invalid format. Try again");
-
+			logger.exiting( className, "isValidWord");
+			throw new InvalidWordException( "Invalid format. Try again");
 		}
 		// return the valid word to be searched
 		else {
@@ -77,8 +79,7 @@ public class validateWords {
 
 			return wordForSearch;
 		}
-		logger.exiting( className, "isValidWord");
-		return "";
+		
 	}
 
 
