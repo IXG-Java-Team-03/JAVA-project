@@ -66,19 +66,19 @@ public class validateWords {
 		String wordForSearch = isValidFormat(word);
 
 		// if empty print error
-		if (wordForSearch == "") {
-			logger.info( "Invalid format. Try again");
-			logger.exiting( className, "isValidWord");
-			throw new InvalidWordException( "Invalid format. Try again");
-		}
-		// return the valid word to be searched
-		else {
+//		if (wordForSearch == "") {
+//			logger.info( "Invalid format. Try again");
+//			logger.exiting( className, "isValidWord");
+//			throw new InvalidWordException( "Invalid format. Try again");
+//		}
+//		// return the valid word to be searched
+//		else {
 
 			logger.info( "The word that should be checked if valid = " + wordForSearch);
 			logger.exiting( className, "isValidWord");
 
 			return wordForSearch;
-		}
+//		}
 		
 	}
 
