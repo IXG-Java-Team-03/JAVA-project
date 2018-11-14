@@ -94,12 +94,20 @@ public class validateWords {
 	public static void searchInArrayList(ArrayList<String> wordsDB, String wordForSearch) {
 
 		if (wordsDB.contains(wordForSearch)) {
+			
+			logger.info( "Word found");
 
-			// do actions
+			//remove word from the array list. Not to be searched again
+			wordsDB.remove(wordForSearch);
+			
+			//do all the appropriate updates
+			GameMethods.updateScore();
+			GameMethods.updateAvailablePositions();
+			GameMethods.updateLevel();
 
 		} else {
 
-			logger.info( "Invalid Word, Not in the arrayList. Try with another word");
+			logger.info( "Invalid Word, Not in the arrayList or already found. Try with another word");
 
 		}
 	}
