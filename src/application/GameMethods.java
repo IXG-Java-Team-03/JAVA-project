@@ -9,8 +9,8 @@ package application;
  */
 public class GameMethods {
 	
-	public static void updateScore() {
-		;
+	public static void updateScore( String wordFound) {
+		WordBuilderGame.addScore( wordFound.length());
 	}
 	
 	

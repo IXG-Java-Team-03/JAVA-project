@@ -103,6 +103,9 @@ public class WordBuilderGame extends Application {
 	private GridPane gamePane;
 
 	private ArrayList<Button> availableLetters, availablePositions;
+	
+	private static WordBuilderGame selfReference;
+	
 
 	/**
 	 * organized words in arraylist of different sizes
@@ -324,6 +327,8 @@ private void pickUpWord() {
 		CurrentLevel = 0;
 		Score = 0;
 
+		selfReference = this;
+		
 		startGame.setId("default-button");
 		quitGame.setId("default-button");
 
@@ -552,7 +557,14 @@ private void pickUpWord() {
 		logger.exiting( className, "SetGameLevel");
 	}
 
-	private void SetScore() {
+	
+	public static void addScore( int value) {
+		Score += value;
+		selfReference.SetScore();
+	}
+	
+	
+	private void SetScore( ) {
 
 		logger.entering( className, "SetScore");
 
@@ -651,17 +663,18 @@ private void pickUpWord() {
 				String wordForSearch;
 				try {
 					wordForSearch = validateWords.isValidWord(word);
+					
+					validateWords.searchInArrayList(foundWords,wordForSearch);
+					
 				}
 				catch (InvalidWordException ex) {
 					wordForSearch = "";
 					logger.throwing( className, "buttons event handler", ex);
 					
 					////////////////////////////////////////////////////////////////////////////
-					// EDW MPOREI NA PAEI ENAS DIALOG POY NA LEEI OTI H LEXH EINAI INVALID
+					// EDW MPOREI NA FLASH KOKKINO STA BUTTONS
 					////////////////////////////////////////////////////////////////////////////
 				}
-
-				validateWords.searchInArrayList(foundWords,wordForSearch);
 
 				logger.log( Level.INFO, "check1 {0}", event.getSource().toString());
 

@@ -101,7 +101,7 @@ public class validateWords {
 			wordsDB.remove(wordForSearch);
 			
 			//do all the appropriate updates
-			GameMethods.updateScore();
+			GameMethods.updateScore( wordForSearch);
 			GameMethods.updateAvailablePositions();
 			GameMethods.updateLevel();
 
