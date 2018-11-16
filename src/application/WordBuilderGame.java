@@ -73,6 +73,8 @@ public class WordBuilderGame extends Application {
 	private final static int MAXCOLS = 15;
 	
 	private final static int NOFDEFAULTWORDSCURLEVEL = 4;
+	
+	private Label scoreLabel;
 
 
 	private String pickedWord;
@@ -325,6 +327,7 @@ private void pickUpWord() {
 		availableLetters = new ArrayList<Button>();
 		availablePositions = new ArrayList<Button>();
 		CurrentLevel = 0;
+		
 		Score = 0;
 
 		selfReference = this;
@@ -334,6 +337,9 @@ private void pickUpWord() {
 
 		startGame.setPrefWidth(200.0);
 		quitGame.setPrefWidth(200.0);
+		
+		//This is the Score
+		scoreLabel = new Label();
 
 		logger.exiting( className, "WordBuilderGame constructor");
 	}
@@ -447,7 +453,7 @@ private void pickUpWord() {
 			maxsize = foundWords.size();
 		else
 			maxsize = numofWordstoFound;
-			System.out.println("SWSTO");
+			
 		
 		
 		
@@ -482,6 +488,7 @@ private void pickUpWord() {
 		gamePane.add(WlistLabel, 0, 1, 2, 1);
 
 		SetGameLevel();
+		SetScore();
 
 		// on the left we will need a list of words to be found
 		ListView<String> wordsList = new ListView<String>();
@@ -506,7 +513,7 @@ private void pickUpWord() {
 
 		gamePane.add(hbtimer, MAXCOLS - 4, 2, 2, 1); // spans 2 columns and 2 rows (the last two elements)
 
-		SetScore();
+		SetScoreLabelData();
 
 		createLetterSeqBut(pickedWord);
 
@@ -563,8 +570,13 @@ private void pickUpWord() {
 		selfReference.SetScore();
 	}
 	
+	public void SetScore() {
+		
+		scoreLabel.setText(Integer.toString(Score));
+	}
 	
-	private void SetScore( ) {
+	
+	private void SetScoreLabelData( ) {
 
 		logger.entering( className, "SetScore");
 
@@ -572,8 +584,8 @@ private void pickUpWord() {
 		scoreSlogan.setTextFill(Color.WHITE);
 		scoreSlogan.setStyle("-fx-font-size:28px;");
 
-		Label scoreLabel = new Label();
-		scoreLabel.setText(Integer.toString(Score));
+		//Label scoreLabel = new Label();
+		
 		scoreLabel.setTextFill(Color.BLUE);
 		scoreLabel.setStyle("-fx-font-size:28px;");
 
