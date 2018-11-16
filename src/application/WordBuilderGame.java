@@ -104,7 +104,7 @@ public class WordBuilderGame extends Application {
 
 	private ArrayList<Button> availableLetters, availablePositions;
 	
-	private static WordBuilderGame selfReference;
+	public static WordBuilderGame selfReference;
 	
 
 	/**
@@ -117,17 +117,17 @@ public class WordBuilderGame extends Application {
 	/**
 	 * Container for the upper row
 	 */
-	private CharContainer charArrayUpper = new CharContainer();
+	public CharContainer charArrayUpper = new CharContainer();
 	/**
 	 * Container for the lower row
 	 */
-	private CharContainer charArrayLower = new CharContainer();
+	public CharContainer charArrayLower = new CharContainer();
 	/**
 	 * Char indicating an empty position
 	 */
 	public static final char EmptyLabel = '_';
 
-	private String initialLetters;
+	public String initialLetters;
 
 	/**
 	 *  variable for the timer value

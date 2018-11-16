@@ -100,6 +100,11 @@ public class validateWords {
 			//remove word from the array list. Not to be searched again
 			wordsDB.remove(wordForSearch);
 			
+			// if valid word move all letters from ArrayUpper to ArrayLower
+			WordBuilderGame.selfReference.charArrayLower.InitLetters(WordBuilderGame.selfReference.initialLetters);
+			WordBuilderGame.selfReference.charArrayUpper.InitLetters("");
+			WordBuilderGame.selfReference.updateButtons();
+			
 			//do all the appropriate updates
 			GameMethods.updateScore( wordForSearch);
 			GameMethods.updateAvailablePositions();
