@@ -53,16 +53,16 @@ public class WordSetTest {
 			Method method = obj1.getClass().getDeclaredMethod( "isValid", char.class, String.class);
 			method.setAccessible(true);
 			
-			result = (boolean) method.invoke( obj1, 'Á', langGR);
+			result = (boolean) method.invoke( obj1, 'Î‘', langGR);
 			assertTrue( result);
 
-			result = (boolean) method.invoke( obj1, 'Â', langGR);
+			result = (boolean) method.invoke( obj1, 'Î’', langGR);
 			assertTrue( result);
 
-			result = (boolean) method.invoke( obj1, 'Ã', langGR);
+			result = (boolean) method.invoke( obj1, 'Î“', langGR);
 			assertTrue( result);
 
-			result = (boolean) method.invoke( obj1, 'ã', langGR);
+			result = (boolean) method.invoke( obj1, 'Î³', langGR);
 			assertTrue( result);
 
 			result = (boolean) method.invoke( obj1, 'C', langGR);
@@ -74,10 +74,10 @@ public class WordSetTest {
 			result = (boolean) method.invoke( obj1, 'C', "FR");
 			assertFalse( result);
 
-			result = (boolean) method.invoke( obj1, 'Ù', langGR);
+			result = (boolean) method.invoke( obj1, 'Î©', langGR);
 			assertTrue( result);
 
-			result = (boolean) method.invoke( obj1, 'Ö', langGR);
+			result = (boolean) method.invoke( obj1, 'Î¦', langGR);
 			assertTrue( result);
 
 		} catch (NoSuchMethodException | SecurityException e) {
