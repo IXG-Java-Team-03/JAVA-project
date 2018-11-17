@@ -259,7 +259,7 @@ public class CharContainerTest01 {
 
 		int length = 0;
 		try {
-			Method method = obj1.getClass().getDeclaredMethod( "getLength");
+			Method method = obj1.getClass().getDeclaredMethod( "getHighestIndex");
 			method.setAccessible(true);
 			length = (int) method.invoke( obj1);
 
@@ -275,7 +275,7 @@ public class CharContainerTest01 {
 		obj1.popLetter(4);
 		length = -2;
 		try {
-			Method method = obj1.getClass().getDeclaredMethod( "getLength");
+			Method method = obj1.getClass().getDeclaredMethod( "getHighestIndex");
 			method.setAccessible(true);
 			length = (int) method.invoke( obj1);
 
@@ -289,7 +289,7 @@ public class CharContainerTest01 {
 		obj1.removeLetter(2);
 		length = -2;
 		try {
-			Method method = obj1.getClass().getDeclaredMethod( "getLength");
+			Method method = obj1.getClass().getDeclaredMethod( "getHighestIndex");
 			method.setAccessible(true);
 			length = (int) method.invoke( obj1);
 

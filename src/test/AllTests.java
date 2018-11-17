@@ -8,7 +8,8 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @SuiteClasses({ 
 	CharContainerTest01.class, 
-	WordSetTest.class 
+	WordSetTest.class,
+	testValidateWords.class
 })
 
 public class AllTests {
