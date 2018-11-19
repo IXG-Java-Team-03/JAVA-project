@@ -29,14 +29,13 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; 
 
 [Files]
-Source: "C:\Users\nkot\Documents\eclipse-workspace\binaries\WordGame\JAVA-project.cmd"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\nkot\Documents\eclipse-workspace\binaries\WordGame\JAVA-project.jar"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\nkot\Documents\eclipse-workspace\binaries\WordGame\JAVA-project.jnlp"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\nkot\Documents\eclipse-workspace\binaries\WordGame\wooden.jpg"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\nkot\Documents\eclipse-workspace\binaries\WordGame\wooden1.jpg"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\nkot\Documents\eclipse-workspace\binaries\WordGame\libs\*"; DestDir: "{app}\libs"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Users\nkot\Documents\eclipse-workspace\binaries\WordGame\res\*"; DestDir: "{app}\res"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Users\nkot\Documents\eclipse-workspace\binaries\WordGame\words\*"; DestDir: "{app}\words"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\nkot\Documents\eclipse-workspace\JAVA-project\packager\JAVA-project.cmd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\nkot\Documents\eclipse-workspace\binaries\WordGame\dist\JAVA-project.jar"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\nkot\Documents\eclipse-workspace\JAVA-project\wooden.jpg"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\nkot\Documents\eclipse-workspace\JAVA-project\wooden1.jpg"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\nkot\Documents\eclipse-workspace\binaries\WordGame\dist\libs\*"; DestDir: "{app}\libs"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\nkot\Documents\eclipse-workspace\JAVA-project\src\res\*"; DestDir: "{app}\res"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\nkot\Documents\eclipse-workspace\JAVA-project\words\*"; DestDir: "{app}\words"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
