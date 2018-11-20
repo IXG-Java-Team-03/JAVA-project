@@ -170,8 +170,10 @@ public class WordBuilderGame extends Application implements timerCallback {
 			timerLabel.setStyle("-fx-font-size:28px;");
 			timerLabel.setText( String.valueOf(STARTTIME));
 			
+
 			timer.startTimer( STARTTIME,			// length of timer 
 									  1, 			// interval = 1 second
+									  0,			// timer number (first timer)
 									  this);
 
 			HBox hb = new HBox(20);
@@ -814,8 +816,9 @@ private void pickUpWord() {
 	}
 
 	@Override
-	public void clockTick(int currentValue, int timeoutValue) {
+	public void clockTick(int currentValue, int timeoutValue, int timerNumber) {
 		// TODO Auto-generated method stub
+		
 		Platform.runLater(new Runnable() {
 		    @Override
 		    public void run() {
@@ -825,7 +828,7 @@ private void pickUpWord() {
 	}
 
 	@Override
-	public void clockExpired() {
+	public void clockExpired( int timerNumber) {
 		// TODO Auto-generated method stub
 		Platform.runLater(new Runnable() {
 		    @Override
@@ -837,7 +840,7 @@ private void pickUpWord() {
 	}
 
 	@Override
-	public void clockStopped(int currentValue, int timeoutValue) {
+	public void clockStopped(int currentValue, int timeoutValue, int timerNumber) {
 		// TODO Auto-generated method stub
 		
 	}
