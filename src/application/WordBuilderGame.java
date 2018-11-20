@@ -173,7 +173,6 @@ public class WordBuilderGame extends Application implements timerCallback {
 
 			timer.startTimer( STARTTIME,			// length of timer 
 									  1, 			// interval = 1 second
-									  0,			// timer number (first timer)
 									  this);
 
 			HBox hb = new HBox(20);

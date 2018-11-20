@@ -115,6 +115,21 @@ public class GameTimer {
 		return false;		// timer is not active
 	}
 
+
+	
+	
+	/**
+	 * Initiate a new clock if there is none already running
+	 * @param timeout
+	 * @param interval
+	 * @param callbackClass
+	 * @return true if the timer is started - false if not
+	 */
+	public boolean startTimer( int timeout, int interval, timerCallback callbackClass) {
+		return startTimer( timeout, interval, 0, callbackClass);
+	}
+	
+	
 	
 	
 	
