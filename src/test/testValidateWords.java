@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import application.CharContainer;
 import application.validateWords;
-import exceptions.InvalidWordException;
+import helper.InvalidWordException;
 
 
 

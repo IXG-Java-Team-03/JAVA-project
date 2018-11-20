@@ -1,7 +1,7 @@
 /**
  * 
  */
-package exceptions;
+package helper;
 
 /**
  * @author nkot

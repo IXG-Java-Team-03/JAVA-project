@@ -10,7 +10,9 @@ import java.util.logging.Level;
 
 import com.sun.javafx.application.LauncherImpl;
 
-import exceptions.InvalidWordException;
+import helper.InvalidWordException;
+import helper.gameclock.GameTimer;
+import helper.gameclock.timerCallback;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -54,7 +56,7 @@ import javafx.util.Duration;
  * @author soco
  *
  */
-public class WordBuilderGame extends Application {
+public class WordBuilderGame extends Application implements timerCallback {
 
 	private final static String className = MethodHandles.lookup().lookupClass().getSimpleName();
 	private final static appLogger logger = new appLogger( className, null);
@@ -84,6 +86,13 @@ public class WordBuilderGame extends Application {
 	 */
 	
 	private ArrayList<String> foundWords;
+	
+	
+	/**
+	 * Instance of a timer object
+	 */
+	private final GameTimer timer = new GameTimer();
+	private Label timerLabel = null;
 	
 	
 
@@ -150,74 +159,20 @@ public class WordBuilderGame extends Application {
 
 		if (STARTTIME != 0) {
 
-			AnimationTimer timer;
-
-
 
 			Label timeSlogan = new Label("Time");
 			timeSlogan.setTextFill(Color.WHITE);
 			timeSlogan.setStyle("-fx-font-size:28px;");
 
 
-			Timeline timeline = null;
-			Label timerLabel = new Label();
-			IntegerProperty timeSeconds = new SimpleIntegerProperty(STARTTIME * 100);
-
-			timerLabel.textProperty().bind(timeSeconds.divide(100).asString());
+			timerLabel = new Label();
 			timerLabel.setTextFill(Color.GREEN);
 			timerLabel.setStyle("-fx-font-size:28px;");
-
-
-
-			timeSeconds.set((STARTTIME + 1) * 100);
-			timeline = new Timeline();
-			timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(STARTTIME + 1), new KeyValue(timeSeconds, 0)));
-
-
-
-
-
-
-			//You can add a specific action when each frame is started.
-	        timer = new AnimationTimer() {
-
-	        	long starttime = 0L;
-	        	long currentabstime=0;
-
-	            @Override
-	            public void handle(long l) {
-
-	            	if(starttime==0)
-	            		starttime=l;
-	            	else
-	            	{
-	            		currentabstime=l-starttime;
-	            	}
-
-
-	            	if(TimeUnit.SECONDS.convert(currentabstime, TimeUnit.NANOSECONDS)==(STARTTIME-(STARTTIME/2)))
-	            		timerLabel.setTextFill(Color.YELLOW);
-	            	else if(STARTTIME > 10 && (TimeUnit.SECONDS.convert(currentabstime, TimeUnit.NANOSECONDS)==STARTTIME-5))
-	            		timerLabel.setTextFill(Color.RED);
-
-	            }
-	        };
-
-
-	        //this part of code will perform some actions when
-			//the timer expires
-            timeline.setOnFinished(event -> {
-				timer.stop(); //stop Animation timer
-
-
-
-			});
-
-
-			timeline.playFromStart();
-			timer.start();
-
-
+			timerLabel.setText( String.valueOf(STARTTIME));
+			
+			timer.startTimer( STARTTIME,			// length of timer 
+									  1, 			// interval = 1 second
+									  this);
 
 			HBox hb = new HBox(20);
 			hb.setAlignment(Pos.BASELINE_LEFT);
@@ -856,6 +811,35 @@ private void pickUpWord() {
 		return btn;
 
 
+	}
+
+	@Override
+	public void clockTick(int currentValue, int timeoutValue) {
+		// TODO Auto-generated method stub
+		Platform.runLater(new Runnable() {
+		    @Override
+		    public void run() {
+		    	timerLabel.setText( String.valueOf( timeoutValue-currentValue));
+		    }
+		});
+	}
+
+	@Override
+	public void clockExpired() {
+		// TODO Auto-generated method stub
+		Platform.runLater(new Runnable() {
+		    @Override
+		    public void run() {
+		    	timerLabel.setText( String.valueOf( 0));
+		    }
+		});
+		
+	}
+
+	@Override
+	public void clockStopped(int currentValue, int timeoutValue) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

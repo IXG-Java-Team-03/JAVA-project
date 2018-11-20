@@ -2,7 +2,8 @@ package application;
 
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
-import exceptions.InvalidWordException;
+
+import helper.InvalidWordException;
 
 /**
  * Write a description of validateWords here.
