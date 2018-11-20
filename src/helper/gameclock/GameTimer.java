@@ -24,7 +24,7 @@ public class GameTimer {
 		private int counter;
 		private boolean timerRunning = false;
 		private final timerCallback callbackClass;
-		private int timerNumber;
+		private final int timerNumber;
 		
 		GameTimerThread( int timeout, int interval, int timerNumber, timerCallback callbackClass) {
 			counter = 0;
@@ -39,14 +39,17 @@ public class GameTimer {
 			
 			while( timerRunning) {
 				try {					
-					Thread.sleep( interval * 1000 );         // seconds to milliseconds
-					checkClock();
+					Thread.sleep( interval * 1000 );        // seconds to milliseconds
+					counter++;								// increase timer
+					if( counter >= timeoutValue) {
+						timerRunning = false;
+						callbackClass.clockExpired( timerNumber);
+						break;
+					}
 					callbackClass.clockTick(counter, timeoutValue, timerNumber);
 				} catch (InterruptedException e) {
-					timerRunning = false;
 				}
 			}
-			callbackClass.clockExpired( timerNumber);
 			handleTimerExpiry( this);
 		}
 		
@@ -60,19 +63,7 @@ public class GameTimer {
 			callbackClass.clockStopped(counter, timeoutValue, timerNumber);
 		}
 		
-		
-		
-		/**
-		 * Increase timer and check if this clock has reached the timeout value.
-		 * @throws InterruptedException
-		 */
-		private void checkClock() throws InterruptedException {
-			counter++;
-			if( counter >= timeoutValue) {
-				throw new InterruptedException();
-			}
-		}
-		
+
 		
 
 		/**
@@ -166,7 +157,6 @@ public class GameTimer {
 			if( timer.isActive( timerNumber, callbackClass)) {
 				synchronized(this) {
 					timer.StopTimer();
-					handleTimerExpiry( timer);
 				}
 			}
 		}
@@ -182,7 +172,6 @@ public class GameTimer {
 		synchronized(this) {
 			for( GameTimerThread timer : timerList) {
 				timer.StopTimer();
-				handleTimerExpiry( timer);
 			}
 		}
 	}
