@@ -68,7 +68,7 @@ public class GameTimer {
 		 */
 		private void checkClock() throws InterruptedException {
 			counter++;
-			if( counter == timeoutValue) {
+			if( counter >= timeoutValue) {
 				throw new InterruptedException();
 			}
 		}
