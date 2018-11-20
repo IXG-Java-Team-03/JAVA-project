@@ -564,12 +564,19 @@ private void pickUpWord() {
 		logger.exiting( className, "SetGameLevel");
 	}
 
-	
+	/**
+	 * @author Aris
+	 * @param value
+	 */
 	public static void addScore( int value) {
 		Score += value;
 		selfReference.SetScore();
 	}
 	
+	
+	/**
+	 * @author Aris
+	 */
 	public void SetScore() {
 		
 		scoreLabel.setText(Integer.toString(Score));
@@ -599,6 +606,11 @@ private void pickUpWord() {
 		logger.exiting( className, "SetScore");
 	}
 
+	
+	
+	/**
+	 * @author Nikos
+	 */
 	void updateButtons() {
 
 		logger.entering( className, "updateButtons");
@@ -636,6 +648,9 @@ private void pickUpWord() {
 
 
 
+	/**
+	 * @author Soco + others
+	 */
 	final EventHandler<ActionEvent> myHandler = new EventHandler<ActionEvent>() {
 
 		@Override
@@ -691,7 +706,8 @@ private void pickUpWord() {
 				logger.log( Level.INFO, "check1 {0}", event.getSource().toString());
 
 			} else if (x == resetword) {
-				logger.log( Level.INFO, "check2 {0}", event.getSource().toString());
+				logger.log( Level.INFO, "Reset word {0}", event.getSource().toString());
+
 			} else if (x == shuffleword) {
 				charArrayLower.InitLetters(initialLetters);
 				charArrayLower.ShuffleContainer();
