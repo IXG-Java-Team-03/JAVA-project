@@ -182,6 +182,7 @@ public class GameTimer {
 		synchronized(this) {
 			for( GameTimerThread timer : timerList) {
 				timer.StopTimer();
+				handleTimerExpiry( timer);
 			}
 		}
 	}
