@@ -9,7 +9,8 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({ 
 	CharContainerTest01.class, 
 	WordSetTest.class,
-	testValidateWords.class
+	testValidateWords.class,
+	testGameClock.class
 })
 
 public class AllTests {

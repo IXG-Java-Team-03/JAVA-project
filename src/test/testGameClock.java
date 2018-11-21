@@ -15,7 +15,7 @@ public class testGameClock {
 	
 	static GameTimer timer;
 	
-	static final int NUMTESTS = 10;
+	static final int NUMTESTS = 20;
 	
 	static int[] count1 = new int[NUMTESTS];
 	static boolean[] isActive = new boolean[NUMTESTS];
@@ -139,5 +139,58 @@ public class testGameClock {
 			assertTrue( true);
 		}
 	}
+	
+	
+	@Test
+	public void test03() {
 
+		handler1 h = new handler1();
+		
+		boolean result1 = timer.startTimer( 10, 1, h);
+		try { Thread.sleep(100); } catch (InterruptedException e) {}
+		
+		boolean result2 = timer.startTimer( 10, 1, h);
+		try { Thread.sleep(100); } catch (InterruptedException e) {}
+		
+		boolean result3 = timer.startTimer( 10, 1, 1, h);
+		try { Thread.sleep(100); } catch (InterruptedException e) {}
+		
+		handler1 h2 = new handler1();
+		boolean result4 = timer.startTimer( 10, 1, h2);
+		try { Thread.sleep(100); } catch (InterruptedException e) {}
+
+		assertTrue(  result1);
+		assertFalse( result2);
+		assertTrue(  result3);
+		assertTrue(  result4);
+		
+		try { Thread.sleep(100); } catch (InterruptedException e) {}
+		assertEquals( 3, timer.getNumberOfActiveTimers());
+		
+		timer.stopTimer( 0, h);
+		
+		try { Thread.sleep(100); } catch (InterruptedException e) {}
+		assertEquals( 2, timer.getNumberOfActiveTimers());
+		
+		timer.stopTimer( 0, h);
+		
+		try { Thread.sleep(100); } catch (InterruptedException e) {}
+		assertEquals( 2, timer.getNumberOfActiveTimers());
+		
+		timer.stopAllTimers();
+		
+		try { Thread.sleep(100); } catch (InterruptedException e) {}
+		assertEquals( 0, timer.getNumberOfActiveTimers());
+		
+		timer.stopAllTimers();
+		
+		try { Thread.sleep(100); } catch (InterruptedException e) {}
+		assertEquals( 0, timer.getNumberOfActiveTimers());
+		
+		timer.stopTimer( 0, h);
+		
+		try { Thread.sleep(100); } catch (InterruptedException e) {}
+		assertEquals( 0, timer.getNumberOfActiveTimers());
+	}
+	
 }
