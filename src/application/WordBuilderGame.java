@@ -301,7 +301,6 @@ private void pickUpWord() {
 	}
 	
 	
-	
 
 	@Override
 	public void init() throws Exception {
@@ -365,6 +364,10 @@ private void pickUpWord() {
 
 		handleButtonAction(startGame);
 		handleButtonAction(quitGame);
+
+		primaryStage.setOnCloseRequest(event -> {
+			timer.stopAllTimers();
+		});
 
 		logger.exiting( className, "start");
 	}

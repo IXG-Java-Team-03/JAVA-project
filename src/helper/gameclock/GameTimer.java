@@ -177,6 +177,7 @@ public class GameTimer {
 		synchronized( selfReference) {
 			GameTimerThread timer = new GameTimerThread( timeout, interval, timerNumber, callbackClass);
 			timerList.add( timer);
+			timer.setName( "Clock-" + timeout + "s-"+ timerNumber + "-" + callbackClass.hashCode());
 			timer.start();
 		}
 		return true;		// timer started
