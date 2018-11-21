@@ -86,6 +86,7 @@ public class testGameClock {
 	public void tearDown() throws Exception {
 	}
 
+	
 	@Test
 	public void test01() {
 		
@@ -113,6 +114,8 @@ public class testGameClock {
 		}
 	}
 
+	
+	
 	@Test
 	public void test02() {
 		
@@ -191,5 +194,42 @@ public class testGameClock {
 		try { Thread.sleep(100); } catch (InterruptedException e) {}
 		assertEquals( 0, timer.getNumberOfActiveTimers());
 	}
+	
+	
+	@Test
+	public void test04() {
+
+		handler1 h = new handler1();
+
+		boolean result1 = timer.startTimer( 10, 1, h);
+
+		try { Thread.sleep(1100); } catch (InterruptedException e) {}
+		assertEquals( 1, count1[0]);
+
+		try { Thread.sleep(1100); } catch (InterruptedException e) {}
+		assertEquals( 2, count1[0]);
+		
+		timer.pauseTimer( 0, h);
+
+		try { Thread.sleep(2100); } catch (InterruptedException e) {}
+		assertEquals( 2, count1[0]);
+
+		try { Thread.sleep(2100); } catch (InterruptedException e) {}
+		assertEquals( 2, count1[0]);
+
+		timer.restartTimer( 0, h);
+
+		try { Thread.sleep(1100); } catch (InterruptedException e) {}
+		assertEquals( 3, count1[0]);
+
+		try { Thread.sleep(1100); } catch (InterruptedException e) {}
+		assertEquals( 4, count1[0]);
+		
+		try { Thread.sleep(8600); } catch (InterruptedException e) {}
+		assertEquals( 10, count1[0]);
+		
+		assertEquals( 0, timer.getNumberOfActiveTimers());
+	}
+	
 	
 }

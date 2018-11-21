@@ -23,6 +23,8 @@ public class GameTimer {
 		private final int timeoutValue;
 		private final int interval;
 		private boolean timerRunning = false;
+		private boolean timerPaused = false;
+		private boolean recalculate = false;
 		private final timerCallback caller;
 		private final int timerNumber;
 		private int counter = 0;
@@ -44,15 +46,29 @@ public class GameTimer {
 		public void run() {
 			
 			timerRunning = true;
+			int intervalCounter		= 1;
 			long startTime          = System.currentTimeMillis();
 			long CalculatedTimeout  = startTime + timeoutValue*interval*1000;
 			long CalculatedInterval = startTime + interval*1000;
-
+			
 			while( timerRunning) {
 				
 				try {
 					Thread.sleep( HEARTBEAT );
 				} catch (InterruptedException e) {}
+				
+				
+				if( timerPaused) {
+					continue;
+				}
+				
+				if( recalculate) {
+					recalculate			= false;
+					intervalCounter		= 1;
+					startTime			= System.currentTimeMillis();
+					CalculatedTimeout	= startTime + (timeoutValue-counter)*interval*1000;
+					CalculatedInterval	= startTime + interval*1000;
+				}
 				
 				long time = System.currentTimeMillis();	
 				if( timerRunning && time >= CalculatedTimeout) {
@@ -62,7 +78,8 @@ public class GameTimer {
 				}
 				if( timerRunning && time >= CalculatedInterval) {
 					counter++;
-					CalculatedInterval = startTime + (counter+1)*interval*1000;
+					intervalCounter++;
+					CalculatedInterval = startTime + intervalCounter*interval*1000;
 					caller.clockTick( counter, timeoutValue, timerNumber);
 				}
 			}
@@ -92,7 +109,32 @@ public class GameTimer {
 					callbackClass == this.caller &&
 					timerRunning;
 		}
+		
+		
+		
+		
+		/**
+		 * Pause the active timer
+		 */
+		public void PauseTimerThread() {
+			timerPaused = true;
+		}
+		
+		
+		/**
+		 * Pause the active timer
+		 */
+		public void RestartTimerThread() {
+			recalculate = true;
+			timerPaused = false;
+		}
+		
+		
+		
 	}
+	
+	
+	
 	
 	//=================================================================================
 	
@@ -185,6 +227,52 @@ public class GameTimer {
 		}
 		return false;
 	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * Stop the indicated clock 
+	 * @param timerNumber
+	 * @param callbackClass
+	 */
+	public boolean pauseTimer( int timerNumber, timerCallback callbackClass) {
+		for( GameTimerThread timer : timerList) {
+			if( timer.isActiveThread( timerNumber, callbackClass)) {
+				timer.PauseTimerThread();
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Stop the indicated clock 
+	 * @param timerNumber
+	 * @param callbackClass
+	 */
+	public boolean restartTimer( int timerNumber, timerCallback callbackClass) {
+		for( GameTimerThread timer : timerList) {
+			if( timer.isActiveThread( timerNumber, callbackClass)) {
+				timer.RestartTimerThread();
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	
+	
 	
 	
 	
