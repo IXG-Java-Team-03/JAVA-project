@@ -219,14 +219,32 @@ public class testGameClock {
 
 		timer.restartTimer( 0, h);
 
-		try { Thread.sleep(1100); } catch (InterruptedException e) {}
+		try { Thread.sleep(1500); } catch (InterruptedException e) {}
 		assertEquals( 3, count1[0]);
 
 		try { Thread.sleep(1100); } catch (InterruptedException e) {}
 		assertEquals( 4, count1[0]);
 		
-		try { Thread.sleep(8600); } catch (InterruptedException e) {}
+		timer.pauseTimer( 0, h);
+
+		try { Thread.sleep(2100); } catch (InterruptedException e) {}
+		assertEquals( 4, count1[0]);
+
+		try { Thread.sleep(2100); } catch (InterruptedException e) {}
+		assertEquals( 4, count1[0]);
+
+		timer.restartTimer( 0, h);
+
+		try { Thread.sleep(1100); } catch (InterruptedException e) {}
+		assertEquals( 5, count1[0]);
+
+		try { Thread.sleep(5600); } catch (InterruptedException e) {}
 		assertEquals( 10, count1[0]);
+		
+		result1 = timer.restartTimer( 0, h);
+		assertFalse( result1);
+		result1 = timer.pauseTimer( 0, h);
+		assertFalse( result1);
 		
 		assertEquals( 0, timer.getNumberOfActiveTimers());
 	}
