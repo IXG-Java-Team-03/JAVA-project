@@ -12,11 +12,16 @@ import java.util.ArrayList;
 public class GameTimer {
 	
 	private final ArrayList<GameTimerThread> timerList;
+	private final GameTimer selfReference;
 	
 	public GameTimer() {
 		timerList = new ArrayList<GameTimerThread>();
+		selfReference = this;
 	}
 
+	
+	
+	
 	private class GameTimerThread extends Thread {
 		
 		private final int timeoutValue;
@@ -26,6 +31,12 @@ public class GameTimer {
 		private final timerCallback callbackClass;
 		private final int timerNumber;
 		
+		private final static int HEARTBEAT = 70;
+		
+		private long CalculatedTimeout;
+		private long CalculatedInterval;
+		
+		
 		GameTimerThread( int timeout, int interval, int timerNumber, timerCallback callbackClass) {
 			counter = 0;
 			timeoutValue = Math.max( 0, timeout);           // zero is the minimum value
@@ -34,23 +45,47 @@ public class GameTimer {
 			this.timerNumber = timerNumber;
 		}
 		
+		
+		/**
+		 * Thread run method
+		 */
 		public void run() {
-			timerRunning = true;
 			
+			timerRunning = true;
+			long startTime     = System.currentTimeMillis();
+			CalculatedTimeout  = startTime + timeoutValue*interval*1000;
+			CalculatedInterval = startTime + interval*1000;
+
 			while( timerRunning) {
-				try {					
-					Thread.sleep( interval * 1000 );        // seconds to milliseconds
-					counter++;								// increase timer
-					if( counter >= timeoutValue) {
-						timerRunning = false;
-						callbackClass.clockExpired( timerNumber);
-						break;
+				
+				try {
+					Thread.sleep( HEARTBEAT );
+				} catch (InterruptedException e) {}
+				
+				boolean flag1 = false;
+				boolean flag2 = false;
+				
+				synchronized( selfReference) {
+					long time = System.currentTimeMillis();	
+					if( time >= CalculatedInterval) {
+						counter++;
+						flag1 = true;
+						CalculatedInterval = startTime + (counter+1)*interval*1000;
 					}
-					callbackClass.clockTick(counter, timeoutValue, timerNumber);
-				} catch (InterruptedException e) {
+					if( time >= CalculatedTimeout) {
+						timerRunning = false;
+						flag2 = true;
+						flag1 = false;
+					}
+				}
+				if( flag1) {
+					callbackClass.clockTick( counter, timeoutValue, timerNumber);
+				}
+				if( flag2) {
+					callbackClass.clockExpired( timeoutValue, timeoutValue, timerNumber);
 				}
 			}
-			handleTimerExpiry( this);
+			removeFromList( this);
 		}
 		
 		
@@ -58,12 +93,11 @@ public class GameTimer {
 		/**
 		 * Stop timer for this thread
 		 */
-		private void StopTimer() {
+		private void StopTimerThread() {
 			timerRunning = false;
 			callbackClass.clockStopped(counter, timeoutValue, timerNumber);
 		}
 		
-
 		
 
 		/**
@@ -73,7 +107,9 @@ public class GameTimer {
 		 * @return true if the clock is running
 		 */
 		private boolean isActive( int timerNumber, timerCallback callbackClass) {
-			return timerNumber == this.timerNumber && callbackClass == this.callbackClass;
+			return  timerNumber == this.timerNumber && 
+					callbackClass == this.callbackClass &&
+					timerRunning;
 		}
 	}
 	
@@ -84,8 +120,10 @@ public class GameTimer {
 	 * Notify the manager that the clock is stopped
 	 * @param timer
 	 */
-	private void handleTimerExpiry( GameTimerThread timer) {
-		timerList.remove(timer);
+	private void removeFromList( GameTimerThread timer) {
+		synchronized( selfReference) {
+			timerList.remove(timer);
+		}
 	}
 	
 	
@@ -136,7 +174,7 @@ public class GameTimer {
 		if( isTimerRunning( timerNumber, callbackClass)) {
 			return false;	// timer already active
 		}
-		synchronized(this) {
+		synchronized( selfReference) {
 			GameTimerThread timer = new GameTimerThread( timeout, interval, timerNumber, callbackClass);
 			timerList.add( timer);
 			timer.start();
@@ -155,9 +193,7 @@ public class GameTimer {
 	public void stopTimer( int timerNumber, timerCallback callbackClass) {
 		for( GameTimerThread timer : timerList) {
 			if( timer.isActive( timerNumber, callbackClass)) {
-				synchronized(this) {
-					timer.StopTimer();
-				}
+				timer.StopTimerThread();
 			}
 		}
 	}
@@ -169,11 +205,19 @@ public class GameTimer {
 	 * Stop all running timers
 	 */
 	public void stopAllTimers() {
-		synchronized(this) {
-			for( GameTimerThread timer : timerList) {
-				timer.StopTimer();
-			}
+		for( GameTimerThread timer : timerList) {
+			timer.StopTimerThread();
 		}
+	}
+	
+	
+	
+	/**
+	 * Gets the number of active timers
+	 * @return
+	 */
+	public int getNumberOfActiveTimers() {
+		return timerList.size();
 	}
 	
 }

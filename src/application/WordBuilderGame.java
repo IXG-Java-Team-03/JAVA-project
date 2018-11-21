@@ -815,7 +815,7 @@ private void pickUpWord() {
 	}
 
 	@Override
-	public void clockTick(int currentValue, int timeoutValue, int timerNumber) {
+	public void clockTick( int currentValue, int timeoutValue, int timerNumber) {
 		// TODO Auto-generated method stub
 		
 		Platform.runLater(new Runnable() {
@@ -827,19 +827,19 @@ private void pickUpWord() {
 	}
 
 	@Override
-	public void clockExpired( int timerNumber) {
+	public void clockExpired( int currentValue, int timeoutValue, int timerNumber) {
 		// TODO Auto-generated method stub
 		Platform.runLater(new Runnable() {
 		    @Override
 		    public void run() {
-		    	timerLabel.setText( String.valueOf( 0));
+		    	timerLabel.setText( String.valueOf( timeoutValue-currentValue));
 		    }
 		});
 		
 	}
 
 	@Override
-	public void clockStopped(int currentValue, int timeoutValue, int timerNumber) {
+	public void clockStopped( int currentValue, int timeoutValue, int timerNumber) {
 		// TODO Auto-generated method stub
 		
 	}
