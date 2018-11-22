@@ -14,7 +14,7 @@ public class testGameClock {
 	
 	static GameTimer timer;
 	
-	static final int NUMTESTS = 20;
+	static final int NUMTESTS = 200;
 	
 	static int[] count1 = new int[NUMTESTS];
 	static boolean[] isActive = new boolean[NUMTESTS];
@@ -35,7 +35,7 @@ public class testGameClock {
 			long time2 = System.currentTimeMillis();
 			diff[timerNumber] = time2 - time1[timerNumber];
 			time1[timerNumber] = time2;
-			if( diff[timerNumber] > interval*1000+maxJitter || diff[timerNumber] < interval*1000-maxJitter ) {
+			if( diff[timerNumber]>400 && (diff[timerNumber] > interval*1000+maxJitter || diff[timerNumber] < interval*1000-maxJitter) ) {
 				timeAnalysisFault = true;
 				analysisFaultCount++;
 			}	
@@ -52,7 +52,7 @@ public class testGameClock {
 			long time2 = System.currentTimeMillis();
 			diff[timerNumber] = time2 - time1[timerNumber];
 			time1[timerNumber] = time2;
-			if( diff[timerNumber] > interval*1000+maxJitter || diff[timerNumber] < interval*1000-maxJitter ) {
+			if( diff[timerNumber]>400 && (diff[timerNumber] > interval*1000+maxJitter || diff[timerNumber] < interval*1000-maxJitter) ) {
 					timeAnalysisFault = true;
 					analysisFaultCount++;
 			}	
@@ -64,20 +64,35 @@ public class testGameClock {
 
 		@Override
 		public void clockStopped( int currentValue, int timeoutValue, int timerNumber) {
-			// TODO Auto-generated method stub
-			
+			long time2 = System.currentTimeMillis();
+			diff[timerNumber] = time2 - time1[timerNumber];
+			time1[timerNumber] = time2;
+//			System.out.println( "Clock stopped " + timerNumber + 
+//					"  c=" + currentValue + 
+//					" diff=" + diff[timerNumber] +
+//					" time=" + time1[timerNumber]);
 		}
 
 		@Override
 		public void clockPaused(int currentValue, int timeoutValue, int timerNumber) {
-			// TODO Auto-generated method stub
-			
+			long time2 = System.currentTimeMillis();
+			diff[timerNumber] = time2 - time1[timerNumber];
+			time1[timerNumber] = time2;
+//			System.out.println( "Clock paused " + timerNumber + 
+//					"  c=" + currentValue + 
+//					" diff=" + diff[timerNumber] +
+//					" time=" + time1[timerNumber]);
 		}
 
 		@Override
 		public void clockRestarted(int currentValue, int timeoutValue, int timerNumber) {
-			// TODO Auto-generated method stub
-			
+			long time2 = System.currentTimeMillis();
+			diff[timerNumber] = time2 - time1[timerNumber];
+			time1[timerNumber] = time2;
+//			System.out.println( "Clock restarted " + timerNumber + 
+//					"  c=" + currentValue + 
+//					" diff=" + diff[timerNumber] +
+//					" time=" + time1[timerNumber]);
 		}
 		
 	}
@@ -100,14 +115,14 @@ public class testGameClock {
 	}
 
 	
-//	@Test
+	@Test
 	public void test01() {
 		
 		isActive[0] = true;
 		timeAnalysisFault = false;
 		
 		time1[0] = System.currentTimeMillis();
-		timer.startTimer( 10, 1, new handler1());
+		timer.startTimer( 10, new handler1());
 		while ( count1[0] < 10) {
 			try {
 				Thread.sleep( 900);
@@ -129,7 +144,7 @@ public class testGameClock {
 
 	
 	
-//	@Test
+	@Test
 	public void test02() {
 		
 		timeAnalysisFault = false;
@@ -156,7 +171,7 @@ public class testGameClock {
 	}
 	
 	
-//	@Test
+	@Test
 	public void test03() {
 
 		handler1 h = new handler1();

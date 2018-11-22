@@ -170,10 +170,7 @@ public class WordBuilderGame extends Application implements timerCallback {
 			timerLabel.setStyle("-fx-font-size:28px;");
 			timerLabel.setText( String.valueOf(STARTTIME));
 			
-
-			timer.startTimer( STARTTIME,			// length of timer 
-									  1, 			// interval = 1 second
-									  this);
+			timer.startTimer( STARTTIME, this);				// 1-second-long timer
 
 			HBox hb = new HBox(20);
 			hb.setAlignment(Pos.BASELINE_LEFT);

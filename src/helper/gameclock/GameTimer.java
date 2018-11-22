@@ -30,7 +30,7 @@ public class GameTimer {
 		private int intervalCounter;
 		private final timerCallback callerReference;
 		private final int timerNumber;
-		private int counter = 0;
+		private int counter;
 		
 		private final static int HEARTBEAT = 70;
 		
@@ -51,10 +51,13 @@ public class GameTimer {
 		public void run() {
 			
 			timerRunning = true;
+			counter 		= 0;
 			intervalCounter = 1;
 			startTime          		= System.currentTimeMillis();
 			long CalculatedTimeout  = startTime + timeoutValue*interval*1000;
 			long CalculatedInterval = startTime + interval*1000;
+			
+			callerReference.clockTick( counter, timeoutValue, timerNumber);
 			
 			while( timerRunning) {
 				
@@ -90,7 +93,6 @@ public class GameTimer {
 					callerReference.clockTick( counter, timeoutValue, timerNumber);
 				}
 			}
-			callerReference.clockStopped( counter, timeoutValue, timerNumber);
 			removeFromList( this);
 		}
 		
@@ -101,6 +103,7 @@ public class GameTimer {
 		 */
 		private void StopTimerThread() {
 			timerRunning = false;
+			callerReference.clockStopped( counter, timeoutValue, timerNumber);
 		}
 		
 		
@@ -185,6 +188,22 @@ public class GameTimer {
 	}
 
 
+	
+	
+	
+	/**
+	 * Initiate a new clock if there is none already running
+	 * @param timeout The duration of the timer
+	 * @param interval The clock tick interval
+	 * @param callbackClass The class reference that will receive the callback notifications
+	 * @return true if the timer is started - false if not
+	 */
+	public boolean startTimer( int timeout, timerCallback callbackClass) {
+		return startTimer( timeout, 1, 0, callbackClass);
+	}
+	
+	
+	
 	
 	
 	
