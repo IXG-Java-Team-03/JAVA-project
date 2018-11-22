@@ -14,7 +14,7 @@ public class testGameClock {
 	
 	static GameTimer timer;
 	
-	static final int NUMTESTS = 200;
+	static final int NUMTESTS = 50;
 	
 	static int[] count1 = new int[NUMTESTS];
 	static boolean[] isActive = new boolean[NUMTESTS];
@@ -22,7 +22,7 @@ public class testGameClock {
 	static long[] time1 = new long[NUMTESTS];
 	static long[] diff = new long[NUMTESTS];
 	
-	static int interval = 1;
+	static int interval = 1000;
 	static int maxJitter = 100;	// maximum acceptable offset (milliseconds)
 	static boolean timeAnalysisFault = false;
 	static int analysisFaultCount = 0;
@@ -35,7 +35,7 @@ public class testGameClock {
 			long time2 = System.currentTimeMillis();
 			diff[timerNumber] = time2 - time1[timerNumber];
 			time1[timerNumber] = time2;
-			if( diff[timerNumber]>400 && (diff[timerNumber] > interval*1000+maxJitter || diff[timerNumber] < interval*1000-maxJitter) ) {
+			if( diff[timerNumber]>100 && (diff[timerNumber] > interval+maxJitter || diff[timerNumber] < interval-maxJitter) ) {
 				timeAnalysisFault = true;
 				analysisFaultCount++;
 			}	
@@ -52,7 +52,7 @@ public class testGameClock {
 			long time2 = System.currentTimeMillis();
 			diff[timerNumber] = time2 - time1[timerNumber];
 			time1[timerNumber] = time2;
-			if( diff[timerNumber]>400 && (diff[timerNumber] > interval*1000+maxJitter || diff[timerNumber] < interval*1000-maxJitter) ) {
+			if( diff[timerNumber]>100 && (diff[timerNumber] > interval+maxJitter || diff[timerNumber] < interval-maxJitter) ) {
 					timeAnalysisFault = true;
 					analysisFaultCount++;
 			}	
@@ -116,10 +116,11 @@ public class testGameClock {
 
 	
 	@Test
-	public void test01() {
+	public void test01_one_timer() {
 		
 		isActive[0] = true;
 		timeAnalysisFault = false;
+		interval = 1000;
 		
 		time1[0] = System.currentTimeMillis();
 		timer.startTimer( 10, new handler1());
@@ -129,6 +130,45 @@ public class testGameClock {
 			} catch (InterruptedException e) {
 			}
 		}
+		
+		try { Thread.sleep( 300); } catch (InterruptedException e) {}
+		
+		if( !isActive[0]) {
+			if( timeAnalysisFault) {
+				fail( "Clock jitter is higher than limits");
+			}
+			else {
+				assertTrue( true);
+			}
+		}
+		else {
+			fail( "Clock is not stopped");
+		}
+	}
+
+	
+	
+	
+	
+	
+	@Test
+	public void test02_one_timer_ds() {
+		
+		isActive[0] = true;
+		timeAnalysisFault = false;
+		interval = 500;
+		
+		time1[0] = System.currentTimeMillis();
+		timer.startTimerDS( 20, 4, new handler1());
+		while ( count1[0] < 20) {
+			try {
+				Thread.sleep( 900);
+			} catch (InterruptedException e) {
+			}
+		}
+		
+		try { Thread.sleep( 300); } catch (InterruptedException e) {}
+		
 		if( !isActive[0]) {
 			if( timeAnalysisFault) {
 				fail( "Clock jitter is higher than limits");
@@ -145,9 +185,10 @@ public class testGameClock {
 	
 	
 	@Test
-	public void test02() {
+	public void test03_many_timers() {
 		
 		timeAnalysisFault = false;
+		interval = 1000;
 		
 		handler1 h = new handler1();
 		for( int i=0; i<NUMTESTS; i++) {
@@ -172,9 +213,10 @@ public class testGameClock {
 	
 	
 	@Test
-	public void test03() {
+	public void test04_simultaneous() {
 
 		handler1 h = new handler1();
+		interval = 1000;
 		
 		boolean result1 = timer.startTimer( 10, 1, h);
 		try { Thread.sleep(100); } catch (InterruptedException e) {}
@@ -225,9 +267,10 @@ public class testGameClock {
 	
 	
 	@Test
-	public void test04() {
+	public void test05_pause_and_restart() {
 
 		handler1 h = new handler1();
+		interval = 1000;
 
 		boolean result1 = timer.startTimer( 10, 1, h);
 
@@ -278,4 +321,59 @@ public class testGameClock {
 	}
 	
 	
+	@Test
+	public void test06_pause_and_restart_ds() {
+
+		handler1 h = new handler1();
+		interval = 600;
+
+		boolean result1 = timer.startTimerDS( 10, 6, h);
+
+		try { Thread.sleep(1100); } catch (InterruptedException e) {}
+		assertEquals( 1, count1[0]);
+
+		try { Thread.sleep(610); } catch (InterruptedException e) {}
+		assertEquals( 2, count1[0]);
+		
+		timer.pauseTimer( 0, h);
+
+		try { Thread.sleep(2100); } catch (InterruptedException e) {}
+		assertEquals( 2, count1[0]);
+
+		try { Thread.sleep(2100); } catch (InterruptedException e) {}
+		assertEquals( 2, count1[0]);
+
+		timer.restartTimer( 0, h);
+
+		try { Thread.sleep(650); } catch (InterruptedException e) {}
+		assertEquals( 3, count1[0]);
+
+		try { Thread.sleep(610); } catch (InterruptedException e) {}
+		assertEquals( 4, count1[0]);
+		
+		timer.pauseTimer( 0, h);
+
+		try { Thread.sleep(2100); } catch (InterruptedException e) {}
+		assertEquals( 4, count1[0]);
+
+		try { Thread.sleep(2100); } catch (InterruptedException e) {}
+		assertEquals( 4, count1[0]);
+
+		timer.restartTimer( 0, h);
+
+		try { Thread.sleep(610); } catch (InterruptedException e) {}
+		assertEquals( 5, count1[0]);
+
+		try { Thread.sleep(4000); } catch (InterruptedException e) {}
+		assertEquals( 10, count1[0]);
+		
+		result1 = timer.restartTimer( 0, h);
+		assertFalse( result1);
+		result1 = timer.pauseTimer( 0, h);
+		assertFalse( result1);
+		
+		assertEquals( 0, timer.getNumberOfActiveTimers());
+	}
+	
+
 }

@@ -20,7 +20,7 @@ public class GameTimer {
 	/**
 	 * Initiate a new clock if there is none already running
 	 * @param timeout The duration of the timer
-	 * @param interval The clock tick interval
+	 * @param interval The clock tick interval (seconds)
 	 * @param callbackClass The class reference that will receive the callback notifications
 	 * @return true if the timer is started - false if not
 	 */
@@ -36,7 +36,7 @@ public class GameTimer {
 	/**
 	 * Initiate a new clock if there is none already running
 	 * @param timeout The duration of the timer
-	 * @param interval The clock tick interval
+	 * @param interval The clock tick interval (seconds)
 	 * @param callbackClass The class reference that will receive the callback notifications
 	 * @return true if the timer is started - false if not
 	 */
@@ -51,7 +51,7 @@ public class GameTimer {
 	/**
 	 * Initiate a new clock if there is none already running
 	 * @param timeout The duration of the timer
-	 * @param interval The clock tick interval
+	 * @param interval The clock tick interval (seconds)
 	 * @param timerNumber The timer number distinguishing between independent timers 
 	 * @param callbackClass The class reference that will receive the callback notifications
 	 * @return true if the timer is started - false if not
@@ -62,7 +62,51 @@ public class GameTimer {
 				return false;	// timer already active
 			}
 		}
-		GameTimerThread timer = new GameTimerThread( timeout, interval, timerNumber, callbackClass, this);
+		GameTimerThread timer = new GameTimerThread( timeout, interval * 1000, timerNumber, callbackClass, this);
+		synchronized( this) {
+			timerList.add( timer);
+		}
+		timer.setName( "Clock-" + timeout + "s-"+ timerNumber + "-" + callbackClass.hashCode());
+		timer.start();
+		return true;		// timer started
+	}
+
+	
+	
+	
+	
+	
+	/**
+	 * Initiate a new clock if there is none already running (interval in deciseconds)
+	 * @param timeout The duration of the timer
+	 * @param interval The clock tick interval (deciseconds)
+	 * @param callbackClass The class reference that will receive the callback notifications
+	 * @return true if the timer is started - false if not
+	 */
+	public boolean startTimerDS( int timeout, int interval, timerCallback callbackClass) {
+		return startTimerDS( timeout, interval, 0, callbackClass);
+	}
+	
+	
+	
+
+	
+	
+	/**
+	 * Initiate a new clock if there is none already running (interval in deciseconds)
+	 * @param timeout The duration of the timer
+	 * @param interval The clock tick interval (deciseconds)
+	 * @param timerNumber The timer number distinguishing between independent timers 
+	 * @param callbackClass The class reference that will receive the callback notifications
+	 * @return true if the timer is started - false if not
+	 */
+	public boolean startTimerDS( int timeout, int interval, int timerNumber, timerCallback callbackClass) {
+		synchronized( this) {
+			if( isTimerRunning( timerNumber, callbackClass)) {
+				return false;	// timer already active
+			}
+		}
+		GameTimerThread timer = new GameTimerThread( timeout, interval * 100, timerNumber, callbackClass, this);
 		synchronized( this) {
 			timerList.add( timer);
 		}
