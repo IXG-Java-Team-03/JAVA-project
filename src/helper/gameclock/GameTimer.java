@@ -14,36 +14,6 @@ public class GameTimer {
 	private final ArrayList<GameTimerThread> timerList = new ArrayList<GameTimerThread>();
 	
 
-
-	/**
-	 * Notify the manager that the clock is stopped
-	 * @param timer
-	 */
-	void removeFromList( GameTimerThread timer) {
-		synchronized( this) {
-			timerList.remove(timer);
-		}
-	}
-	
-	
-	
-	
-	/**
-	 * Check if the clock is running
-	 * @param timerNumber
-	 * @param callbackClass
-	 * @return true if the clock is running
-	 */
-	private boolean isTimerRunning( int timerNumber, timerCallback callbackClass) {
-		for( GameTimerThread timer : timerList) {
-			if( timer.isActiveThread( timerNumber, callbackClass)) {
-				return true;	// timer is active
-			}
-		}
-		return false;		// timer is not active
-	}
-
-
 	
 	
 	
@@ -104,16 +74,53 @@ public class GameTimer {
 	
 	
 	
+
+	/**
+	 * Notify the manager that the clock is stopped
+	 * @param timer
+	 */
+	void removeFromList( GameTimerThread timer) {
+		synchronized( this) {
+			timerList.remove(timer);
+		}
+	}
+	
+	
+	
+	
+	/**
+	 * Check if the clock is running
+	 * @param timerNumber
+	 * @param callbackClass
+	 * @return true if the clock is running
+	 */
+	private boolean isTimerRunning( int timerNumber, timerCallback callbackClass) {
+		synchronized( this) {
+			for( GameTimerThread timer : timerList) {
+				if( timer.isActiveThread( timerNumber, callbackClass)) {
+					return true;	// timer is active
+				}
+			}
+		}
+		return false;		// timer is not active
+	}
+
+
+
+	
+	
 	/**
 	 * Stop the indicated clock 
 	 * @param timerNumber
 	 * @param callbackClass
 	 */
 	public boolean stopTimer( int timerNumber, timerCallback callbackClass) {
-		for( GameTimerThread timer : timerList) {
-			if( timer.isActiveThread( timerNumber, callbackClass)) {
-				timer.StopTimerThread();
-				return true;
+		synchronized( this) {
+			for( GameTimerThread timer : timerList) {
+				if( timer.isActiveThread( timerNumber, callbackClass)) {
+					timer.StopTimerThread();
+					return true;
+				}
 			}
 		}
 		return false;
@@ -130,10 +137,12 @@ public class GameTimer {
 	 * @param callbackClass
 	 */
 	public boolean pauseTimer( int timerNumber, timerCallback callbackClass) {
-		for( GameTimerThread timer : timerList) {
-			if( timer.isActiveThread( timerNumber, callbackClass)) {
-				timer.PauseTimerThread();
-				return true;
+		synchronized( this) {
+			for( GameTimerThread timer : timerList) {
+				if( timer.isActiveThread( timerNumber, callbackClass)) {
+					timer.PauseTimerThread();
+					return true;
+				}
 			}
 		}
 		return false;
@@ -152,10 +161,12 @@ public class GameTimer {
 	 * @param callbackClass
 	 */
 	public boolean restartTimer( int timerNumber, timerCallback callbackClass) {
-		for( GameTimerThread timer : timerList) {
-			if( timer.isActiveThread( timerNumber, callbackClass)) {
-				timer.RestartTimerThread();
-				return true;
+		synchronized( this) {
+			for( GameTimerThread timer : timerList) {
+				if( timer.isActiveThread( timerNumber, callbackClass)) {
+					timer.RestartTimerThread();
+					return true;
+				}
 			}
 		}
 		return false;
@@ -170,8 +181,10 @@ public class GameTimer {
 	 * Stop all running timers
 	 */
 	public void stopAllTimers() {
-		for( GameTimerThread timer : timerList) {
-			timer.StopTimerThread();
+		synchronized( this) {
+			for( GameTimerThread timer : timerList) {
+				timer.StopTimerThread();
+			}
 		}
 	}
 	
