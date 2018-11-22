@@ -25,19 +25,24 @@ public class GameTimer {
 		private boolean timerRunning = false;
 		private boolean timerPaused = false;
 		private boolean recalculate = false;
-		private final timerCallback caller;
+		private long startTime=0;
+		private long remainder=0;
+		private int intervalCounter;
+		private final timerCallback callerReference;
 		private final int timerNumber;
 		private int counter = 0;
 		
 		private final static int HEARTBEAT = 70;
 		
 		
-		GameTimerThread( int timeout, int interval, int timerNumber, timerCallback callback) {
+		GameTimerThread( int timeout, int interval, int timerNumber, timerCallback callerReference) {
 			this.timeoutValue = Math.max( 0, timeout);           // zero is the minimum value
 			this.interval = Math.max( 1, interval);			// one is the minimum value
-			this.caller = callback;
+			this.callerReference = callerReference;
 			this.timerNumber = timerNumber;
 		}
+		
+		
 		
 		
 		/**
@@ -46,8 +51,8 @@ public class GameTimer {
 		public void run() {
 			
 			timerRunning = true;
-			int intervalCounter		= 1;
-			long startTime          = System.currentTimeMillis();
+			intervalCounter = 1;
+			startTime          		= System.currentTimeMillis();
 			long CalculatedTimeout  = startTime + timeoutValue*interval*1000;
 			long CalculatedInterval = startTime + interval*1000;
 			
@@ -65,24 +70,27 @@ public class GameTimer {
 				if( recalculate) {
 					recalculate			= false;
 					intervalCounter		= 1;
-					startTime			= System.currentTimeMillis();
+					startTime			= System.currentTimeMillis()-remainder;
+					remainder			= 0;
 					CalculatedTimeout	= startTime + (timeoutValue-counter)*interval*1000;
 					CalculatedInterval	= startTime + interval*1000;
+					callerReference.clockRestarted( counter, timeoutValue, timerNumber);
 				}
 				
 				long time = System.currentTimeMillis();	
 				if( timerRunning && time >= CalculatedTimeout) {
 					timerRunning = false;
-					caller.clockExpired( timeoutValue, timeoutValue, timerNumber);
+					callerReference.clockExpired( timeoutValue, timeoutValue, timerNumber);
 					break;
 				}
 				if( timerRunning && time >= CalculatedInterval) {
 					counter++;
 					intervalCounter++;
 					CalculatedInterval = startTime + intervalCounter*interval*1000;
-					caller.clockTick( counter, timeoutValue, timerNumber);
+					callerReference.clockTick( counter, timeoutValue, timerNumber);
 				}
 			}
+			callerReference.clockStopped( counter, timeoutValue, timerNumber);
 			removeFromList( this);
 		}
 		
@@ -93,7 +101,6 @@ public class GameTimer {
 		 */
 		private void StopTimerThread() {
 			timerRunning = false;
-			caller.clockStopped(counter, timeoutValue, timerNumber);
 		}
 		
 		
@@ -106,9 +113,10 @@ public class GameTimer {
 		 */
 		private boolean isActiveThread( int timerNumber, timerCallback callbackClass) {
 			return  timerNumber == this.timerNumber && 
-					callbackClass == this.caller &&
+					callbackClass == this.callerReference &&
 					timerRunning;
 		}
+		
 		
 		
 		
@@ -118,15 +126,22 @@ public class GameTimer {
 		 */
 		public void PauseTimerThread() {
 			timerPaused = true;
+			recalculate = false;
+			long diff = System.currentTimeMillis() - startTime;
+			remainder = diff%(interval*1000);
+			callerReference.clockPaused( counter, timeoutValue, timerNumber);
 		}
+		
+		
+		
 		
 		
 		/**
 		 * Pause the active timer
 		 */
 		public void RestartTimerThread() {
-			recalculate = true;
 			timerPaused = false;
+			recalculate = true;
 		}
 		
 		
@@ -170,6 +185,7 @@ public class GameTimer {
 	}
 
 
+	
 	
 	
 	/**
@@ -275,8 +291,6 @@ public class GameTimer {
 	
 	
 	
-	
-	
 	/**
 	 * Stop all running timers
 	 */
@@ -285,6 +299,8 @@ public class GameTimer {
 			timer.StopTimerThread();
 		}
 	}
+	
+	
 	
 	
 	
@@ -297,5 +313,7 @@ public class GameTimer {
 			return timerList.size();  
 		}
 	}
+	
+	
 	
 }

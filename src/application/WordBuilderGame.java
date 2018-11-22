@@ -847,6 +847,18 @@ private void pickUpWord() {
 		
 	}
 
+	@Override
+	public void clockPaused(int currentValue, int timeoutValue, int timerNumber) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void clockRestarted(int currentValue, int timeoutValue, int timerNumber) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 
 
