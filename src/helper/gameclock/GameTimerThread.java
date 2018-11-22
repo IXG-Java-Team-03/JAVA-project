@@ -23,7 +23,7 @@ class GameTimerThread extends Thread {
 	 * Constructor for the timer thread
 	 * @param timeout The number of repetitions that will count for this counter
 	 * @param interval The interval in milliseconds
-	 * @param timerNumber The timer numebr 
+	 * @param timerNumber The timer number 
 	 * @param callerReference The reference to the caller
 	 * @param parent The timer pool object
 	 */

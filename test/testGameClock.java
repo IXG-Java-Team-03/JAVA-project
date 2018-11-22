@@ -14,7 +14,7 @@ public class testGameClock {
 	
 	static GameTimer timer;
 	
-	static final int NUMTESTS = 50;
+	static final int NUMTESTS = 80;
 	
 	static int[] count1 = new int[NUMTESTS];
 	static boolean[] isActive = new boolean[NUMTESTS];
@@ -195,6 +195,7 @@ public class testGameClock {
 			timer.startTimer( 10, 1, i, h);
 			isActive[i] = true;
 			time1[i] = System.currentTimeMillis();
+			try { Thread.sleep( 2 ); } catch (InterruptedException e) {}
 		}
 		
 		while ( timer.getNumberOfActiveTimers() > 0 ) {
@@ -203,6 +204,9 @@ public class testGameClock {
 			} catch (InterruptedException e) {
 			}
 		}
+		
+		try { Thread.sleep( 300); } catch (InterruptedException e) {}
+		
 		if( timeAnalysisFault) {
 			fail( "Clock jitter is higher than limits " + analysisFaultCount + " times");
 		}
@@ -220,7 +224,7 @@ public class testGameClock {
 		
 		boolean result1 = timer.startTimer( 10, 1, h);
 		try { Thread.sleep(100); } catch (InterruptedException e) {}
-		
+
 		boolean result2 = timer.startTimer( 10, 1, h);
 		try { Thread.sleep(100); } catch (InterruptedException e) {}
 		
@@ -274,8 +278,13 @@ public class testGameClock {
 
 		boolean result1 = timer.startTimer( 10, 1, h);
 
+		timer.startTimerDS( 8, 8, 1, h);
+		timer.startTimer  ( 4, 2, 2, h);
+
 		try { Thread.sleep(1100); } catch (InterruptedException e) {}
 		assertEquals( 1, count1[0]);
+		
+		assertEquals( 3, timer.getNumberOfActiveTimers());
 
 		try { Thread.sleep(1100); } catch (InterruptedException e) {}
 		assertEquals( 2, count1[0]);
@@ -328,9 +337,14 @@ public class testGameClock {
 		interval = 600;
 
 		boolean result1 = timer.startTimerDS( 10, 6, h);
+		
+		timer.startTimerDS( 8, 8, 1, h);
+		timer.startTimer  ( 4, 2, 2, h);
 
 		try { Thread.sleep(1100); } catch (InterruptedException e) {}
 		assertEquals( 1, count1[0]);
+		
+		assertEquals( 3, timer.getNumberOfActiveTimers());
 
 		try { Thread.sleep(610); } catch (InterruptedException e) {}
 		assertEquals( 2, count1[0]);
