@@ -7,6 +7,7 @@ public interface timerCallback {
 	 * @param currentValue The current value of the timer
 	 * @param timeoutValue The end value of the timer
 	 * @param timerNumber The timer that this event refers to
+	 * @param interval The timer's interval in milliseconds
 	 */
 	public void clockTick( int currentValue, int timeoutValue, int timerNumber, long interval);
 	
@@ -15,6 +16,7 @@ public interface timerCallback {
 	 * @param currentValue The current value of the timer
 	 * @param timeoutValue The end value of the timer
 	 * @param timerNumber The timer that this event refers to
+	 * @param interval The timer's interval in milliseconds
 	 */
 	public void clockExpired( int currentValue, int timeoutValue, int timerNumber, long interval);
 	
@@ -23,6 +25,7 @@ public interface timerCallback {
 	 * @param currentValue The current value of the timer
 	 * @param timeoutValue The end value of the timer
 	 * @param timerNumber The timer that this event refers to
+	 * @param interval The timer's interval in milliseconds
 	 */
 	public void clockStopped( int currentValue, int timeoutValue, int timerNumber, long interval);
 	
@@ -31,6 +34,7 @@ public interface timerCallback {
 	 * @param currentValue The current value of the timer
 	 * @param timeoutValue The end value of the timer
 	 * @param timerNumber The timer that this event refers to
+	 * @param interval The timer's interval in milliseconds
 	 */
 	public void clockPaused( int currentValue, int timeoutValue, int timerNumber, long interval);
 	
@@ -39,6 +43,7 @@ public interface timerCallback {
 	 * @param currentValue The current value of the timer
 	 * @param timeoutValue The end value of the timer
 	 * @param timerNumber The timer that this event refers to
+	 * @param interval The timer's interval in milliseconds
 	 */
 	public void clockRestarted( int currentValue, int timeoutValue, int timerNumber, long interval);
 }
