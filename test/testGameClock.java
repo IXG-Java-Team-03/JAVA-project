@@ -17,7 +17,7 @@ public class testGameClock {
 	
 	static GameTimer timer;
 	
-	static final int NUM_OF_TIMERS	   = 50;
+	static final int NUM_OF_TIMERS	   = 30;
 	static final int HEARTBEAT_OFFSET  = 20; // ms
 	static int MAX_JITTER;
 
@@ -35,6 +35,7 @@ public class testGameClock {
 			val.setAccessible(true);
 		
 			MAX_JITTER = val.getInt(obj1) + HEARTBEAT_OFFSET;		// HEARTBEAT + OFFSET
+			obj1 = null;											// deallocate object
 		} 
 		catch ( NoSuchFieldException | SecurityException | 
 				IllegalArgumentException | IllegalAccessException e) 
@@ -149,23 +150,23 @@ public class testGameClock {
 	@Test
 	public void test01_one_timer() {
 		
+		int pointer = 0;
 		handler1 h1 = new handler1();
 		
-		h1.isActive[0] = true;		
-		h1.time1[0] = System.currentTimeMillis();
+		h1.isActive[pointer] = true;		
+		h1.time1[pointer] = System.currentTimeMillis();
 		
 		timer.startTimer( 10, h1);
 		
-		while ( h1.count1[0] < 10) {
+		while ( h1.count1[pointer] < 10) {
 			try {
 				Thread.sleep( 900);
-			} catch (InterruptedException e) {
-			}
+			} catch (InterruptedException e) {}
 		}
 		
 		try { Thread.sleep( 300); } catch (InterruptedException e) {}
 		
-		if( !h1.isActive[0]) {
+		if( !h1.isActive[pointer]) {
 			if( timeAnalysisFault) {
 				fail( "Clock jitter is higher than limits " + analysisFaultCount + " times");
 			}
@@ -183,23 +184,23 @@ public class testGameClock {
 	@Test
 	public void test02_one_timer_ds() {
 		
+		int pointer = 0;
 		handler1 h1 = new handler1();
 		
-		h1.isActive[0] = true;		
-		h1.time1[0] = System.currentTimeMillis();
+		h1.isActive[pointer] = true;		
+		h1.time1[pointer] = System.currentTimeMillis();
 		
 		timer.startTimerDS( 20, 4, h1);
 		
-		while ( h1.count1[0] < 20) {
+		while ( h1.count1[pointer] < 20) {
 			try {
 				Thread.sleep( 900);
-			} catch (InterruptedException e) {
-			}
+			} catch (InterruptedException e) {}
 		}
 		
 		try { Thread.sleep( 300); } catch (InterruptedException e) {}
 		
-		if( !h1.isActive[0]) {
+		if( !h1.isActive[pointer]) {
 			if( timeAnalysisFault) {
 				fail( "Clock jitter is higher than limits " + analysisFaultCount + " times");
 			}
@@ -219,7 +220,7 @@ public class testGameClock {
 		handler1 h3 = new handler1();
 		handler1 h4 = new handler1();
 
-		for( int i=0; i<NUM_OF_TIMERS; i++) {
+		for( int i=0; i < NUM_OF_TIMERS; i++) {
 
 			timer.startTimer( 10, 1, i, h1);
 			synchronized( h1) {
@@ -271,6 +272,7 @@ public class testGameClock {
 	@Test
 	public void test04_simultaneous() {
 
+		int pointer = 0;
 		handler1 h1 = new handler1();
 		
 		boolean result1 = timer.startTimer( 10, 1, h1);
@@ -286,20 +288,20 @@ public class testGameClock {
 		boolean result4 = timer.startTimer( 10, 1, h2);
 		try { Thread.sleep(100); } catch (InterruptedException e) {}
 
-		assertTrue(  result1);
-		assertFalse( result2);
-		assertTrue(  result3);
-		assertTrue(  result4);
+		assertTrue(  result1);		// first timer is active
+		assertFalse( result2);		// second timer could not be started (same timer number)
+		assertTrue(  result3);		// third timer is active
+		assertTrue(  result4);		// fourth timer is active
 		
 		try { Thread.sleep(100); } catch (InterruptedException e) {}
 		assertEquals( 3, timer.getNumberOfActiveTimers());
 		
-		timer.stopTimer( 0, h1);
+		timer.stopTimer( pointer, h1);
 		
 		try { Thread.sleep(100); } catch (InterruptedException e) {}
 		assertEquals( 2, timer.getNumberOfActiveTimers());
 		
-		timer.stopTimer( 0, h1);
+		timer.stopTimer( pointer, h1);
 		
 		try { Thread.sleep(100); } catch (InterruptedException e) {}
 		assertEquals( 2, timer.getNumberOfActiveTimers());
@@ -314,7 +316,7 @@ public class testGameClock {
 		try { Thread.sleep(100); } catch (InterruptedException e) {}
 		assertEquals( 0, timer.getNumberOfActiveTimers());
 		
-		timer.stopTimer( 0, h1);
+		timer.stopTimer( pointer, h1);
 		
 		try { Thread.sleep(100); } catch (InterruptedException e) {}
 		assertEquals( 0, timer.getNumberOfActiveTimers());
@@ -330,6 +332,7 @@ public class testGameClock {
 	@Test
 	public void test05_pause_and_restart() {
 
+		int pointer = 0;
 		handler1 h1 = new handler1();
 
 		boolean result1 = timer.startTimer( 10, 1, h1);
@@ -338,48 +341,48 @@ public class testGameClock {
 		timer.startTimer  ( 4, 2, 2, h1);
 
 		try { Thread.sleep(1100); } catch (InterruptedException e) {}
-		assertEquals( 1, h1.count1[0]);
+		assertEquals( 1, h1.count1[pointer]);
 		
 		assertEquals( 3, timer.getNumberOfActiveTimers());
 
 		try { Thread.sleep(1100); } catch (InterruptedException e) {}
-		assertEquals( 2, h1.count1[0]);
+		assertEquals( 2, h1.count1[pointer]);
 		
-		timer.pauseTimer( 0, h1);
+		timer.pauseTimer( pointer, h1);
 
 		try { Thread.sleep(2100); } catch (InterruptedException e) {}
-		assertEquals( 2, h1.count1[0]);
+		assertEquals( 2, h1.count1[pointer]);
 
 		try { Thread.sleep(2100); } catch (InterruptedException e) {}
-		assertEquals( 2, h1.count1[0]);
+		assertEquals( 2, h1.count1[pointer]);
 
-		timer.restartTimer( 0, h1);
+		timer.restartTimer( pointer, h1);
 
 		try { Thread.sleep(1500); } catch (InterruptedException e) {}
-		assertEquals( 3, h1.count1[0]);
+		assertEquals( 3, h1.count1[pointer]);
 
 		try { Thread.sleep(1100); } catch (InterruptedException e) {}
-		assertEquals( 4, h1.count1[0]);
+		assertEquals( 4, h1.count1[pointer]);
 		
-		timer.pauseTimer( 0, h1);
+		timer.pauseTimer( pointer, h1);
 
 		try { Thread.sleep(2100); } catch (InterruptedException e) {}
-		assertEquals( 4, h1.count1[0]);
+		assertEquals( 4, h1.count1[pointer]);
 
 		try { Thread.sleep(2100); } catch (InterruptedException e) {}
-		assertEquals( 4, h1.count1[0]);
+		assertEquals( 4, h1.count1[pointer]);
 
-		timer.restartTimer( 0, h1);
+		timer.restartTimer( pointer, h1);
 
 		try { Thread.sleep(1100); } catch (InterruptedException e) {}
-		assertEquals( 5, h1.count1[0]);
+		assertEquals( 5, h1.count1[pointer]);
 
 		try { Thread.sleep(5600); } catch (InterruptedException e) {}
-		assertEquals( 10, h1.count1[0]);
+		assertEquals( 10, h1.count1[pointer]);
 		
-		result1 = timer.restartTimer( 0, h1);
+		result1 = timer.restartTimer( pointer, h1);
 		assertFalse( result1);
-		result1 = timer.pauseTimer( 0, h1);
+		result1 = timer.pauseTimer( pointer, h1);
 		assertFalse( result1);
 		
 		assertEquals( 0, timer.getNumberOfActiveTimers());
@@ -390,6 +393,7 @@ public class testGameClock {
 	@Test
 	public void test06_pause_and_restart_ds() {
 
+		int pointer = 0;
 		handler1 h1 = new handler1();
 
 		boolean result1 = timer.startTimerDS( 10, 6, h1);
@@ -398,48 +402,48 @@ public class testGameClock {
 		timer.startTimer  ( 4, 2, 2, h1);
 
 		try { Thread.sleep(1100); } catch (InterruptedException e) {}
-		assertEquals( 1, h1.count1[0]);
+		assertEquals( 1, h1.count1[pointer]);
 		
 		assertEquals( 3, timer.getNumberOfActiveTimers());
 
 		try { Thread.sleep(610); } catch (InterruptedException e) {}
-		assertEquals( 2, h1.count1[0]);
+		assertEquals( 2, h1.count1[pointer]);
 		
-		timer.pauseTimer( 0, h1);
+		timer.pauseTimer( pointer, h1);
 
 		try { Thread.sleep(2100); } catch (InterruptedException e) {}
-		assertEquals( 2, h1.count1[0]);
+		assertEquals( 2, h1.count1[pointer]);
 
 		try { Thread.sleep(2100); } catch (InterruptedException e) {}
-		assertEquals( 2, h1.count1[0]);
+		assertEquals( 2, h1.count1[pointer]);
 
-		timer.restartTimer( 0, h1);
+		timer.restartTimer( pointer, h1);
 
 		try { Thread.sleep(650); } catch (InterruptedException e) {}
-		assertEquals( 3, h1.count1[0]);
+		assertEquals( 3, h1.count1[pointer]);
 
 		try { Thread.sleep(610); } catch (InterruptedException e) {}
-		assertEquals( 4, h1.count1[0]);
+		assertEquals( 4, h1.count1[pointer]);
 		
-		timer.pauseTimer( 0, h1);
+		timer.pauseTimer( pointer, h1);
 
 		try { Thread.sleep(2100); } catch (InterruptedException e) {}
-		assertEquals( 4, h1.count1[0]);
+		assertEquals( 4, h1.count1[pointer]);
 
 		try { Thread.sleep(2100); } catch (InterruptedException e) {}
-		assertEquals( 4, h1.count1[0]);
+		assertEquals( 4, h1.count1[pointer]);
 
-		timer.restartTimer( 0, h1);
+		timer.restartTimer( pointer, h1);
 
 		try { Thread.sleep(610); } catch (InterruptedException e) {}
-		assertEquals( 5, h1.count1[0]);
+		assertEquals( 5, h1.count1[pointer]);
 
 		try { Thread.sleep(4000); } catch (InterruptedException e) {}
-		assertEquals( 10, h1.count1[0]);
+		assertEquals( 10, h1.count1[pointer]);
 		
-		result1 = timer.restartTimer( 0, h1);
+		result1 = timer.restartTimer( pointer, h1);
 		assertFalse( result1);
-		result1 = timer.pauseTimer( 0, h1);
+		result1 = timer.pauseTimer( pointer, h1);
 		assertFalse( result1);
 		
 		assertEquals( 0, timer.getNumberOfActiveTimers());

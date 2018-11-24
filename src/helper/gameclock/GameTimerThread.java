@@ -56,8 +56,8 @@ public class GameTimerThread extends Thread {
 			
 			try {
 				Thread.sleep( HEARTBEAT );
-			} catch (InterruptedException e) {}
-			
+			} 
+			catch (InterruptedException e) {}
 			
 			if( timerPaused) {
 				continue;
@@ -68,7 +68,7 @@ public class GameTimerThread extends Thread {
 			if( recalculate) {
 				recalculate			= false;
 				intervalCounter		= 1;					// reset the interval counter to 1
-				startTime			= time - remainder;		// this is the start of the paused interval
+				startTime			= time - remainder;		// go back to the start of the paused interval
 				remainder			= 0;
 				CalculatedTimeout	= startTime + (timeoutValue - counter) * interval;
 				CalculatedInterval	= startTime + interval;

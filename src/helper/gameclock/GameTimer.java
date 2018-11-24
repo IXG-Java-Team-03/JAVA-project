@@ -12,9 +12,7 @@ import java.util.ArrayList;
 public class GameTimer {
 	
 	private final ArrayList<GameTimerThread> timerList = new ArrayList<GameTimerThread>();
-	
 
-	
 	
 	
 	/**
@@ -61,7 +59,7 @@ public class GameTimer {
 			return false;	// timer already active
 		}
 		GameTimerThread timer = new GameTimerThread( timeout, interval * 1000, timerNumber, callbackClass, this);
-		synchronized( this) {
+		synchronized( this.timerList) {
 			timerList.add( timer);
 		}
 		timer.setName( String.format( "GameTimer-%d*%ds-%d-%d", timeout, interval, timerNumber, callbackClass.hashCode()));
@@ -103,7 +101,7 @@ public class GameTimer {
 			return false;	// timer already active
 		}
 		GameTimerThread timer = new GameTimerThread( timeout, interval * 100, timerNumber, callbackClass, this);
-		synchronized( this) {
+		synchronized( this.timerList) {
 			timerList.add( timer);
 		}
 		timer.setName( String.format( "GameTimer-%d*%dms-%d-%d", timeout, interval*100, timerNumber, callbackClass.hashCode()));
@@ -120,7 +118,7 @@ public class GameTimer {
 	 * @param timer
 	 */
 	void removeFromList( GameTimerThread timer) {
-		synchronized( this) {
+		synchronized( this.timerList) {
 			timerList.remove(timer);
 		}
 	}
@@ -135,7 +133,7 @@ public class GameTimer {
 	 * @return true if the clock is running
 	 */
 	private boolean isTimerRunning( int timerNumber, timerCallback callbackClass) {
-		synchronized( this) {
+		synchronized( this.timerList) {
 			for( GameTimerThread timer : timerList) {
 				if( timer.isActiveThread( timerNumber, callbackClass)) {
 					return true;	// timer is active
@@ -155,7 +153,7 @@ public class GameTimer {
 	 * @param callbackClass
 	 */
 	public boolean stopTimer( int timerNumber, timerCallback callbackClass) {
-		synchronized( this) {
+		synchronized( this.timerList) {
 			for( GameTimerThread timer : timerList) {
 				if( timer.isActiveThread( timerNumber, callbackClass)) {
 					timer.StopTimerThread();
@@ -177,7 +175,7 @@ public class GameTimer {
 	 * @param callbackClass
 	 */
 	public boolean pauseTimer( int timerNumber, timerCallback callbackClass) {
-		synchronized( this) {
+		synchronized( this.timerList) {
 			for( GameTimerThread timer : timerList) {
 				if( timer.isActiveThread( timerNumber, callbackClass)) {
 					timer.PauseTimerThread();
@@ -201,7 +199,7 @@ public class GameTimer {
 	 * @param callbackClass
 	 */
 	public boolean restartTimer( int timerNumber, timerCallback callbackClass) {
-		synchronized( this) {
+		synchronized( this.timerList) {
 			for( GameTimerThread timer : timerList) {
 				if( timer.isActiveThread( timerNumber, callbackClass)) {
 					timer.RestartTimerThread();
@@ -221,7 +219,7 @@ public class GameTimer {
 	 * Stop all running timers
 	 */
 	public void stopAllTimers() {
-		synchronized( this) {
+		synchronized( this.timerList) {
 			for( GameTimerThread timer : timerList) {
 				timer.StopTimerThread();
 			}
@@ -237,7 +235,7 @@ public class GameTimer {
 	 * @return
 	 */
 	public int getNumberOfActiveTimers() {
-		synchronized( this) {
+		synchronized( this.timerList) {
 			return timerList.size();  
 		}
 	}
