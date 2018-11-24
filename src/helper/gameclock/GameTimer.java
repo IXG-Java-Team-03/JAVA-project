@@ -57,16 +57,14 @@ public class GameTimer {
 	 * @return true if the timer is started - false if not
 	 */
 	public boolean startTimer( int timeout, int interval, int timerNumber, timerCallback callbackClass) {
-		synchronized( this) {
-			if( isTimerRunning( timerNumber, callbackClass)) {
-				return false;	// timer already active
-			}
+		if( isTimerRunning( timerNumber, callbackClass)) {
+			return false;	// timer already active
 		}
 		GameTimerThread timer = new GameTimerThread( timeout, interval * 1000, timerNumber, callbackClass, this);
 		synchronized( this) {
 			timerList.add( timer);
 		}
-		timer.setName( "Clock-" + timeout + "s-"+ timerNumber + "-" + callbackClass.hashCode());
+		timer.setName( String.format( "GameTimer-%d*%ds-%d-%d", timeout, interval, timerNumber, callbackClass.hashCode()));
 		timer.start();
 		return true;		// timer started
 	}
@@ -101,16 +99,14 @@ public class GameTimer {
 	 * @return true if the timer is started - false if not
 	 */
 	public boolean startTimerDS( int timeout, int interval, int timerNumber, timerCallback callbackClass) {
-		synchronized( this) {
-			if( isTimerRunning( timerNumber, callbackClass)) {
-				return false;	// timer already active
-			}
+		if( isTimerRunning( timerNumber, callbackClass)) {
+			return false;	// timer already active
 		}
 		GameTimerThread timer = new GameTimerThread( timeout, interval * 100, timerNumber, callbackClass, this);
 		synchronized( this) {
 			timerList.add( timer);
 		}
-		timer.setName( "Clock-" + timeout + "s-"+ timerNumber + "-" + callbackClass.hashCode());
+		timer.setName( String.format( "GameTimer-%d*%dms-%d-%d", timeout, interval*100, timerNumber, callbackClass.hashCode()));
 		timer.start();
 		return true;		// timer started
 	}

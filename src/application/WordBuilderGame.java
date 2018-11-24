@@ -815,7 +815,7 @@ private void pickUpWord() {
 	}
 
 	@Override
-	public void clockTick( int currentValue, int timeoutValue, int timerNumber) {
+	public void clockTick( int currentValue, int timeoutValue, int timerNumber, long interval) {
 		// TODO Auto-generated method stub
 		
 		Platform.runLater(new Runnable() {
@@ -827,7 +827,7 @@ private void pickUpWord() {
 	}
 
 	@Override
-	public void clockExpired( int currentValue, int timeoutValue, int timerNumber) {
+	public void clockExpired( int currentValue, int timeoutValue, int timerNumber, long interval) {
 		// TODO Auto-generated method stub
 		Platform.runLater(new Runnable() {
 		    @Override
@@ -839,19 +839,19 @@ private void pickUpWord() {
 	}
 
 	@Override
-	public void clockStopped( int currentValue, int timeoutValue, int timerNumber) {
+	public void clockStopped( int currentValue, int timeoutValue, int timerNumber, long interval) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void clockPaused(int currentValue, int timeoutValue, int timerNumber) {
+	public void clockPaused(int currentValue, int timeoutValue, int timerNumber, long interval) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void clockRestarted(int currentValue, int timeoutValue, int timerNumber) {
+	public void clockRestarted(int currentValue, int timeoutValue, int timerNumber, long interval) {
 		// TODO Auto-generated method stub
 		
 	}

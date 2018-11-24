@@ -8,7 +8,7 @@ public interface timerCallback {
 	 * @param timeoutValue The end value of the timer
 	 * @param timerNumber The timer that this event refers to
 	 */
-	public void clockTick( int currentValue, int timeoutValue, int timerNumber);
+	public void clockTick( int currentValue, int timeoutValue, int timerNumber, long interval);
 	
 	/**
 	 * This callback method is called at the expiration of the timer
@@ -16,7 +16,7 @@ public interface timerCallback {
 	 * @param timeoutValue The end value of the timer
 	 * @param timerNumber The timer that this event refers to
 	 */
-	public void clockExpired( int currentValue, int timeoutValue, int timerNumber);
+	public void clockExpired( int currentValue, int timeoutValue, int timerNumber, long interval);
 	
 	/**
 	 * This callback method is called when the timer is stopped before its normal duration
@@ -24,7 +24,7 @@ public interface timerCallback {
 	 * @param timeoutValue The end value of the timer
 	 * @param timerNumber The timer that this event refers to
 	 */
-	public void clockStopped( int currentValue, int timeoutValue, int timerNumber);
+	public void clockStopped( int currentValue, int timeoutValue, int timerNumber, long interval);
 	
 	/**
 	 * This callback method is called when the timer is paused
@@ -32,7 +32,7 @@ public interface timerCallback {
 	 * @param timeoutValue The end value of the timer
 	 * @param timerNumber The timer that this event refers to
 	 */
-	public void clockPaused( int currentValue, int timeoutValue, int timerNumber);
+	public void clockPaused( int currentValue, int timeoutValue, int timerNumber, long interval);
 	
 	/**
 	 * This callback method is called when the timer is restarted after it was previously paused
@@ -40,5 +40,5 @@ public interface timerCallback {
 	 * @param timeoutValue The end value of the timer
 	 * @param timerNumber The timer that this event refers to
 	 */
-	public void clockRestarted( int currentValue, int timeoutValue, int timerNumber);
+	public void clockRestarted( int currentValue, int timeoutValue, int timerNumber, long interval);
 }

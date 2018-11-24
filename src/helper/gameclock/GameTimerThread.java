@@ -1,6 +1,6 @@
 package helper.gameclock;
 
-class GameTimerThread extends Thread {
+public class GameTimerThread extends Thread {
 	
 	private boolean timerRunning = false;
 	private boolean timerPaused = false;
@@ -27,7 +27,7 @@ class GameTimerThread extends Thread {
 	 * @param callerReference The reference to the caller
 	 * @param parent The timer pool object
 	 */
-	GameTimerThread( int timeout, int interval, int timerNumber, timerCallback callerReference, GameTimer parent) {
+	public GameTimerThread( int timeout, int interval, int timerNumber, timerCallback callerReference, GameTimer parent) {
 		this.timeoutValue = Math.max( 0, timeout);           // zero is the minimum value
 		this.interval = Math.max( 500, interval);			 // 500 ms is the minimum value
 		this.callerReference = callerReference;
@@ -50,7 +50,7 @@ class GameTimerThread extends Thread {
 		long CalculatedTimeout  = startTime + timeoutValue * interval;
 		long CalculatedInterval = startTime + interval;
 		
-		callerReference.clockTick( counter, timeoutValue, timerNumber);
+		callerReference.clockTick( counter, timeoutValue, timerNumber, interval);
 		
 		while( timerRunning) {
 			
@@ -72,12 +72,12 @@ class GameTimerThread extends Thread {
 				remainder			= 0;
 				CalculatedTimeout	= startTime + (timeoutValue - counter) * interval;
 				CalculatedInterval	= startTime + interval;
-				callerReference.clockRestarted( counter, timeoutValue, timerNumber);
+				callerReference.clockRestarted( counter, timeoutValue, timerNumber, interval);
 			}
 			
 			if( timerRunning && time >= CalculatedTimeout) {
 				timerRunning = false;
-				callerReference.clockExpired( timeoutValue, timeoutValue, timerNumber);
+				callerReference.clockExpired( timeoutValue, timeoutValue, timerNumber, interval);
 				break;
 			}
 			
@@ -85,7 +85,7 @@ class GameTimerThread extends Thread {
 				counter++;
 				intervalCounter++;
 				CalculatedInterval = startTime + intervalCounter * interval;
-				callerReference.clockTick( counter, timeoutValue, timerNumber);
+				callerReference.clockTick( counter, timeoutValue, timerNumber, interval);
 			}
 		}
 		parent.removeFromList( this);
@@ -114,7 +114,7 @@ class GameTimerThread extends Thread {
 	 */
 	void StopTimerThread() {
 		timerRunning = false;
-		callerReference.clockStopped( counter, timeoutValue, timerNumber);
+		callerReference.clockStopped( counter, timeoutValue, timerNumber, interval);
 	}
 	
 	
@@ -129,7 +129,7 @@ class GameTimerThread extends Thread {
 		recalculate = false;
 		long diff = System.currentTimeMillis() - startTime;
 		remainder = diff % interval;
-		callerReference.clockPaused( counter, timeoutValue, timerNumber);
+		callerReference.clockPaused( counter, timeoutValue, timerNumber, interval);
 	}
 	
 	
