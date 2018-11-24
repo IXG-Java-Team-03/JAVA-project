@@ -3,7 +3,7 @@ package helper.gameclock;
 public interface timerCallback {
 	
 	/**
-	 * This callback method is called whenever a time unit equal to "interval" seconds elapses
+	 * This callback method is called whenever a time unit equal to "interval" elapses
 	 * @param currentValue The current value of the timer
 	 * @param timeoutValue The end value of the timer
 	 * @param timerNumber The timer that this event refers to

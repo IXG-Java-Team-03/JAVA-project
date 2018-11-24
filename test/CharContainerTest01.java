@@ -262,11 +262,9 @@ public class CharContainerTest01 {
 			Method method = obj1.getClass().getDeclaredMethod( "getHighestIndex");
 			method.setAccessible(true);
 			length = (int) method.invoke( obj1);
-
-		} catch (NoSuchMethodException | SecurityException e) {
-		} catch (IllegalAccessException e) {
-		} catch (IllegalArgumentException e) {
-		} catch (InvocationTargetException e) {
+		} 
+		catch (NoSuchMethodException | SecurityException | IllegalAccessException | 
+				 IllegalArgumentException | InvocationTargetException e) {
 		}
 		assertEquals( -1, length);
 		
@@ -278,11 +276,9 @@ public class CharContainerTest01 {
 			Method method = obj1.getClass().getDeclaredMethod( "getHighestIndex");
 			method.setAccessible(true);
 			length = (int) method.invoke( obj1);
-
-		} catch (NoSuchMethodException | SecurityException e) {
-		} catch (IllegalAccessException e) {
-		} catch (IllegalArgumentException e) {
-		} catch (InvocationTargetException e) {
+		} 
+		catch (NoSuchMethodException | SecurityException | IllegalAccessException | 
+				 IllegalArgumentException | InvocationTargetException e) {
 		}
 		assertEquals( 5, length);
 
@@ -292,11 +288,9 @@ public class CharContainerTest01 {
 			Method method = obj1.getClass().getDeclaredMethod( "getHighestIndex");
 			method.setAccessible(true);
 			length = (int) method.invoke( obj1);
-
-		} catch (NoSuchMethodException | SecurityException e) {
-		} catch (IllegalAccessException e) {
-		} catch (IllegalArgumentException e) {
-		} catch (InvocationTargetException e) {
+		} 
+		catch (NoSuchMethodException | SecurityException | IllegalAccessException | 
+				 IllegalArgumentException | InvocationTargetException e) {
 		}
 		assertEquals( 4, length);
 	}

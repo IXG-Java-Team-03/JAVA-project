@@ -22,7 +22,8 @@ public class CharContainer {
 	private final char[] charArray;
 
 
-	/**
+	/**********************************************************************
+	 * 
 	 * Default constructor
 	 */
 	public CharContainer() {
@@ -32,7 +33,9 @@ public class CharContainer {
 		}
 	}
 
-	/**
+	
+	
+	/**********************************************************************
 	 * Constructor with initial data
 	 * @param letters Initial letters to populate the array
 	 */
@@ -41,7 +44,9 @@ public class CharContainer {
 		InitLetters( letters);
 	}
 
-	/**
+	
+	
+	/**********************************************************************
 	 * Insert the letters in the string into the array
 	 * @param letters Initial letters to populate the array
 	 */
@@ -63,7 +68,7 @@ public class CharContainer {
 	}
 
 
-	/**
+	/**********************************************************************
 	 * Insert one letter in the first empty position from the left
 	 * @param letter The input letter
 	 */
@@ -86,7 +91,9 @@ public class CharContainer {
 	}
 
 
-	/**
+	
+	
+	/**********************************************************************
 	 * Get the rightmost letter and remove it from the array.
 	 * @return <ul><li>The rightmost letter or</li>
 	 * <li> EMPTY_CHAR if nothing is stored in the container</li></ul>
@@ -108,8 +115,10 @@ public class CharContainer {
 		return EMPTY_CHAR;
 	}
 
+	
+	
 
-	/**
+	/**********************************************************************
 	 * Get the letter at the specified position. <br>
 	 * If there is no letter at this position, return EMPTY_CHAR value.
 	 * @param position The position to fetch data from
@@ -137,7 +146,7 @@ public class CharContainer {
 
 
 
-	/**
+	/**********************************************************************
 	 * Delete one letter at the specified position. <br>
 	 * The array is compacted, closing the space at the specified position
 	 * @param position The position to delete one letter
@@ -165,7 +174,7 @@ public class CharContainer {
 
 
 
-	/**
+	/**********************************************************************
 	 * Get the highest index of the non-empty stored letters (length-1)
 	 * @return The index of the rightmost non-empty stored letter.<br>
 	 *         If there are no stored characters, -1 will be returned.
@@ -180,7 +189,7 @@ public class CharContainer {
 
 
 
-	/**
+	/**********************************************************************
 	 * Return a string representation of the array data
 	 */
 	@Override
@@ -197,7 +206,7 @@ public class CharContainer {
 
 
 
-	/**
+	/**********************************************************************
 	 * Shuffle the characters of the array
 	 */
 	 public void ShuffleContainer() {

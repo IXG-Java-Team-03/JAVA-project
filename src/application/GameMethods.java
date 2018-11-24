@@ -9,16 +9,28 @@ package application;
  */
 public class GameMethods {
 	
+	
+	/**********************************************************************
+	 * 
+	 * @param wordFound
+	 */
 	public static void updateScore( String wordFound) {
 		WordBuilderGame.addScore( wordFound.length());
 	}
 	
 	
-	
+	/**********************************************************************
+	 * 
+	 */
 	public static void updateAvailablePositions() {
 		;
 	}
 	
+	
+	
+	/**********************************************************************
+	 * 
+	 */
 	public static void updateLevel() {
 		;
 	}

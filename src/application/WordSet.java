@@ -28,15 +28,27 @@ public class WordSet {
 
 
 
+    /**********************************************************************
+     * 
+     * @return
+     */
     public HashMap<Integer, ArrayList<String>> getWordsDB() {
 		return WordsDB;
 	}
 
+    
+    
+    /**********************************************************************
+     * 
+     * @param wordsDB
+     */
 	public void setWordsDB(HashMap<Integer, ArrayList<String>> wordsDB) {
 		WordsDB = wordsDB;
 	}
 
-	/**
+	
+	
+	/**********************************************************************
      * Get language value
      * @return language value
      */
@@ -44,7 +56,9 @@ public class WordSet {
     	return language;
 	}
 
-    /**
+    
+    
+    /**********************************************************************
      * Get minimum length
      * @return
      */
@@ -53,7 +67,9 @@ public class WordSet {
 	}
 
 
-    /**
+    
+    
+    /**********************************************************************
      * Get maximum length
      * @return
      */
@@ -62,7 +78,9 @@ public class WordSet {
 	}
 
 
-    /**
+    
+    
+    /**********************************************************************
      * Get size
      * @return
      */
@@ -71,7 +89,10 @@ public class WordSet {
 	}
 
 
-    /**
+    
+    
+    /**********************************************************************
+     * 
      * Returns an ArrayList with words from a text file
      * Words can be separated by any non-letter character
      * WARNING: A word with an invalid character that looks valid (eg an english A instead of
@@ -114,7 +135,9 @@ public class WordSet {
     }
 
 
-    /**
+    
+    
+    /**********************************************************************
      * Check if that is a valid letter
      * @param c		Input character
      * @param lang	Language selection (GR or EN)
@@ -138,7 +161,8 @@ public class WordSet {
 
 
 
-    /**
+    /**********************************************************************
+     * 
      * Reads from a directory where word files exist.
      * @param lang Language. Used to check validity of characters AND to select the
      * 				appropriate word files.
@@ -165,8 +189,12 @@ public class WordSet {
     }
 
 
+    
+    
+    
 
-    /**
+    /**********************************************************************
+     * 
      * Breaks the input string in letters and finds all words that can be created with them.
      * @param l
      * @return

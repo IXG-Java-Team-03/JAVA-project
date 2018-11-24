@@ -15,7 +15,8 @@ public class GameTimer {
 
 	
 	
-	/**
+	/**********************************************************************
+	 * 
 	 * Initiate a new clock if there is none already running
 	 * @param timeout The duration of the timer
 	 * @param interval The clock tick interval (seconds)
@@ -31,7 +32,8 @@ public class GameTimer {
 	
 	
 	
-	/**
+	/**********************************************************************
+	 * 
 	 * Initiate a new clock if there is none already running
 	 * @param timeout The duration of the timer
 	 * @param interval The clock tick interval (seconds)
@@ -46,7 +48,8 @@ public class GameTimer {
 	
 	
 	
-	/**
+	/**********************************************************************
+	 * 
 	 * Initiate a new clock if there is none already running
 	 * @param timeout The duration of the timer
 	 * @param interval The clock tick interval (seconds)
@@ -72,7 +75,8 @@ public class GameTimer {
 	
 	
 	
-	/**
+	/**********************************************************************
+	 * 
 	 * Initiate a new clock if there is none already running (interval in deciseconds)
 	 * @param timeout The duration of the timer
 	 * @param interval The clock tick interval (deciseconds)
@@ -88,7 +92,8 @@ public class GameTimer {
 
 	
 	
-	/**
+	/**********************************************************************
+	 * 
 	 * Initiate a new clock if there is none already running (interval in deciseconds)
 	 * @param timeout The duration of the timer
 	 * @param interval The clock tick interval (deciseconds)
@@ -113,7 +118,8 @@ public class GameTimer {
 	
 	
 
-	/**
+	/**********************************************************************
+	 * 
 	 * Notify the manager that the clock is stopped
 	 * @param timer
 	 */
@@ -126,7 +132,8 @@ public class GameTimer {
 	
 	
 	
-	/**
+	/**********************************************************************
+	 * 
 	 * Check if the clock is running
 	 * @param timerNumber
 	 * @param callbackClass
@@ -147,7 +154,8 @@ public class GameTimer {
 
 	
 	
-	/**
+	/**********************************************************************
+	 * 
 	 * Stop the indicated clock 
 	 * @param timerNumber
 	 * @param callbackClass
@@ -169,7 +177,8 @@ public class GameTimer {
 	
 	
 	
-	/**
+	/**********************************************************************
+	 * 
 	 * Stop the indicated clock 
 	 * @param timerNumber
 	 * @param callbackClass
@@ -193,7 +202,8 @@ public class GameTimer {
 	
 	
 	
-	/**
+	/**********************************************************************
+	 * 
 	 * Stop the indicated clock 
 	 * @param timerNumber
 	 * @param callbackClass
@@ -215,7 +225,8 @@ public class GameTimer {
 	
 	
 	
-	/**
+	/**********************************************************************
+	 * 
 	 * Stop all running timers
 	 */
 	public void stopAllTimers() {
@@ -230,7 +241,8 @@ public class GameTimer {
 	
 	
 	
-	/**
+	/**********************************************************************
+	 * 
 	 * Gets the number of active timers
 	 * @return
 	 */

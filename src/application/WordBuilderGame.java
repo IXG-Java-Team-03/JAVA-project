@@ -154,7 +154,10 @@ public class WordBuilderGame extends Application implements timerCallback {
 	
 	
 	
-	
+	/*********************************************************************
+	 * 
+	 * @return
+	 */
 	private HBox createTimer() {
 
 		if (STARTTIME != 0) {
@@ -185,19 +188,30 @@ public class WordBuilderGame extends Application implements timerCallback {
 
 	}
 
+	
+	
+	
+	/*********************************************************************
+	 * 
+	 * @param value
+	 */
 	public static void setStartTime(int value) {
 
 		STARTTIME = value;
 
 	}
-
-/**
- * We will normally need to pick-up a word that will give us the chance to create more words
- * of different sizes, with max size the size of the word initially picked up
- */
+	
 
 
-private void pickUpWord() {
+
+
+	/*********************************************************************
+	 * 
+	 * We will normally need to pick-up a word that will give us the chance to create more words
+	 * of different sizes, with max size the size of the word initially picked up
+	 * 
+	 */
+	private void pickUpWord() {
 
 		logger.entering( className, "pickUpWord");
 	
@@ -216,10 +230,11 @@ private void pickUpWord() {
 		/**
 		 * random position inside ArrayList
 		 */
-
 		int randomidx = rand.nextInt(listofMaxletters.size() + 1);
 
-		// shuffle word letters
+		/**
+		 *  shuffle word letters
+		 */
 		pickedWord = shuffleWord(listofMaxletters.get(randomidx));
 		
 		
@@ -232,7 +247,11 @@ private void pickUpWord() {
 
 
 
-
+	/*********************************************************************
+	 * 
+	 * @param word
+	 * @return
+	 */
 	private String shuffleWord(String word) {
 
 		logger.entering( className, "shuffleWord");
@@ -258,7 +277,10 @@ private void pickUpWord() {
 
 
 
-
+	/*********************************************************************
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		// thes ena thread gia na kaleis afto
 		LauncherImpl.launchApplication(WordBuilderGame.class, GamePreloader.class, args);
@@ -268,7 +290,9 @@ private void pickUpWord() {
 
 
 
-
+	/*********************************************************************
+	 * 
+	 */
 	public WordBuilderGame() {
 		
 		logger.entering( className, "WordBuilderGame constructor");
@@ -299,6 +323,11 @@ private void pickUpWord() {
 	
 	
 
+	
+	/*********************************************************************
+	 * 
+	 * 
+	 */
 	@Override
 	public void init() throws Exception {
 		
@@ -318,6 +347,13 @@ private void pickUpWord() {
 		logger.exiting( className, "init");
 	}
 
+	
+	
+	
+	
+	/*********************************************************************
+	 * 
+	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
@@ -371,6 +407,11 @@ private void pickUpWord() {
 
 	
 	
+	
+	/*********************************************************************
+	 * 
+	 * @param btn
+	 */
 	public void handleButtonAction(Button btn) {
 
 		logger.entering( className, "handleButtonAction");
@@ -401,6 +442,14 @@ private void pickUpWord() {
 		logger.exiting( className, "handleButtonAction");
 	}
 
+	
+	
+	
+	/*********************************************************************
+	 * 
+	 * @param numofWordstoFound
+	 * @return
+	 */
 	private String[] maxWordsForCurrentLevel(int numofWordstoFound) {
 		
 		int maxsize = 0;
@@ -417,6 +466,11 @@ private void pickUpWord() {
 	}
 	
 	
+	
+	/*********************************************************************
+	 * 
+	 * @param numofWordstoFound
+	 */
 	private void createLevel(int numofWordstoFound) {
 		
 		
@@ -497,6 +551,9 @@ private void pickUpWord() {
 	
 	
 	
+	/*********************************************************************
+	 * 
+	 */
 	private void SetGameLevel() {
 
 		logger.entering( className, "SetGameLevel");
@@ -520,7 +577,10 @@ private void pickUpWord() {
 		logger.exiting( className, "SetGameLevel");
 	}
 
-	/**
+	
+	
+	/*********************************************************************
+	 * 
 	 * @author Aris
 	 * @param value
 	 */
@@ -530,7 +590,10 @@ private void pickUpWord() {
 	}
 	
 	
-	/**
+	
+	
+	/*********************************************************************
+	 * 
 	 * @author Aris
 	 */
 	public void SetScore() {
@@ -539,6 +602,11 @@ private void pickUpWord() {
 	}
 	
 	
+	
+	
+	/*********************************************************************
+	 * 
+	 */
 	private void SetScoreLabelData( ) {
 
 		logger.entering( className, "SetScore");
@@ -564,7 +632,8 @@ private void pickUpWord() {
 
 	
 	
-	/**
+	/*********************************************************************
+	 * 
 	 * @author Nikos
 	 */
 	void updateButtons() {
@@ -604,7 +673,8 @@ private void pickUpWord() {
 
 
 
-	/**
+	/*********************************************************************
+	 * 
 	 * @author Soco + others
 	 */
 	final EventHandler<ActionEvent> myHandler = new EventHandler<ActionEvent>() {
@@ -679,6 +749,12 @@ private void pickUpWord() {
 
 
 
+	/*********************************************************************
+	 * 
+	 * @param gpane
+	 * @param rows
+	 * @param cols
+	 */
 	private void setGridPaneRowsCols(GridPane gpane, int rows, int cols) {
 
 		logger.entering( className, "setGridPaneRowsCols");
@@ -709,6 +785,10 @@ private void pickUpWord() {
 
 
 
+	/*********************************************************************
+	 * 
+	 * @param letters
+	 */
 	private void createLetterSeqBut(String letters) {
 
 		logger.entering( className, "createLetterSeqBut");
@@ -746,6 +826,13 @@ private void pickUpWord() {
 		logger.exiting( className, "createLetterSeqBut");
 	}
 
+	
+	
+	/*********************************************************************
+	 * 
+	 * @param slogan
+	 * @return
+	 */
 	private Button createNewButton(String slogan) {
 
 		Button btn = new Button(slogan);
@@ -759,6 +846,13 @@ private void pickUpWord() {
 		return btn;
 	}
 
+	
+	
+	/*********************************************************************
+	 * 
+	 * @param button
+	 * @param color
+	 */
 	private void setEffectShadow(Button button,Color color) {
 
 		DropShadow shadow = new DropShadow();
@@ -784,6 +878,13 @@ private void pickUpWord() {
 
 
 
+	/*********************************************************************
+	 * 
+	 * @param filepath
+	 * @param tooltipslogan
+	 * @param color
+	 * @return
+	 */
 	private Button createControlButton(String filepath,String tooltipslogan,Color color) {
 
 		Button btn = null;
@@ -814,6 +915,9 @@ private void pickUpWord() {
 
 	}
 
+	/*********************************************************************
+	 * 
+	 */
 	@Override
 	public void clockTick( int currentValue, int timeoutValue, int timerNumber, long interval) {
 		// TODO Auto-generated method stub
@@ -826,6 +930,9 @@ private void pickUpWord() {
 		});
 	}
 
+	/*********************************************************************
+	 * 
+	 */
 	@Override
 	public void clockExpired( int currentValue, int timeoutValue, int timerNumber, long interval) {
 		// TODO Auto-generated method stub
@@ -838,18 +945,27 @@ private void pickUpWord() {
 		
 	}
 
+	/*********************************************************************
+	 * 
+	 */
 	@Override
 	public void clockStopped( int currentValue, int timeoutValue, int timerNumber, long interval) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/*********************************************************************
+	 * 
+	 */
 	@Override
 	public void clockPaused(int currentValue, int timeoutValue, int timerNumber, long interval) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/*********************************************************************
+	 * 
+	 */
 	@Override
 	public void clockRestarted(int currentValue, int timeoutValue, int timerNumber, long interval) {
 		// TODO Auto-generated method stub

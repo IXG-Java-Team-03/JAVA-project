@@ -24,7 +24,7 @@ public class GameTimerThread extends Thread {
 	 * @param timeout The number of repetitions that will count for this counter
 	 * @param interval The interval in milliseconds
 	 * @param timerNumber The timer number 
-	 * @param callerReference The reference to the caller
+	 * @param callerReference The reference to the calling procedure
 	 * @param parent The timer pool object
 	 */
 	public GameTimerThread( int timeout, int interval, int timerNumber, timerCallback callerReference, GameTimer parent) {
@@ -96,14 +96,14 @@ public class GameTimerThread extends Thread {
 
 	/**
 	 * Check if this thread is running.
-	 * @param timerNumber
-	 * @param callbackClass
+	 * @param timerNumber The timer number
+	 * @param callerReference The reference to the calling procedure
 	 * @return true if the clock is running
 	 */
-	boolean isActiveThread( int timerNumber, timerCallback callbackClass) {
-		return  timerNumber == this.timerNumber && 
-				callbackClass == this.callerReference &&
-				timerRunning;
+	boolean isActiveThread( int timerNumber, timerCallback callerReference) {
+		return  timerRunning && 
+				this.timerNumber == timerNumber && 
+				this.callerReference.equals(callerReference);
 	}
 	
 	

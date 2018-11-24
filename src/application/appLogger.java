@@ -18,6 +18,10 @@ public class appLogger extends Logger {
 
 		private final DateFormat df = new SimpleDateFormat("HH:mm:ss.SSS");
 
+		
+		/**********************************************************************
+		 * 
+		 */
 		@Override
 		public synchronized String format( LogRecord record) {
 
@@ -46,6 +50,10 @@ public class appLogger extends Logger {
 		}
 	}
 
+	
+	/**********************************************************************
+	 * 
+	 */
 	@Override
 	public void setLevel( Level l) {
 		Handler[] handlers = this.getHandlers();
@@ -57,6 +65,12 @@ public class appLogger extends Logger {
 	}
 
 
+	
+	/**********************************************************************
+	 * 
+	 * @param name
+	 * @param resourceBundleName
+	 */
 	protected appLogger(String name, String resourceBundleName) {
 		super(name, resourceBundleName);
 

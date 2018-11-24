@@ -17,6 +17,12 @@ public class validateWords {
 	private final static appLogger logger = new appLogger( className, null);
 
 	
+	
+	/**********************************************************************
+	 * 
+	 * @param word
+	 * @return
+	 */
 	private static String trimWord( String word) {
 		StringBuilder sbWord = new StringBuilder(word);
 		String newWord = "";
@@ -40,7 +46,11 @@ public class validateWords {
 		return newWord;
 	}
 	
-	/**
+	
+	
+	
+	/**********************************************************************
+	 * 
 	 * check if the given word has a valid format - only letters
 	 */
 	public static boolean isValidFormat(String word) {
@@ -63,8 +73,10 @@ public class validateWords {
 	}
 
 
+	
 
-	/**
+	/**********************************************************************
+	 * 
 	 * check if the word is valid to be searched in the ArrayList
 	 */
 	public static String isValidWord(String word) throws InvalidWordException {
@@ -89,7 +101,8 @@ public class validateWords {
 
 
 
-	/**
+	/**********************************************************************
+	 * 
 	 * Check if the word exists in the arrayList of valid words
 	 */
 	public static void searchInArrayList(ArrayList<String> wordsDB, String wordForSearch) {
