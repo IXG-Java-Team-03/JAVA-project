@@ -23,7 +23,8 @@ public class GameMethods {
 	 * 
 	 */
 	public static void updateAvailablePositions() {
-		;
+		// TODO: implement method updateAvailablePositions
+		
 	}
 	
 	
@@ -32,7 +33,8 @@ public class GameMethods {
 	 * 
 	 */
 	public static void updateLevel() {
-		;
+		// TODO: implement method updateLevel
+
 	}
 
 }

@@ -20,8 +20,10 @@ public class validateWords {
 	
 	/**********************************************************************
 	 * 
-	 * @param word
-	 * @return
+	 * Removes any leading or trailing whitespace characters 
+	 * 
+	 * @param word The input word
+	 * @return The cleaned-up word
 	 */
 	private static String trimWord( String word) {
 		StringBuilder sbWord = new StringBuilder(word);
@@ -51,7 +53,10 @@ public class validateWords {
 	
 	/**********************************************************************
 	 * 
-	 * check if the given word has a valid format - only letters
+	 * Check if the given word has a valid format - only letters
+	 * 
+	 * @param word The input word
+	 * @return True if the word is in the correct format
 	 */
 	public static boolean isValidFormat(String word) {
 
@@ -77,7 +82,11 @@ public class validateWords {
 
 	/**********************************************************************
 	 * 
-	 * check if the word is valid to be searched in the ArrayList
+	 * Check if the word is valid to be searched in the ArrayList
+	 * 
+	 * @param word The input word
+	 * @return The word that should be used for searching
+	 * @throws InvalidWordException
 	 */
 	public static String isValidWord(String word) throws InvalidWordException {
 
@@ -104,6 +113,9 @@ public class validateWords {
 	/**********************************************************************
 	 * 
 	 * Check if the word exists in the arrayList of valid words
+	 * 
+	 * @param wordsDB Arraylist with all the valid words
+	 * @param wordForSearch The input word
 	 */
 	public static void searchInArrayList(ArrayList<String> wordsDB, String wordForSearch) {
 

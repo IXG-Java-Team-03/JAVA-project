@@ -723,15 +723,17 @@ public class WordBuilderGame extends Application implements timerCallback {
 				catch (InvalidWordException ex) {
 					wordForSearch = "";
 					logger.throwing( className, "buttons event handler", ex);
-					
+
 					////////////////////////////////////////////////////////////////////////////
-					// EDW MPOREI NA FLASH KOKKINO STA BUTTONS
+					// TODO: EDW MPOREI NA FLASH KOKKINO STA BUTTONS
 					////////////////////////////////////////////////////////////////////////////
 				}
 
 				logger.log( Level.INFO, "check1 {0}", event.getSource().toString());
 
 			} else if (x == resetword) {
+				// TODO : IMPLEMENT RESET BUTTON
+				
 				logger.log( Level.INFO, "Reset word {0}", event.getSource().toString());
 
 			} else if (x == shuffleword) {
@@ -739,6 +741,7 @@ public class WordBuilderGame extends Application implements timerCallback {
 				charArrayLower.ShuffleContainer();
 				charArrayUpper.InitLetters("");
 				updateButtons();
+				
 				logger.log( Level.INFO, "Shuffle letters pressed {0}", event.getSource().toString());
 			}
 
@@ -920,7 +923,6 @@ public class WordBuilderGame extends Application implements timerCallback {
 	 */
 	@Override
 	public void clockTick( int currentValue, int timeoutValue, int timerNumber, long interval) {
-		// TODO Auto-generated method stub
 		
 		Platform.runLater(new Runnable() {
 		    @Override
@@ -935,7 +937,6 @@ public class WordBuilderGame extends Application implements timerCallback {
 	 */
 	@Override
 	public void clockExpired( int currentValue, int timeoutValue, int timerNumber, long interval) {
-		// TODO Auto-generated method stub
 		Platform.runLater(new Runnable() {
 		    @Override
 		    public void run() {
@@ -950,7 +951,6 @@ public class WordBuilderGame extends Application implements timerCallback {
 	 */
 	@Override
 	public void clockStopped( int currentValue, int timeoutValue, int timerNumber, long interval) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -959,7 +959,6 @@ public class WordBuilderGame extends Application implements timerCallback {
 	 */
 	@Override
 	public void clockPaused(int currentValue, int timeoutValue, int timerNumber, long interval) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -968,7 +967,6 @@ public class WordBuilderGame extends Application implements timerCallback {
 	 */
 	@Override
 	public void clockRestarted(int currentValue, int timeoutValue, int timerNumber, long interval) {
-		// TODO Auto-generated method stub
 		
 	}
 

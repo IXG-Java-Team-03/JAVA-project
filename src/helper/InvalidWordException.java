@@ -4,6 +4,8 @@
 package helper;
 
 /**
+ * This exception is thrown when there is a need to abort checking for a word in the dictionary
+ * 
  * @author nkot
  *
  */
@@ -14,13 +16,20 @@ public class InvalidWordException extends Exception {
 	private String message;
 	
 
+	/*********************************************************************
+	 * 
+	 * This exception is thrown when there is a need to abort checking for a word in the dictionary
+	 * 
+	 * @param message The text to be output in the exception message
+	 */
 	public InvalidWordException( String message) {
 		this.message = message;
 	}
 
 	
-	/**
-	 * This formats the exception in a string format
+	/*********************************************************************
+	 * 
+	 * Formats the exception message in a string format
 	 */
 	@Override
 	public String toString() {
