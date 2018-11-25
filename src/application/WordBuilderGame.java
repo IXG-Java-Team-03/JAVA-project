@@ -51,6 +51,11 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+
+
+
+
+
 /**
  * hdfghdfghdfgh
  * @author soco
@@ -116,6 +121,11 @@ public class WordBuilderGame extends Application implements timerCallback {
 	private ArrayList<Button> availableLetters, availablePositions;
 	
 	public static WordBuilderGame selfReference;
+	
+	/**
+	 * Instance of FillTrans class that will be used when a word is invalid
+	 */
+	private FillTrans ft;
 	
 
 	/**
@@ -309,6 +319,9 @@ public class WordBuilderGame extends Application implements timerCallback {
 
 		selfReference = this;
 		
+		
+		
+		
 		startGame.setId("default-button");
 		quitGame.setId("default-button");
 
@@ -386,6 +399,9 @@ public class WordBuilderGame extends Application implements timerCallback {
 			scene = new Scene(root, GamePreloader.WIDTH, GamePreloader.HEIGHT);
 
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			
+			ft = new FillTrans(scene,"application.css");
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -667,6 +683,11 @@ public class WordBuilderGame extends Application implements timerCallback {
 				b.setText(String.valueOf(EmptyLabel));
 			}
 		}
+		
+		//it is a good place to call flashOff since even there is no flash
+		//of available positions, this method guarantees the call safety
+		ft.flashOff(availablePositions);
+		
 		logger.exiting( className, "updateButtons");
 	}
 
@@ -727,12 +748,18 @@ public class WordBuilderGame extends Application implements timerCallback {
 					////////////////////////////////////////////////////////////////////////////
 					// TODO: EDW MPOREI NA FLASH KOKKINO STA BUTTONS
 					////////////////////////////////////////////////////////////////////////////
+					
+					
+					ft.flashOn(availablePositions,FillTrans.Color.RED);
+					
 				}
 
 				logger.log( Level.INFO, "check1 {0}", event.getSource().toString());
 
 			} else if (x == resetword) {
 				// TODO : IMPLEMENT RESET BUTTON
+				
+				ft.flashOff(availablePositions);
 				
 				logger.log( Level.INFO, "Reset word {0}", event.getSource().toString());
 

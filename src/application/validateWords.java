@@ -117,7 +117,7 @@ public class validateWords {
 	 * @param wordsDB Arraylist with all the valid words
 	 * @param wordForSearch The input word
 	 */
-	public static void searchInArrayList(ArrayList<String> wordsDB, String wordForSearch) {
+	public static void searchInArrayList(ArrayList<String> wordsDB, String wordForSearch) throws InvalidWordException {
 
 		if (wordsDB.contains(wordForSearch)) {
 			
@@ -139,6 +139,12 @@ public class validateWords {
 		} else {
 
 			logger.info( "Invalid Word, Not in the arrayList or already found. Try with another word");
+			
+			throw new InvalidWordException("Invalid Word, Not in the arrayList or already found. Try with another word");
+			
+			
+			
+			
 
 		}
 	}
