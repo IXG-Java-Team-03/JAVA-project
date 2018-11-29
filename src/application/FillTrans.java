@@ -36,12 +36,12 @@ public class FillTrans {
 		
 		
 			Timeline timeline = new Timeline(
-					new KeyFrame(Duration.millis(0), e -> btn.setId(".button")),
-	                new KeyFrame(Duration.millis(1000), e -> btn.setId("Button-"+color.toString()))
+					new KeyFrame(Duration.millis(0), e -> btn.setId("Button-"+color.toString())),
+	                new KeyFrame(Duration.millis(1000), e -> btn.setId(".button"))
 	        );
 			
 			//perform animation forever until stop is issued
-			timeline.setCycleCount(Timeline.INDEFINITE);
+			timeline.setCycleCount(2);//Timeline.INDEFINITE);
 			
 			timeline.setAutoReverse(true);
 			
