@@ -13,7 +13,6 @@ public class GameTimerThread extends Thread {
 	private final GameTimer parent;
 	
 	private int counter;
-	private int intervalCounter;
 	private long startTime=0;
 	private long remainder=0;
 
@@ -41,13 +40,13 @@ public class GameTimerThread extends Thread {
 	/**
 	 * Thread run method
 	 */
+	@Override
 	public void run() {
 		
 		timerRunning = true;
 		counter 		= 0;
-		intervalCounter = 1;
 		startTime          		= System.currentTimeMillis();
-		long CalculatedTimeout  = startTime + timeoutValue * interval;
+		long CalculatedTimeout  = startTime + interval * timeoutValue;
 		long CalculatedInterval = startTime + interval;
 		
 		callerReference.clockTick( counter, timeoutValue, timerNumber, interval);
@@ -67,11 +66,10 @@ public class GameTimerThread extends Thread {
 
 			if( recalculate) {
 				recalculate			= false;
-				intervalCounter		= 1;					// reset the interval counter to 1
-				startTime			= time - remainder;		// go back to the start of the paused interval
+				startTime			= time - remainder;		// recalculate the start time
 				remainder			= 0;
-				CalculatedTimeout	= startTime + (timeoutValue - counter) * interval;
-				CalculatedInterval	= startTime + interval;
+				CalculatedTimeout	= startTime + interval * timeoutValue;		// recalculate the timeout value
+				CalculatedInterval	= startTime + interval * (counter+1);		// get the next clock tick
 				callerReference.clockRestarted( counter, timeoutValue, timerNumber, interval);
 			}
 			
@@ -83,8 +81,7 @@ public class GameTimerThread extends Thread {
 			
 			if( timerRunning && time >= CalculatedInterval) {
 				counter++;
-				intervalCounter++;
-				CalculatedInterval = startTime + intervalCounter * interval;
+				CalculatedInterval = startTime + interval * (counter+1);
 				callerReference.clockTick( counter, timeoutValue, timerNumber, interval);
 			}
 		}
@@ -96,14 +93,14 @@ public class GameTimerThread extends Thread {
 
 	/**
 	 * Check if this thread is running.
-	 * @param timerNumber The timer number
-	 * @param callerReference The reference to the calling procedure
+	 * @param timerNumber1 The timer number
+	 * @param callerReference1 The reference to the calling procedure
 	 * @return true if the clock is running
 	 */
-	boolean isActiveThread( int timerNumber, timerCallback callerReference) {
+	boolean isActiveThread( int timerNumber1, timerCallback callerReference1) {
 		return  timerRunning && 
-				this.timerNumber == timerNumber && 
-				this.callerReference.equals(callerReference);
+				this.timerNumber == timerNumber1 && 
+				this.callerReference.equals(callerReference1);
 	}
 	
 	
@@ -127,8 +124,7 @@ public class GameTimerThread extends Thread {
 	void PauseTimerThread() {
 		timerPaused = true;
 		recalculate = false;
-		long diff = System.currentTimeMillis() - startTime;
-		remainder = diff % interval;
+		remainder = System.currentTimeMillis() - startTime;
 		callerReference.clockPaused( counter, timeoutValue, timerNumber, interval);
 	}
 	

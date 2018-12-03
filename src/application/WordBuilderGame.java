@@ -179,7 +179,7 @@ public class WordBuilderGame extends Application implements timerCallback {
 
 
 			timerLabel = new Label();
-			timerLabel.setTextFill(Color.GREEN);
+			timerLabel.setTextFill(Color.BLUE);
 			timerLabel.setStyle("-fx-font-size:28px;");
 			timerLabel.setText( String.valueOf(STARTTIME));
 			
