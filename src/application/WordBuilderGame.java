@@ -999,6 +999,17 @@ public class WordBuilderGame extends Application implements timerCallback {
 
 
 
+	/*********************************************************************
+	 * 
+	 */
+	public String[] getSelectedWords() {
+		int maxNum = Math.min( 4, foundWords.size());
+		String[] retval = new String[maxNum];
+		for( int i=0; i<maxNum; i++) {
+			retval[i] = foundWords.get(i);
+		}
+		return retval;
+	}
 
 
 }
