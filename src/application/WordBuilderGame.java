@@ -964,12 +964,15 @@ public class WordBuilderGame extends Application implements timerCallback {
 	 */
 	@Override
 	public void clockExpired( int currentValue, int timeoutValue, int timerNumber, long interval) {
+		
 		Platform.runLater(new Runnable() {
 		    @Override
 		    public void run() {
 		    	timerLabel.setText( String.valueOf( timeoutValue-currentValue));
 		    }
 		});
+		
+		// TODO : Add actions for timer expiry
 		
 	}
 
