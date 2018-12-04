@@ -4,8 +4,8 @@ import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Properties;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 import com.sun.javafx.application.LauncherImpl;
@@ -13,15 +13,9 @@ import com.sun.javafx.application.LauncherImpl;
 import helper.InvalidWordException;
 import helper.gameclock.GameTimer;
 import helper.gameclock.timerCallback;
-import javafx.animation.AnimationTimer;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.application.Preloader;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -49,7 +43,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 
 
@@ -108,7 +101,7 @@ public class WordBuilderGame extends Application implements timerCallback {
 
 	private BorderPane root;
 
-	private static int CurrentLevel;
+	public static int CurrentLevel;
 
 	private Scene scene;
 
@@ -128,10 +121,10 @@ public class WordBuilderGame extends Application implements timerCallback {
 	private FillTrans ft;
 	
 
-	/**
-	 * organized words in arraylist of different sizes
-	 */
-	private HashMap<Integer, ArrayList<String>> wdb;
+//	/**
+//	 * organized words in arraylist of different sizes
+//	 */
+//	private HashMap<Integer, ArrayList<String>> wdb;
 
 
 
@@ -150,10 +143,7 @@ public class WordBuilderGame extends Application implements timerCallback {
 
 	public String initialLetters;
 
-	/**
-	 *  variable for the timer value
-	 */
-	private static Integer STARTTIME = 60;
+
 
 
 	private Stage applicationStage;
@@ -170,7 +160,17 @@ public class WordBuilderGame extends Application implements timerCallback {
 	 */
 	private HBox createTimer() {
 
-		if (STARTTIME != 0) {
+		int TimerValue      = 60;
+		int TimerInterval   = 1;
+		String TimerUnit    = "sec";
+		Properties params   = GameMethods.getLevelParameters( CurrentLevel); 
+		if( params != null) {
+			TimerValue      = (int) params.get( "Timer");
+			TimerInterval   = (int) params.get( "TimerInterval");
+			TimerUnit    	= (String) params.get( "TimerUnit");
+		}
+		
+		if (TimerValue != 0) {
 
 
 			Label timeSlogan = new Label("Time");
@@ -181,14 +181,19 @@ public class WordBuilderGame extends Application implements timerCallback {
 			timerLabel = new Label();
 			timerLabel.setTextFill(Color.BLUE);
 			timerLabel.setStyle("-fx-font-size:28px;");
-			timerLabel.setText( String.valueOf(STARTTIME));
+			timerLabel.setText( String.valueOf(TimerValue));
 			
-			timer.startTimer( STARTTIME, this);				// 1-second-long timer
+			if( TimerUnit.equals( "sec")) {
+				timer.startTimer( TimerValue, TimerInterval, this);
+			}
+			else {
+				timer.startTimerDS( TimerValue, TimerInterval, this);
+			}
 
 			HBox hb = new HBox(20);
 			hb.setAlignment(Pos.BASELINE_LEFT);
 			hb.getChildren().addAll(timeSlogan, timerLabel);
-			//hb.setLayoutY(20);
+//			hb.setLayoutY(20);
 
 			return hb;
 
@@ -201,17 +206,17 @@ public class WordBuilderGame extends Application implements timerCallback {
 	
 	
 	
-	/*********************************************************************
-	 * 
-	 * @param value
-	 */
-	public static void setStartTime(int value) {
-
-		STARTTIME = value;
-
-	}
-	
-
+//	/*********************************************************************
+//	 * 
+//	 * @param value
+//	 */
+//	public static void setStartTime(int value) {
+//
+//		STARTTIME = value;
+//
+//	}
+//	
+//
 
 
 
@@ -973,7 +978,12 @@ public class WordBuilderGame extends Application implements timerCallback {
 		});
 		
 		// TODO : Add actions for timer expiry
-		
+//		int PointsForNextLevel = 100;
+//		Properties params = GameMethods.getLevelParameters( CurrentLevel);
+//		if( params != null) {
+//			PointsForNextLevel = (int) params.get( "NextLevel");
+//		}
+
 	}
 
 	/*********************************************************************
