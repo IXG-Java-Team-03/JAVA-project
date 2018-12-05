@@ -30,6 +30,8 @@ public class CharContainerTest02 {
 		assertEquals( 1, index);
 		index = obj1.getLetterIndex( "ARENA " + letters, 4);
 		assertEquals( 2, index);
+		index = obj1.getLetterIndex( "ARENA " + letters, 5);
+		assertEquals( CharContainer.NO_INDEX, index);
 	}
 
 
@@ -65,12 +67,15 @@ public class CharContainerTest02 {
 		index = obj1.getLetterIndex( "RANE " + letters, 3);
 		assertEquals( 5, index);
 		index = obj1.getLetterIndex( "RANE " + letters, 4);
-		assertEquals( -1, index);
+		assertEquals( CharContainer.NO_INDEX, index);
 		index = obj1.getLetterIndex( "RANE " + letters, 5);
-		assertEquals( -1, index);
+		assertEquals( CharContainer.NO_INDEX, index);
 		index = obj1.getLetterIndex( "RANEERTRWE " + letters, 6);
-		assertEquals( -1, index);
-	}
+		assertEquals( CharContainer.NO_INDEX, index);
+
+		index = obj1.getLetterIndex( "RANE " + letters, -1);
+		assertEquals( CharContainer.NO_INDEX, index);
+}
 
 	@Test
 	public void test04() {

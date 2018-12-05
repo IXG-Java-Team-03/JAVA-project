@@ -4,7 +4,8 @@
 package application;
 
 import java.lang.invoke.MethodHandles;
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -16,8 +17,10 @@ public class CharContainer {
 	private final static String className = MethodHandles.lookup().lookupClass().getSimpleName();
 	private final static appLogger logger = new appLogger( className, null);
 
-	public static final int MAX_CHARACTERS = 7;
-	public static final char EMPTY_CHAR = 0;
+	public static final int    MAX_CHARACTERS = 7;
+	public static final char   EMPTY_CHAR     = 0;
+	public static final int    NO_INDEX       = -1;
+	public static final String WORD_SEPARATOR = " ";
 
 	private final char[] charArray;
 
@@ -27,9 +30,10 @@ public class CharContainer {
 	 * Default constructor
 	 */
 	public CharContainer() {
-		charArray = new char[MAX_CHARACTERS];
+		
+		charArray = new char[ MAX_CHARACTERS];		
 		for( int i = 0; i < MAX_CHARACTERS; i++) {
-			charArray[i] = EMPTY_CHAR;
+			charArray[i]  = EMPTY_CHAR;
 		}
 	}
 
@@ -40,7 +44,8 @@ public class CharContainer {
 	 * @param letters Initial letters to populate the array
 	 */
 	public CharContainer( String letters) {
-		charArray = new char[MAX_CHARACTERS];
+		
+		charArray = new char[ MAX_CHARACTERS];
 		InitLetters( letters);
 	}
 
@@ -59,9 +64,9 @@ public class CharContainer {
 		System.arraycopy( letters.toCharArray(), 0,					// source array
 						  charArray, 0, 							// target array
 						  numChars);								// number of elements
-
+		
 		for( int i = numChars; i < MAX_CHARACTERS; i++) {
-			charArray[i] = EMPTY_CHAR;
+			charArray[i]  = EMPTY_CHAR;
 		}
 
 		logger.exiting( className, "InitLetters");
@@ -213,61 +218,65 @@ public class CharContainer {
 
 		logger.entering( className, "ShuffleContainer");
 
-		Random r = new Random();
-		int numChars = getHighestIndex();
-
-		// Scramble the letters using the standard Fisher-Yates shuffle,
-		for( int i=0 ; i < numChars ; i++ )
-		  {
-			int j;
-			do {
-				j = r.nextInt( numChars);
-			} while (i==j);
-
-		    // Swap letters
-		    char temp = charArray[i];
-		    charArray[i] = charArray[j];
-		    charArray[j] = temp;
-		  }
-
+		int numChars = getHighestIndex()+1;
+		ArrayList<Character> charList = new ArrayList<>();
+		
+		for( int i=0; i<numChars; i++) {
+			charList.add( charArray[i]);
+		}
+		
+		Collections.shuffle(charList);
+		
+		for( int i=0; i< charList.size(); i++) {
+			charArray[i] = charList.get(i);
+		}
+		
 		logger.exiting( className, "ShuffleContainer");
 	 }
 
+	 
+	 
 	/**********************************************************************
-	 * 
+	 * This procedure provides the index of the letter in the original word
+	 * in the randomized array of letters.<br>
+	 * There is an effort to have a deterministic function. Therefore,
+	 * subsequent calls produce the same result.<br>
+	 * It is mainly used by Jubula to discover the correct keypresses.
+	 * @author Nikos
+	 * @param word The concatentation of the selected word and the randomized letters separated by one space
+	 * @param index The letter index in the original word 
+	 * @return The letter index in the randomized word
 	 */
-	 public int getLetterIndex( String word, int index) {
-		 String[] words = word.split( " ");
-		 if( words.length != 2) {
-			 return -1;
-		 }
-		 if( index >= words[0].length()) {
-			 return -1;
-		 }
-		 if( index >= words[1].length()) {
-			 return -1;
-		 }
-		 char[] letters1 = words[0].toCharArray();
-		 char[] letters2 = words[1].toCharArray();
-		 int[]  indexes = new int[letters1.length];
-		 
-		 for( int i=0; i<indexes.length; i++) {
-			 indexes[i] = -1;
-		 }
-		 for( int i=0; i < words[0].length(); i++) {		// iterate all input letters
-	 		for( int j=0; j<words[1].length(); j++) {		// iterate word letters
-nextLetter:
-			 	if( letters1[i] == letters2[j]) {			// if letter found
-					for( int x=0; x<i; x++) {				// check if previously found
-						if( indexes[x] == j) {
-							break nextLetter;				// continue with next letters
+	public int getLetterIndex(String word, int index) {
+		String[] words = word.split( WORD_SEPARATOR);
+		if (words.length != 2) {
+			return NO_INDEX;
+		}
+		if (index<0 || index >= words[0].length() || index >= words[1].length()) {
+			return NO_INDEX;
+		}
+
+		char[] letters1 = words[0].toCharArray();
+		char[] letters2 = words[1].toCharArray();
+		int[] indexes = new int[letters1.length];
+
+		for (int i = 0; i < indexes.length; i++) {
+			indexes[i] = NO_INDEX;
+		}
+		for (int i = 0; i < letters1.length; i++) { 				// iterate all input letters
+			for (int j = 0; j < letters2.length; j++) { 			// iterate word letters
+				nextLetter: 
+				if (letters1[i] == letters2[j]) { 					// if letter found
+					for (int x = 0; x < i; x++) { 					// check if previously found
+						if (indexes[x] == j) {
+							break nextLetter; 						// continue with next letters
 						}
 					}
-					indexes[i] = j;
+					indexes[i] = j;					// store the randomized letter index in the output array
 					break;
-			 	}
- 			}
- 		}
+				}
+			}
+		}
 		return indexes[index];
 	}
 	 

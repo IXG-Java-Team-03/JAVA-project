@@ -786,6 +786,7 @@ public class WordBuilderGame extends Application implements timerCallback {
 
 	/*********************************************************************
 	 * 
+	 * @author soco
 	 * @param gpane
 	 * @param rows
 	 * @param cols
@@ -822,6 +823,7 @@ public class WordBuilderGame extends Application implements timerCallback {
 
 	/*********************************************************************
 	 * 
+	 * @author soco
 	 * @param letters
 	 */
 	private void createLetterSeqBut(String letters) {
@@ -865,6 +867,7 @@ public class WordBuilderGame extends Application implements timerCallback {
 	
 	/*********************************************************************
 	 * 
+	 * @author soco
 	 * @param slogan
 	 * @return
 	 */
@@ -885,6 +888,7 @@ public class WordBuilderGame extends Application implements timerCallback {
 	
 	/*********************************************************************
 	 * 
+	 * @author soco
 	 * @param button
 	 * @param color
 	 */
@@ -915,6 +919,7 @@ public class WordBuilderGame extends Application implements timerCallback {
 
 	/*********************************************************************
 	 * 
+	 * @author soco
 	 * @param filepath
 	 * @param tooltipslogan
 	 * @param color
@@ -1013,16 +1018,27 @@ public class WordBuilderGame extends Application implements timerCallback {
 
 
 	/*********************************************************************
-	 * 
+	 * This method is used by Jubula in order to get the selected word and the randomized letters
+	 * @author Nikos
+	 * @param index The word index in the array
+	 * @return The concatentation of the selected word and the randomized letters separated by one space
 	 */
 	public static String getSelectedWords(int index) {
 		if( selfReference.foundWords.size() == 0 ) {
 			return "";
 		}
 		index = Math.min( index, selfReference.foundWords.size()-1);
-		return selfReference.foundWords.get(index) + " " + selfReference.charArrayLower.toString();
+		return selfReference.foundWords.get(index) + CharContainer.WORD_SEPARATOR
+				+ selfReference.charArrayLower.toString();
 	}
 	
+	/*********************************************************************
+	 * This method is used by Jubula in order to get the randomized word and the original form of it
+	 * @author Nikos
+	 * @param word The selected word and the randomized letters, separated by one space
+	 * @param index The letter index in the original word 
+	 * @return The letter index in the randomized word
+	 */
 	public static String getLetterIndex( String word, int index) {
 		return String.valueOf( selfReference.charArrayLower.getLetterIndex(word, index));
 	}
