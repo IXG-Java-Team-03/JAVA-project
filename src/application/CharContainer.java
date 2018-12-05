@@ -233,6 +233,43 @@ public class CharContainer {
 		logger.exiting( className, "ShuffleContainer");
 	 }
 
-
+	/**********************************************************************
+	 * 
+	 */
+	 public int getLetterIndex( String word, int index) {
+		 String[] words = word.split( " ");
+		 if( words.length != 2) {
+			 return -1;
+		 }
+		 if( index >= words[0].length()) {
+			 return -1;
+		 }
+		 if( index >= words[1].length()) {
+			 return -1;
+		 }
+		 char[] letters1 = words[0].toCharArray();
+		 char[] letters2 = words[1].toCharArray();
+		 int[]  indexes = new int[letters1.length];
+		 
+		 for( int i=0; i<indexes.length; i++) {
+			 indexes[i] = -1;
+		 }
+		 for( int i=0; i < words[0].length(); i++) {		// iterate all input letters
+	 		for( int j=0; j<words[1].length(); j++) {		// iterate word letters
+nextLetter:
+			 	if( letters1[i] == letters2[j]) {			// if letter found
+					for( int x=0; x<i; x++) {				// check if previously found
+						if( indexes[x] == j) {
+							break nextLetter;				// continue with next letters
+						}
+					}
+					indexes[i] = j;
+					break;
+			 	}
+ 			}
+ 		}
+		return indexes[index];
+	}
+	 
 }
 

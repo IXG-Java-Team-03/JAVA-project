@@ -1015,13 +1015,16 @@ public class WordBuilderGame extends Application implements timerCallback {
 	/*********************************************************************
 	 * 
 	 */
-	public String[] getSelectedWords() {
-		int maxNum = Math.min( 4, foundWords.size());
-		String[] retval = new String[maxNum];
-		for( int i=0; i<maxNum; i++) {
-			retval[i] = foundWords.get(i);
+	public static String getSelectedWords(int index) {
+		if( selfReference.foundWords.size() == 0 ) {
+			return "";
 		}
-		return retval;
+		index = Math.min( index, selfReference.foundWords.size()-1);
+		return selfReference.foundWords.get(index) + " " + selfReference.charArrayLower.toString();
+	}
+	
+	public static String getLetterIndex( String word, int index) {
+		return String.valueOf( selfReference.charArrayLower.getLetterIndex(word, index));
 	}
 
 
