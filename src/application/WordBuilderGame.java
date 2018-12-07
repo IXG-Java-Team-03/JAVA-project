@@ -1031,16 +1031,16 @@ public class WordBuilderGame extends Application implements timerCallback {
 		return selfReference.foundWords.get(index) + CharContainer.WORD_SEPARATOR
 				+ selfReference.charArrayLower.toString();
 	}
-	
+
 	/*********************************************************************
-	 * This method is used by Jubula in order to get the randomized word and the original form of it
+	 * This method is used by Jubula in order to find out which button to press for the test case 
 	 * @author Nikos
 	 * @param word The selected word and the randomized letters, separated by one space
 	 * @param index The letter index in the original word 
-	 * @return The letter index in the randomized word
+	 * @return The letter index in the randomized word for the specific original letter index
 	 */
 	public static String getLetterIndex( String word, int index) {
-		return String.valueOf( selfReference.charArrayLower.getLetterIndex(word, index));
+		return String.valueOf( CharContainer.getLetterIndex(word, index));
 	}
 
 

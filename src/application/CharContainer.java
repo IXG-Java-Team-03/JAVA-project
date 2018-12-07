@@ -247,7 +247,7 @@ public class CharContainer {
 	 * @param index The letter index in the original word 
 	 * @return The letter index in the randomized word
 	 */
-	public int getLetterIndex(String word, int index) {
+	public static int getLetterIndex(String word, int index) {
 		String[] words = word.split( WORD_SEPARATOR);
 		if (words.length != 2) {
 			return NO_INDEX;
