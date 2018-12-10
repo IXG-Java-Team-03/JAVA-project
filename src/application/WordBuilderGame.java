@@ -475,28 +475,40 @@ public class WordBuilderGame extends Application implements timerCallback {
 		
 		int maxsize = 0;
 		
-		if(foundWords.size()<numofWordstoFound)
+		if( foundWords.size() < numofWordstoFound)
 			maxsize = foundWords.size();
 		else
 			maxsize = numofWordstoFound;
-			
-		
-		
 		
 		return Arrays.copyOfRange(foundWords.toArray(new String[0]),0,maxsize);
 	}
 	
-	//xigvaag
-		private String[] dashReplace(String[] wordsToShow) {
-				
-			String [] dashWords = new String[wordsToShow.length];
-			
-			for (int i=0;i<wordsToShow.length;i++){
-				dashWords[i] = wordsToShow[i].replaceAll(".", "_");			                	 
-			}    	 
-	             		
-			return dashWords;
+	
+	
+	
+	
+	
+	/*********************************************************************
+	 * Replaces all letters with underscores in all words in a String array
+	 * @author xigvaag
+	 * @param wordsToShow String array with all the letters
+	 * @return String array with all letters replaced by underscore
+	 */
+	private String[] dashReplace(String[] wordsToShow) {
+
+		String[] dashWords = new String[wordsToShow.length];
+
+		for (int i = 0; i < wordsToShow.length; i++) {
+			dashWords[i] = wordsToShow[i].replaceAll( ".", "_");
 		}
+
+		return dashWords;
+	}
+	
+	
+	
+	
+	
 	
 	/*********************************************************************
 	 * 
