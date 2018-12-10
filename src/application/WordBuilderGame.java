@@ -486,7 +486,17 @@ public class WordBuilderGame extends Application implements timerCallback {
 		return Arrays.copyOfRange(foundWords.toArray(new String[0]),0,maxsize);
 	}
 	
-	
+	//xigvaag
+		private String[] dashReplace(String[] wordsToShow) {
+				
+			String [] dashWords = new String[wordsToShow.length];
+			
+			for (int i=0;i<wordsToShow.length;i++){
+				dashWords[i] = wordsToShow[i].replaceAll(".", "_");			                	 
+			}    	 
+	             		
+			return dashWords;
+		}
 	
 	/*********************************************************************
 	 * 
@@ -527,7 +537,7 @@ public class WordBuilderGame extends Application implements timerCallback {
 		// ***********************This is just an example**************
 		// here we will call a function that will return the found words
 		// with a dash replacing each word letter
-		String[] wordsToShowUp = maxWordsForCurrentLevel(numofWordstoFound);
+		String[] wordsToShowUp = dashReplace(maxWordsForCurrentLevel(numofWordstoFound));
 		
 
 		wordsList.setItems(FXCollections.observableArrayList(wordsToShowUp));
