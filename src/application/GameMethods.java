@@ -32,8 +32,9 @@ public class GameMethods {
 	/**********************************************************************
 	 * 
 	 */
-	public static void updateAvailablePositions() {
+	public static void updateAvailablePositions( String wordForSearch) {
 		// TODO: implement method updateAvailablePositions
+		
 		
 	}
 	
