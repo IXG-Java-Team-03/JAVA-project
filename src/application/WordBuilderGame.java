@@ -143,10 +143,8 @@ public class WordBuilderGame extends Application implements timerCallback {
 
 	public String initialLetters;
 
-
-
-
 	private Stage applicationStage;
+	public ListView<String> wordsList;
 
 
 	
@@ -544,15 +542,15 @@ public class WordBuilderGame extends Application implements timerCallback {
 		SetScore();
 
 		// on the left we will need a list of words to be found
-		ListView<String> wordsList = new ListView<String>();
+		wordsList = new ListView<String>();
 
 		// ***********************This is just an example**************
 		// here we will call a function that will return the found words
 		// with a dash replacing each word letter
-		String[] wordsToShowUp = dashReplace(maxWordsForCurrentLevel(numofWordstoFound));
+		//String[] wordsToShowUp = dashReplace(maxWordsForCurrentLevel(numofWordstoFound));
 		
 
-		wordsList.setItems(FXCollections.observableArrayList(wordsToShowUp));
+		//wordsList.setItems(FXCollections.observableArrayList(wordsToShowUp));
 		// wordsList.setBackground(value);
 
 		wordsList.setMouseTransparent(true);
@@ -786,6 +784,9 @@ public class WordBuilderGame extends Application implements timerCallback {
 			} else if (x == resetword) {
 				// TODO : IMPLEMENT RESET BUTTON
 				
+				charArrayLower.InitLetters(initialLetters);
+				charArrayUpper.InitLetters("");
+				updateButtons();
 				ft.flashOff(availablePositions);
 				
 				logger.log( Level.INFO, "Reset word {0}", event.getSource().toString());
