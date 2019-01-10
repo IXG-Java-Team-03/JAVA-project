@@ -955,7 +955,9 @@ public class WordBuilderGame extends Application implements timerCallback {
 		if(!filepath.isEmpty() && !tooltipslogan.isEmpty())
 		{
 
-	      	Image img = new Image(getClass().getResourceAsStream(filepath));
+			//FIXME : Overlapping of glow areas around buttons 
+			
+			Image img = new Image(getClass().getResourceAsStream(filepath));
 
 	      	btn = new Button("", new ImageView(img));
 
