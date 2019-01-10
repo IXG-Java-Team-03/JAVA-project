@@ -72,7 +72,7 @@ public class WordBuilderGame extends Application implements timerCallback {
 	private final static int MAXROWS = 15;
 	private final static int MAXCOLS = 15;
 	
-	private final static int NOFDEFAULTWORDSCURLEVEL = 4;
+	private final static int NUMBER_OF_DEFAULT_WORDS_CUR_LEVEL = 4;
 	
 	private Label scoreLabel;
 
@@ -435,7 +435,7 @@ public class WordBuilderGame extends Application implements timerCallback {
 
 				case "Start Playing":
 					
-					createLevel(NOFDEFAULTWORDSCURLEVEL);
+					createLevel(NUMBER_OF_DEFAULT_WORDS_CUR_LEVEL);
 					
 					break;
 
@@ -1033,6 +1033,8 @@ public class WordBuilderGame extends Application implements timerCallback {
 
 
 
+	
+	
 	/*********************************************************************
 	 * This method is used by Jubula in order to get the selected word and the randomized letters
 	 * @author Nikos
@@ -1048,6 +1050,10 @@ public class WordBuilderGame extends Application implements timerCallback {
 				+ selfReference.charArrayLower.toString();
 	}
 
+	
+	
+	
+	
 	/*********************************************************************
 	 * This method is used by Jubula in order to find out which button to press for the test case 
 	 * @author Nikos

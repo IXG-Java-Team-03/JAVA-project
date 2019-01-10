@@ -248,21 +248,26 @@ public class CharContainer {
 	 * @return The letter index in the randomized word
 	 */
 	public static int getLetterIndex(String word, int index) {
+		
 		String[] words = word.split( WORD_SEPARATOR);
+		
 		if (words.length != 2) {
 			return NO_INDEX;
 		}
-		if (index<0 || index >= words[0].length() || index >= words[1].length()) {
+		
+		if (index < 0 || index >= words[0].length() || index >= words[1].length()) {
 			return NO_INDEX;
 		}
 
 		char[] letters1 = words[0].toCharArray();
 		char[] letters2 = words[1].toCharArray();
-		int[] indexes = new int[letters1.length];
+		
+		int[] indexes = new int[ letters1.length];
 
 		for (int i = 0; i < indexes.length; i++) {
 			indexes[i] = NO_INDEX;
 		}
+		
 		for (int i = 0; i < letters1.length; i++) { 				// iterate all input letters
 			for (int j = 0; j < letters2.length; j++) { 			// iterate word letters
 				nextLetter: 
