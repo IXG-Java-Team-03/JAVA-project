@@ -20,11 +20,9 @@ public class GameMethods {
 	 */
 	public static void updateScore( String wordFound) {
 		
-		int multiplier = 1;
+
 		Properties params = GameMethods.getLevelParameters( WordBuilderGame.CurrentLevel);
-		if( params != null) {
-			multiplier = (int) params.get( "LetterMultiplier");
-		}
+		int multiplier = getIntegerProperty( params, "LetterMultiplier", 1);
 
 		int wordValue = wordFound.length() * multiplier;
 		WordBuilderGame.addScore( wordValue);
@@ -65,40 +63,72 @@ public class GameMethods {
 		
 		Properties params = new Properties();
 				
-		if ( level < 10) {
-	
-			params.put("NextLevel", 100);			// Minimum 10 points to advance to next level 
-			params.put("Timer", 80);				// 80 seconds
-			params.put("TimerInterval", 1);			// 1 second
-			params.put("TimerUnit", "sec");			// Timer unit : sec = seconds / dec = deciseconds
-			params.put("LetterMultiplier", 10);		// 10 points per each letter
-		}
-		else if ( level < 20) {
-			
-			params.put("NextLevel", 200);			// Minimum 10 points to advance to next level 
-			params.put("Timer", 60);				// 60 seconds
-			params.put("TimerInterval", 1);			// 1 second
-			params.put("TimerUnit", "sec");			// Timer unit : sec = seconds / dec = deciseconds
-			params.put("LetterMultiplier", 9);		// 10 points per each letter
-		}
-		else if ( level < 30) {
-			
-			params.put("NextLevel", 400);			// Minimum 10 points to advance to next level 
-			params.put("Timer", 50);				// 60 seconds
-			params.put("TimerInterval", 1);			// 1 second
-			params.put("TimerUnit", "sec");			// Timer unit : sec = seconds / dec = deciseconds
-			params.put("LetterMultiplier", 5);		// 10 points per each letter
-		}
-		else {
-			
-			params.put("NextLevel", 700);			// Minimum 10 points to advance to next level 
-			params.put("Timer", 30);				// 60 seconds
-			params.put("TimerInterval", 1);			// 1 second
-			params.put("TimerUnit", "sec");			// Timer unit : sec = seconds / dec = deciseconds
-			params.put("LetterMultiplier", 4);		// 10 points per each letter
+		if (level < 10) {
+			params.put("NextLevel", Integer.valueOf(100)); 		// 100 points to advance to next level
+			params.put("Timer", Integer.valueOf(80)); 			// 80 seconds
+			params.put("TimerInterval", Integer.valueOf(1)); 	// 1 second
+			params.put("TimerUnit", "sec"); 					// Timer unit : sec = seconds / dec = deciseconds
+			params.put("LetterMultiplier", Integer.valueOf(10)); // 10 points per each letter
+		
+		} else if (level < 20) {
+			params.put("NextLevel", Integer.valueOf(200)); 		// 200 points to advance to next level
+			params.put("Timer", Integer.valueOf(60)); 			// 60 seconds
+			params.put("TimerInterval", Integer.valueOf(1)); 	// 1 second
+			params.put("TimerUnit", "sec"); 					// Timer unit : sec = seconds / dec = deciseconds
+			params.put("LetterMultiplier", Integer.valueOf(9)); // 9 points per each letter
+		
+		} else if (level < 30) {
+			params.put("NextLevel", Integer.valueOf(400)); 		// 400 points to advance to next level
+			params.put("Timer", Integer.valueOf(50)); 			// 50 seconds
+			params.put("TimerInterval", Integer.valueOf(1)); 	// 1 second
+			params.put("TimerUnit", "sec"); 					// Timer unit : sec = seconds / dec = deciseconds
+			params.put("LetterMultiplier", Integer.valueOf(5)); // 5 points per each letter
+
+		} else {
+			params.put("NextLevel", Integer.valueOf(700)); 		// 700 points to advance to next level
+			params.put("Timer", Integer.valueOf(30)); 			// 30 seconds
+			params.put("TimerInterval", Integer.valueOf(1)); 	// 1 second
+			params.put("TimerUnit", "sec"); 					// Timer unit : sec = seconds / dec = deciseconds
+			params.put("LetterMultiplier", Integer.valueOf(4)); // 4 points per each letter
 		}
 
 		return params;
 	}
 
+	
+	
+	/**********************************************************************
+	 * Gets an integer property from the Properties object
+	 * @param p The Properties object
+	 * @param tag The name of the property to return 
+	 * @param defaultValue The default value that will be returned if the property is not found
+	 * @return The integer value of the indicated property
+	 */
+	public static int getIntegerProperty( Properties p, String tag, int defaultValue) {
+		if (p != null && p.containsKey(tag)) {
+			if (p.get(tag) instanceof Integer) {
+				return ((Integer) p.get(tag)).intValue();
+			}
+		}
+		return defaultValue;
+	}
+	
+	
+	
+	
+	/**********************************************************************
+	 * Gets a String property from the Properties object
+	 * @param p The Properties object
+	 * @param tag The name of the property to return 
+	 * @param defaultValue The default value that will be returned if the property is not found
+	 * @return The String value of the indicated property
+	 */
+	public static String getStringProperty(Properties p, String tag, String defaultValue) {
+		if (p != null && p.containsKey(tag)) {
+			if (p.get(tag) instanceof String) {
+				return (String) p.get(tag);
+			}
+		}
+		return defaultValue;
+	}
 }

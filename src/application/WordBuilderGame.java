@@ -158,19 +158,12 @@ public class WordBuilderGame extends Application implements timerCallback {
 	 */
 	private HBox createTimer() {
 
-		int TimerValue      = 60;
-		int TimerInterval   = 1;
-		String TimerUnit    = "sec";
-		Properties params   = GameMethods.getLevelParameters( CurrentLevel); 
-		if( params != null) {
-			TimerValue      = (int) params.get( "Timer");
-			TimerInterval   = (int) params.get( "TimerInterval");
-			TimerUnit    	= (String) params.get( "TimerUnit");
-		}
+		Properties	params			= GameMethods.getLevelParameters(CurrentLevel);
+		int			TimerValue		= GameMethods.getIntegerProperty(params, "Timer", 60);
+		int			TimerInterval	= GameMethods.getIntegerProperty(params, "TimerInterval", 1);
+		String		TimerUnit		= GameMethods.getStringProperty(params, "TimerUnit", "sec");
 		
 		if (TimerValue != 0) {
-
-
 			Label timeSlogan = new Label("Time");
 			timeSlogan.setTextFill(Color.WHITE);
 			timeSlogan.setStyle("-fx-font-size:28px;");
@@ -1008,11 +1001,9 @@ public class WordBuilderGame extends Application implements timerCallback {
 		});
 		
 		// TODO : Add actions for timer expiry
-//		int PointsForNextLevel = 100;
+		
 //		Properties params = GameMethods.getLevelParameters( CurrentLevel);
-//		if( params != null) {
-//			PointsForNextLevel = (int) params.get( "NextLevel");
-//		}
+//		int PointsForNextLevel = getIntegerProperty( params, "NextLevel", 100);
 
 	}
 
