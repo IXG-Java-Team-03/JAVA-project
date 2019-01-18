@@ -1034,10 +1034,13 @@ public class WordBuilderGame extends Application implements timerCallback {
 		
 		if( GameMethods.CheckNextLevel( ) ) {
 			
-			// goto next level
+			//XXX : goto next level
+			logger.log( Level.INFO, "Goto Next Level at Timer Expiry");
 		}
 		else {
-			//game over
+			
+			//XXX : game over
+			logger.log( Level.INFO, "Game Over");
 		}
 		
 
