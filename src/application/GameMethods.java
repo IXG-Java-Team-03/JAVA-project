@@ -26,6 +26,11 @@ public class GameMethods {
 
 		int wordValue = wordFound.length() * multiplier;
 		WordBuilderGame.addScore( wordValue);
+		
+		if( CheckNextLevel()) {
+			WordBuilderGame.selfReference.ActivateNextLevel();
+		}
+
 	}
 	
 	
@@ -41,6 +46,25 @@ public class GameMethods {
 		}
 		data.add(wordForSearch);
 		WordBuilderGame.selfReference.wordsList.setItems(data);
+	}
+	
+	
+	
+	/**************************************************************************
+	 * 
+	 * @return
+	 */
+	public static boolean CheckNextLevel( ) {
+		
+		Properties params = GameMethods.getLevelParameters( 
+				WordBuilderGame.CurrentLevel);
+		int PointsForNextLevel = getIntegerProperty( params, "NextLevel", 100);
+
+		if( WordBuilderGame.Score >= PointsForNextLevel ) {
+			return true;
+		}
+		
+		return false;
 	}
 	
 	

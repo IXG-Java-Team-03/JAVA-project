@@ -9,6 +9,7 @@ import java.util.Random;
 import java.util.logging.Level;
 
 import com.sun.javafx.application.LauncherImpl;
+import com.sun.media.jfxmedia.logging.Logger;
 
 import helper.InvalidWordException;
 import helper.gameclock.GameTimer;
@@ -105,9 +106,10 @@ public class WordBuilderGame extends Application implements timerCallback {
 
 	private Scene scene;
 
-	private static int Score;
+	public static int Score;
+	public static int ScoreTotal;
 
-	private Button chckword, resetword, shuffleword,nextlevel;
+	public  Button chckword, resetword, shuffleword,nextlevel;
 
 	private GridPane gamePane;
 
@@ -312,6 +314,7 @@ public class WordBuilderGame extends Application implements timerCallback {
 		CurrentLevel = 0;
 		
 		Score = 0;
+		ScoreTotal = 0;
 
 		selfReference = this;
 		
@@ -571,6 +574,8 @@ public class WordBuilderGame extends Application implements timerCallback {
 
 		gamePane.add(hbox, MAXCOLS - 5, MAXROWS - 1, 1, 1);
 
+		
+		nextlevel.setDisable(true);
 
 		scene = new Scene(gamePane, GamePreloader.WIDTH, GamePreloader.HEIGHT);
 
@@ -619,7 +624,10 @@ public class WordBuilderGame extends Application implements timerCallback {
 	 * @param value
 	 */
 	public static void addScore( int value) {
+		
 		Score += value;
+		ScoreTotal += value;
+		
 		selfReference.SetScore();
 	}
 	
@@ -632,8 +640,25 @@ public class WordBuilderGame extends Application implements timerCallback {
 	 */
 	public void SetScore() {
 		
-		scoreLabel.setText(Integer.toString(Score));
+		scoreLabel.setText(Integer.toString( ScoreTotal));
 	}
+	
+	
+	
+	
+	
+	
+	/*********************************************************************
+	 * 
+	 */
+	public void ActivateNextLevel() {
+		
+		//TODO : flash next level button
+		
+		nextlevel.setDisable(false);
+	}
+	
+	
 	
 	
 	
@@ -791,6 +816,12 @@ public class WordBuilderGame extends Application implements timerCallback {
 				updateButtons();
 				
 				logger.log( Level.INFO, "Shuffle letters pressed {0}", event.getSource().toString());
+			
+			} else if (x == nextlevel) {
+				
+
+				//TODO : Actions for next level
+				logger.log( Level.INFO, "Next Level");
 			}
 
 			logger.exiting( className, "buttons event handler");
@@ -947,8 +978,6 @@ public class WordBuilderGame extends Application implements timerCallback {
 
 		if(!filepath.isEmpty() && !tooltipslogan.isEmpty())
 		{
-
-			//FIXME : Overlapping of glow areas around buttons 
 			
 			Image img = new Image(getClass().getResourceAsStream(filepath));
 
@@ -1002,8 +1031,15 @@ public class WordBuilderGame extends Application implements timerCallback {
 		
 		// TODO : Add actions for timer expiry
 		
-//		Properties params = GameMethods.getLevelParameters( CurrentLevel);
-//		int PointsForNextLevel = getIntegerProperty( params, "NextLevel", 100);
+		
+		if( GameMethods.CheckNextLevel( ) ) {
+			
+			// goto next level
+		}
+		else {
+			//game over
+		}
+		
 
 	}
 
