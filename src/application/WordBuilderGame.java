@@ -913,7 +913,7 @@ public class WordBuilderGame extends Application implements timerCallback {
 		DropShadow shadow = new DropShadow();
 
 		shadow.setColor(color);
-		shadow.setRadius(50.0f);
+		shadow.setRadius(10.0f); //50.0f
 
 		button.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
 			@Override
