@@ -27,7 +27,7 @@ public class GameMethods {
 		int wordValue = wordFound.length() * multiplier;
 		WordBuilderGame.addScore( wordValue);
 		
-		if( CheckNextLevel()) {
+		if( checkUnlockedNextLevel()) {
 			WordBuilderGame.selfReference.ActivateNextLevel();
 		}
 
@@ -37,8 +37,7 @@ public class GameMethods {
 	/**********************************************************************
 	 * 
 	 */
-	public static void updateAvailablePositions( String wordForSearch) {
-		// TODO: implement method updateAvailablePositions
+	public static void insertInWordList( String wordForSearch) {
 		
 		ObservableList<String> data = WordBuilderGame.selfReference.wset.wordsList.getItems();
 		if( data.size() >= 10) {
@@ -54,10 +53,9 @@ public class GameMethods {
 	 * 
 	 * @return
 	 */
-	public static boolean CheckNextLevel( ) {
+	public static boolean checkUnlockedNextLevel( ) {
 		
-		Properties params = GameMethods.getLevelParameters( 
-				WordBuilderGame.CurrentLevel);
+		Properties params = GameMethods.getLevelParameters( WordBuilderGame.CurrentLevel);
 		int PointsForNextLevel = getIntegerProperty( params, "NextLevel", 100);
 
 		if( WordBuilderGame.Score >= PointsForNextLevel ) {
@@ -68,16 +66,7 @@ public class GameMethods {
 	}
 	
 	
-	
-//	/**********************************************************************
-//	 * 
-//	 */
-//	public static void updateLevel() {
-//		// TODO: implement method updateLevel
-//
-//	}
-//	
-	
+
 	
 	
 	/**********************************************************************

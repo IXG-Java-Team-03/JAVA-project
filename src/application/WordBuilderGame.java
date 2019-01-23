@@ -73,6 +73,7 @@ public class WordBuilderGame extends Application implements timerCallback {
 	private final static int MAXCOLS = 15;
 		
 	private final static int NUMBER_OF_DEFAULT_WORDS_CUR_LEVEL = 4;
+	private final static int MAIN_TIMER = 0;
 	
 	private Label scoreLabel;
 
@@ -173,10 +174,12 @@ public class WordBuilderGame extends Application implements timerCallback {
 			timerLabel.setText( String.valueOf(TimerValue));
 			
 			if( TimerUnit.equals( "sec")) {
-				timer.startTimer( TimerValue, TimerInterval, this);
+				// Start a timer with one-second accuracy
+				timer.startTimer( TimerValue, TimerInterval, MAIN_TIMER, this);
 			}
 			else {
-				timer.startTimerDS( TimerValue, TimerInterval, this);
+				// Start a timer with decisecond accuracy
+				timer.startTimerDS( TimerValue, TimerInterval, MAIN_TIMER, this);
 			}
 
 			HBox hb = new HBox(20);
@@ -462,7 +465,7 @@ public class WordBuilderGame extends Application implements timerCallback {
 		gamePane.add(WlistLabel, 0, 1, 2, 1);
 
 		SetGameLevel();
-		SetScore();
+		updateScoreLabel();
 
 		// on the left we will need a list of words to be found
 		wset.wordsList = new ListView<String>();
@@ -555,7 +558,7 @@ public class WordBuilderGame extends Application implements timerCallback {
 		Score += value;
 		ScoreTotal += value;
 		
-		selfReference.SetScore();
+		updateScoreLabel();
 	}
 	
 	
@@ -565,9 +568,9 @@ public class WordBuilderGame extends Application implements timerCallback {
 	 * 
 	 * @author Aris
 	 */
-	public void SetScore() {
+	public static void updateScoreLabel() {
 		
-		scoreLabel.setText(Integer.toString( ScoreTotal));
+		selfReference.scoreLabel.setText(Integer.toString( ScoreTotal));
 	}
 	
 	
@@ -589,33 +592,45 @@ public class WordBuilderGame extends Application implements timerCallback {
 	
 	
 	
-	
+	/*********************************************************************************************
+	 * Perform the actions that are needed to reset the game and advance to the next level
+	 */
 	public void gotoNextLevel() {
 
-		Properties	params			= GameMethods.getLevelParameters(CurrentLevel);
-		int			timeMultiplier	= GameMethods.getIntegerProperty(params, "TimeMultiplier", 1);
-		int			timerValue     	= GameMethods.getIntegerProperty(params, "Timer", 60);
+		Properties	params			= GameMethods.getLevelParameters( CurrentLevel);
+		int			timeMultiplier	= GameMethods.getIntegerProperty( params, "TimeMultiplier", 1);
+		int			TimerValue		= GameMethods.getIntegerProperty( params, "Timer", 60);
+		int			TimerInterval	= GameMethods.getIntegerProperty( params, "TimerInterval", 1);
+		String		TimerUnit		= GameMethods.getStringProperty(  params, "TimerUnit", "sec");
 
 		
-		CurrentLevel++;
-		ScoreTotal += timeLeft * timeMultiplier;
-		Score = 0;
-		
-		SetScore();
-		nextlevel.setDisable(true);
-		gameLevel.setText( "Level " + CurrentLevel);
-		
-		timer.stopTimer(0, this);
-		timer.startTimer(timerValue, this);
-		
-		wset.constructLetters();
-		initialLetters = wset.pickedWord;
+		ScoreTotal += timeLeft * timeMultiplier;			// Add time bonus to the current score
+		Score = 0;											// Reset current level's score
+		updateScoreLabel();									// Update the score field with the new score
 
-		charArrayUpper.InitLetters( "");
-		charArrayLower.InitLetters( initialLetters);
-		updateButtons();
-		ft.flashOff(availablePositions);
+		CurrentLevel++;										// Advance to the next level
+		gameLevel.setText( "Level " + CurrentLevel);		// Update the level field with the current level value
+		
+		timer.stopTimer( MAIN_TIMER, this);					// Stop any ongoing timer
+		
+		if( TimerUnit.equals( "sec")) {
+			// Start a timer with one-second accuracy
+			timer.startTimer( TimerValue, TimerInterval, MAIN_TIMER, this);
+		}
+		else {
+			// Start a timer with decisecond accuracy
+			timer.startTimerDS( TimerValue, TimerInterval, MAIN_TIMER, this);
+		}
+		
+		wset.constructLetters();							// Get a new word and construct new random letters
+		initialLetters = wset.pickedWord;					// Store the selected word (randomized)
 
+		charArrayUpper.InitLetters( "");					// Clear the upper letter container
+		charArrayLower.InitLetters( initialLetters);		// Initiate the lower letter container
+		updateButtons();									// Update the buttons
+
+		ft.flashOff(availablePositions);					// Reset any ongoing flash
+		nextlevel.setDisable(true);							// Disable the "next level" button
 
 	}
 	
@@ -745,11 +760,6 @@ public class WordBuilderGame extends Application implements timerCallback {
 				catch (InvalidWordException ex) {
 					wordForSearch = "";
 					logger.throwing( className, "buttons event handler", ex);
-
-					////////////////////////////////////////////////////////////////////////////
-					// TODO: EDW MPOREI NA FLASH KOKKINO STA BUTTONS
-					////////////////////////////////////////////////////////////////////////////
-					
 					
 					ft.flashOn(availablePositions,FillTrans.Color.RED);
 					
@@ -758,7 +768,6 @@ public class WordBuilderGame extends Application implements timerCallback {
 				logger.log( Level.INFO, "check1 {0}", event.getSource().toString());
 
 			} else if (x == resetword) {
-				// TODO : IMPLEMENT RESET BUTTON
 				
 				charArrayLower.InitLetters(initialLetters);
 				charArrayUpper.InitLetters("");
@@ -777,11 +786,8 @@ public class WordBuilderGame extends Application implements timerCallback {
 			
 			} else if (x == nextlevel) {
 				
-
-				//TODO : Actions for next level
 				logger.log( Level.INFO, "Next Level");
 				gotoNextLevel();
-				
 			}
 
 			logger.exiting( className, "buttons event handler");
@@ -993,17 +999,14 @@ public class WordBuilderGame extends Application implements timerCallback {
 		    }
 		});
 		
-		// TODO : Add actions for timer expiry
-		
-		
-		if( GameMethods.CheckNextLevel( ) ) {
-			
-			//XXX : goto next level
+		if( GameMethods.checkUnlockedNextLevel( ) ) {
+
 			logger.log( Level.INFO, "Goto Next Level at Timer Expiry");
+			gotoNextLevel();
 		}
 		else {
 			
-			//XXX : game over
+			//TODO : game over
 			logger.log( Level.INFO, "Game Over");
 		}
 		
