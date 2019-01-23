@@ -5,7 +5,6 @@ import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Random;
 import java.util.logging.Level;
 
 import javafx.collections.ObservableList;

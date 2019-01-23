@@ -2,23 +2,16 @@ package application;
 
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Properties;
-import java.util.Random;
 import java.util.logging.Level;
 
 import com.sun.javafx.application.LauncherImpl;
-import com.sun.media.jfxmedia.logging.Logger;
-
 import helper.InvalidWordException;
 import helper.gameclock.GameTimer;
 import helper.gameclock.timerCallback;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.application.Preloader;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -52,9 +45,8 @@ import javafx.stage.Stage;
 
 
 /**
- * hdfghdfghdfgh
+ * Constructor for main class
  * @author soco
- *
  */
 public class WordBuilderGame extends Application implements timerCallback {
 
@@ -72,7 +64,7 @@ public class WordBuilderGame extends Application implements timerCallback {
 	private final static int MAXROWS = 15;
 	private final static int MAXCOLS = 15;
 		
-	private final static int NUMBER_OF_DEFAULT_WORDS_CUR_LEVEL = 4;
+//	private final static int NUMBER_OF_DEFAULT_WORDS_CUR_LEVEL = 4;
 	private final static int MAIN_TIMER = 0;
 	
 	private Label scoreLabel;
@@ -101,13 +93,13 @@ public class WordBuilderGame extends Application implements timerCallback {
 	public static int Score;
 	public static int ScoreTotal;
 	private static int timeLeft;
+	
 	Label scoreSlogan;
 	Text gameLevel;
 	
 	WordSet wset;
 
-
-	public  Button chckword, resetword, shuffleword,nextlevel;
+	public  Button chckword, resetword, shuffleword, nextlevel;
 
 	private GridPane gamePane;
 
@@ -157,10 +149,10 @@ public class WordBuilderGame extends Application implements timerCallback {
 	 */
 	private HBox createTimer() {
 
-		Properties	params			= GameMethods.getLevelParameters(CurrentLevel);
-		int			TimerValue		= GameMethods.getIntegerProperty(params, "Timer", 60);
-		int			TimerInterval	= GameMethods.getIntegerProperty(params, "TimerInterval", 1);
-		String		TimerUnit		= GameMethods.getStringProperty(params, "TimerUnit", "sec");
+		Properties	params			= GameMethods.getLevelParameters( CurrentLevel);
+		int			TimerValue		= GameMethods.getIntegerProperty( params, "Timer", 60);
+		int			TimerInterval	= GameMethods.getIntegerProperty( params, "TimerInterval", 1);
+		String		TimerUnit		= GameMethods.getStringProperty(  params, "TimerUnit", "sec");
 		
 		if (TimerValue != 0) {
 			Label timeSlogan = new Label("Time");
@@ -196,20 +188,6 @@ public class WordBuilderGame extends Application implements timerCallback {
 	}
 
 	
-	
-	
-//	/*********************************************************************
-//	 * 
-//	 * @param value
-//	 */
-//	public static void setStartTime(int value) {
-//
-//		STARTTIME = value;
-//
-//	}
-//	
-//
-
 
 
 
@@ -220,6 +198,7 @@ public class WordBuilderGame extends Application implements timerCallback {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		
 		// thes ena thread gia na kaleis afto
 		LauncherImpl.launchApplication(WordBuilderGame.class, GamePreloader.class, args);
 	}
@@ -241,13 +220,12 @@ public class WordBuilderGame extends Application implements timerCallback {
 		root = new BorderPane();
 		availableLetters = new ArrayList<Button>();
 		availablePositions = new ArrayList<Button>();
-		CurrentLevel = 1;
 		
+		CurrentLevel = 1;
 		Score = 0;
 		ScoreTotal = 0;
 
 		selfReference = this;
-		
 		
 		startGame.setId("default-button");
 		quitGame.setId("default-button");
@@ -368,7 +346,7 @@ public class WordBuilderGame extends Application implements timerCallback {
 
 				case "Start Playing":
 					
-					createLevel(NUMBER_OF_DEFAULT_WORDS_CUR_LEVEL);
+					createLevel();
 					
 					break;
 
@@ -390,55 +368,55 @@ public class WordBuilderGame extends Application implements timerCallback {
 	
 	
 	
+//	/*********************************************************************
+//	 * 
+//	 * @param numofWordstoFound
+//	 * @return
+//	 */
+//	private String[] maxWordsForCurrentLevel(int numofWordstoFound) {
+//		
+//		int maxsize = 0;
+//		
+//		if( wset.foundWords.size() < numofWordstoFound)
+//			maxsize = wset.foundWords.size();
+//		else
+//			maxsize = numofWordstoFound;
+//		
+//		return Arrays.copyOfRange( wset.foundWords.toArray(new String[0]),0,maxsize);
+//	}
+	
+	
+	
+	
+	
+	
+//	/*********************************************************************
+//	 * Replaces all letters with underscores in all words in a String array
+//	 * @author xigvaag
+//	 * @param wordsToShow String array with all the letters
+//	 * @return String array with all letters replaced by underscore
+//	 */
+//	private String[] dashReplace(String[] wordsToShow) {
+//
+//		String[] dashWords = new String[wordsToShow.length];
+//
+//		for (int i = 0; i < wordsToShow.length; i++) {
+//			dashWords[i] = wordsToShow[i].replaceAll( ".", "_");
+//		}
+//
+//		return dashWords;
+//	}
+	
+	
+	
+	
+	
+	
 	/*********************************************************************
 	 * 
 	 * @param numofWordstoFound
-	 * @return
 	 */
-	private String[] maxWordsForCurrentLevel(int numofWordstoFound) {
-		
-		int maxsize = 0;
-		
-		if( wset.foundWords.size() < numofWordstoFound)
-			maxsize = wset.foundWords.size();
-		else
-			maxsize = numofWordstoFound;
-		
-		return Arrays.copyOfRange( wset.foundWords.toArray(new String[0]),0,maxsize);
-	}
-	
-	
-	
-	
-	
-	
-	/*********************************************************************
-	 * Replaces all letters with underscores in all words in a String array
-	 * @author xigvaag
-	 * @param wordsToShow String array with all the letters
-	 * @return String array with all letters replaced by underscore
-	 */
-	private String[] dashReplace(String[] wordsToShow) {
-
-		String[] dashWords = new String[wordsToShow.length];
-
-		for (int i = 0; i < wordsToShow.length; i++) {
-			dashWords[i] = wordsToShow[i].replaceAll( ".", "_");
-		}
-
-		return dashWords;
-	}
-	
-	
-	
-	
-	
-	
-	/*********************************************************************
-	 * 
-	 * @param numofWordstoFound
-	 */
-	private void createLevel(int numofWordstoFound) {
+	private void createLevel( /* int numofWordstoFound */) {
 		
 		
 		// fill in with code to generate the new
@@ -603,11 +581,11 @@ public class WordBuilderGame extends Application implements timerCallback {
 	/*********************************************************************
 	 * 
 	 */
-	public void ActivateNextLevel() {
+	static void ActivateNextLevel() {
 		
 		//TODO : flash next level button
 		
-		nextlevel.setDisable(false);
+		selfReference.nextlevel.setDisable(false);
 		
 		
 	}

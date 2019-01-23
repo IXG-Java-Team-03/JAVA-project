@@ -20,15 +20,13 @@ public class GameMethods {
 	 */
 	public static void updateScore( String wordFound) {
 		
-
-		Properties params = GameMethods.getLevelParameters( WordBuilderGame.CurrentLevel);
-		int multiplier = getIntegerProperty( params, "LetterMultiplier", 1);
+		int multiplier = getIntegerProperty( "LetterMultiplier", 1);
 
 		int wordValue = wordFound.length() * multiplier;
 		WordBuilderGame.addScore( wordValue);
 		
 		if( checkUnlockedNextLevel()) {
-			WordBuilderGame.selfReference.ActivateNextLevel();
+			WordBuilderGame.ActivateNextLevel();
 		}
 
 	}
@@ -55,8 +53,7 @@ public class GameMethods {
 	 */
 	public static boolean checkUnlockedNextLevel( ) {
 		
-		Properties params = GameMethods.getLevelParameters( WordBuilderGame.CurrentLevel);
-		int PointsForNextLevel = getIntegerProperty( params, "NextLevel", 100);
+		int PointsForNextLevel = getIntegerProperty( "NextLevel", 100);
 
 		if( WordBuilderGame.Score >= PointsForNextLevel ) {
 			return true;
@@ -132,6 +129,19 @@ public class GameMethods {
 	
 	
 	
+	/**********************************************************************
+	 * Gets an integer property from the Properties object
+	 * @param tag The name of the property to return 
+	 * @param defaultValue The default value that will be returned if the property is not found
+	 * @return The integer value of the indicated property
+	 */
+	public static int getIntegerProperty( String tag, int defaultValue) {
+		Properties params = GameMethods.getLevelParameters( WordBuilderGame.CurrentLevel);
+		return getIntegerProperty( params, tag, defaultValue);
+	}
+	
+	
+	
 	
 	/**********************************************************************
 	 * Gets a String property from the Properties object
@@ -140,12 +150,24 @@ public class GameMethods {
 	 * @param defaultValue The default value that will be returned if the property is not found
 	 * @return The String value of the indicated property
 	 */
-	public static String getStringProperty(Properties p, String tag, String defaultValue) {
+	public static String getStringProperty( Properties p, String tag, String defaultValue) {
 		if (p != null && p.containsKey(tag)) {
 			if (p.get(tag) instanceof String) {
 				return (String) p.get(tag);
 			}
 		}
 		return defaultValue;
+	}
+	
+	
+	/**********************************************************************
+	 * Gets a String property from the Properties object
+	 * @param tag The name of the property to return 
+	 * @param defaultValue The default value that will be returned if the property is not found
+	 * @return The String value of the indicated property
+	 */
+	public static String getStringProperty( String tag, String defaultValue) {
+		Properties params = GameMethods.getLevelParameters( WordBuilderGame.CurrentLevel);
+		return getStringProperty( params, tag, defaultValue);
 	}
 }
