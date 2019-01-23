@@ -134,7 +134,7 @@ public class validateWords {
 			//do all the appropriate updates
 			GameMethods.updateScore( wordForSearch);
 			GameMethods.updateAvailablePositions( wordForSearch);
-			GameMethods.updateLevel();
+//			GameMethods.updateLevel();
 
 		} else {
 

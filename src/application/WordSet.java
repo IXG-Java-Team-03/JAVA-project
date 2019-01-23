@@ -3,8 +3,13 @@ package application;
 import java.io.*;
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.logging.Level;
+
+import javafx.collections.ObservableList;
+import javafx.scene.control.ListView;
 
 
 /**
@@ -15,81 +20,72 @@ import java.util.logging.Level;
  */
 public class WordSet {
 
+	
+	private final static int SIZE_OF_RANDOM_LIST = 100;
+
+	
 	private final static String className = MethodHandles.lookup().lookupClass().getSimpleName();
 	private final static appLogger logger = new appLogger( className, null);
 
     private String language;
-    private int size;
     private int minLength;
     private int maxLength;
 
     private HashMap<Integer, ArrayList<String>> WordsDB;
 
+	ArrayList<String> listofMaxletters;
 
+	int[] randomWordPositions;
+	int randomValuesPosition;
+	
+	
+	
 
-
-    /**********************************************************************
-     * 
-     * @return
-     */
-    public HashMap<Integer, ArrayList<String>> getWordsDB() {
-		return WordsDB;
-	}
-
-    
-    
-    /**********************************************************************
-     * 
-     * @param wordsDB
-     */
-	public void setWordsDB(HashMap<Integer, ArrayList<String>> wordsDB) {
-		WordsDB = wordsDB;
-	}
+	String pickedWord;
+	
+	/**
+	 * Words that can be constructed, using letters of pickedWord
+	 */
+	
+	ArrayList<String> foundWords;
+	
+	public ListView<String> wordsList;
 
 	
 	
-	/**********************************************************************
-     * Get language value
-     * @return language value
-     */
-    public String language() {
-    	return language;
-	}
+	
 
-    
-    
     /**********************************************************************
-     * Get minimum length
-     * @return
+     * 
+     * Reads from a directory where word files exist.
+     * @param lang Language. Used to check validity of characters AND to select the
+     * 				appropriate word files.
+     * 				Must be specified by the user. Valid values: EN, GR
+     * @param min   Minimum word length.
+     * @param max   Maximum word length.
+     * @param WordFilesDir Directory where the word files are located, without trailing /
+     * 				Filename format: <language>-<word length>.txt
+     * 				E.g. the file for 3-letter Greek words is GR-3.txt
      */
-    public int minLength() {
-    	return minLength;
-	}
+    public WordSet(String lang, int min, int max, String WordFilesDir){
+
+    	logger.log( Level.INFO, "Build word set {0} {1} {2}",
+    			new Object[]{ lang, min, max} );
+
+    	minLength = min;
+    	maxLength = max;
+        language = lang.toUpperCase();
+        
+        WordsDB = new HashMap<Integer, ArrayList<String>>();
+        
+        //create an ArrayList for each of the legal word lengths, from the respective word files
+        for (int i=minLength;i<=maxLength;i++) {
+            WordsDB.put(i,ReadWordFile(WordFilesDir+"/"+language+"-"+i+".txt",language));
+        }
+    }
 
 
-    
-    
-    /**********************************************************************
-     * Get maximum length
-     * @return
-     */
-    public int maxLength() {
-		return maxLength;
-	}
 
-
-    
-    
-    /**********************************************************************
-     * Get size
-     * @return
-     */
-    public int size(){
-    	return size;
-	}
-
-
-    
     
     /**********************************************************************
      * 
@@ -161,35 +157,140 @@ public class WordSet {
 
 
 
-    /**********************************************************************
-     * 
-     * Reads from a directory where word files exist.
-     * @param lang Language. Used to check validity of characters AND to select the
-     * 				appropriate word files.
-     * 				Must be specified by the user. Valid values: EN, GR
-     * @param min   Minimum word length.
-     * @param max   Maximum word length.
-     * @param WordFilesDir Directory where the word files are located, without trailing /
-     * 				Filename format: <language>-<word length>.txt
-     * 				E.g. the file for 3-letter Greek words is GR-3.txt
-     */
-    public WordSet(String lang, int min, int max, String WordFilesDir){
-
-    	logger.log( Level.INFO, "Build word set {0} {1} {2}",
-    			new Object[]{ lang, min, max} );
-
-    	minLength = min;
-    	maxLength = max;
-        language = lang.toUpperCase();
-        WordsDB = new HashMap<Integer, ArrayList<String>>();
-        //create an ArrayList for each of the legal word lengths, from the respective word files
-        for (int i=minLength;i<=maxLength;i++) {
-            WordsDB.put(i,ReadWordFile(WordFilesDir+"/"+language+"-"+i+".txt",language));
-        }
-    }
-
 
     
+    
+    
+    
+
+
+	/*********************************************************************
+	 * 
+	 * We will normally need to pick-up a word that will give us the chance to create more words
+	 * of different sizes, with max size the size of the word initially picked up
+	 * 
+	 */
+	void performInit() {
+
+		logger.entering( className, "pickUpWord");
+		
+		listofMaxletters = WordsDB.get( maxLength);
+		
+		fillRandomValues();
+		constructLetters();
+
+		logger.exiting( className, "pickUpWord");
+
+	}
+	
+	
+	
+	
+	void constructLetters() {
+
+		/**
+		 *  shuffle word letters
+		 */
+		pickedWord = shuffleWord( listofMaxletters.get( getRandomValue()));
+		
+		
+		//extract all words that can be constructed with "pickedWord" letters
+		foundWords = AssembleWordGameSet( pickedWord);
+
+		if( wordsList != null) {
+			ObservableList<String> data = wordsList.getItems();
+			data.clear();
+			wordsList.setItems(data);
+		}
+	}
+
+	
+	
+	
+	
+	
+	private void fillRandomValues() {
+				
+		int sizeOfArray = listofMaxletters.size(); 
+
+		ArrayList<Integer> randomList = new ArrayList<>();
+		for( int i=0; i<sizeOfArray; i++) {
+			randomList.add( i);
+		}
+		Collections.shuffle( randomList);
+		
+		if( sizeOfArray > SIZE_OF_RANDOM_LIST) {
+			sizeOfArray = SIZE_OF_RANDOM_LIST;
+		}
+		
+		randomWordPositions = new int[ sizeOfArray];
+		
+		for( int i=0; i<sizeOfArray; i++) {
+			randomWordPositions[i] = randomList.get(i);
+		}
+		
+		randomValuesPosition = 0;
+	}
+	
+	
+	
+	
+	
+	
+	protected int getRandomValue() {
+		
+		if( randomValuesPosition >= randomWordPositions.length) {
+			fillRandomValues();
+		}
+		
+		int retval = randomWordPositions[ randomValuesPosition];
+		randomValuesPosition++;
+		
+		if( randomValuesPosition >= randomWordPositions.length) {
+			fillRandomValues();
+		}
+		return retval;
+	}
+	
+	
+
+	
+	
+	
+	
+	
+
+
+	/*********************************************************************
+	 * 
+	 * @param word
+	 * @return
+	 */
+	private static String shuffleWord( String word) {
+
+		logger.entering( className, "shuffleWord");
+
+		ArrayList<Character> charList = new ArrayList<>();
+		
+		for( int i=0; i<word.length(); i++) {
+			charList.add( word.charAt(i));
+		}
+		
+		Collections.shuffle(charList);
+		String retval = "";
+		for( Object c : charList.toArray()) {
+			retval += (Character)c;
+		}
+		
+		logger.exiting( className, "shuffleWord");
+
+		return retval;
+	}
+
+
+	
+	
+	
     
     
 

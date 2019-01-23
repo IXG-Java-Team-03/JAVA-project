@@ -18,6 +18,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.application.Preloader;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -63,28 +64,18 @@ public class WordBuilderGame extends Application implements timerCallback {
 	private final static Button startGame = new Button("Start Playing");
 	private final static Button quitGame = new Button("Quit");
 
-
 	private final static String language ="GR";
 
 	private final static int MINLETTERS = 2;
 	private final static int MAXLETTERS = 5;
 
-
 	private final static int MAXROWS = 15;
 	private final static int MAXCOLS = 15;
-	
+		
 	private final static int NUMBER_OF_DEFAULT_WORDS_CUR_LEVEL = 4;
 	
 	private Label scoreLabel;
 
-
-	private String pickedWord;
-	
-	/**
-	 * Words that can be constructed, using letters of pickedWord
-	 */
-	
-	private ArrayList<String> foundWords;
 	
 	
 	/**
@@ -108,6 +99,12 @@ public class WordBuilderGame extends Application implements timerCallback {
 
 	public static int Score;
 	public static int ScoreTotal;
+	private static int timeLeft;
+	Label scoreSlogan;
+	Text gameLevel;
+	
+	WordSet wset;
+
 
 	public  Button chckword, resetword, shuffleword,nextlevel;
 
@@ -146,7 +143,6 @@ public class WordBuilderGame extends Application implements timerCallback {
 	public String initialLetters;
 
 	private Stage applicationStage;
-	public ListView<String> wordsList;
 
 
 	
@@ -213,75 +209,6 @@ public class WordBuilderGame extends Application implements timerCallback {
 
 
 
-	/*********************************************************************
-	 * 
-	 * We will normally need to pick-up a word that will give us the chance to create more words
-	 * of different sizes, with max size the size of the word initially picked up
-	 * 
-	 */
-	private void pickUpWord() {
-
-		logger.entering( className, "pickUpWord");
-	
-		/**
-		 * creates a new wset with greek words
-		 */
-		WordSet wset = new WordSet(language, MINLETTERS, MAXLETTERS, "words");
-
-		// get the whole set of words
-		HashMap<Integer, ArrayList<String>> wdb = wset.getWordsDB();
-
-		ArrayList<String> listofMaxletters = wdb.get(MAXLETTERS);
-
-		Random rand = new Random();
-
-		/**
-		 * random position inside ArrayList
-		 */
-		int randomidx = rand.nextInt(listofMaxletters.size() + 1);
-
-		/**
-		 *  shuffle word letters
-		 */
-		pickedWord = shuffleWord(listofMaxletters.get(randomidx));
-		
-		
-		//extract all words that can be constructed with "pickedWord" letters
-		foundWords = wset.AssembleWordGameSet(pickedWord);
-
-		logger.exiting( className, "pickUpWord");
-
-	}
-
-
-
-	/*********************************************************************
-	 * 
-	 * @param word
-	 * @return
-	 */
-	private String shuffleWord(String word) {
-
-		logger.entering( className, "shuffleWord");
-
-		char[] wordofChars = word.toCharArray();
-
-		Random rand = new Random();
-
-		for (int i = wordofChars.length - 1; i > 0; i--) {
-			int r = rand.nextInt(i + 1);
-			char tmp = wordofChars[i];
-			wordofChars[i] = wordofChars[r];
-			wordofChars[r] = tmp;
-		}
-
-		logger.exiting( className, "shuffleWord");
-
-		return String.valueOf(wordofChars);
-	}
-
-
-
 
 
 
@@ -311,14 +238,12 @@ public class WordBuilderGame extends Application implements timerCallback {
 		root = new BorderPane();
 		availableLetters = new ArrayList<Button>();
 		availablePositions = new ArrayList<Button>();
-		CurrentLevel = 0;
+		CurrentLevel = 1;
 		
 		Score = 0;
 		ScoreTotal = 0;
 
 		selfReference = this;
-		
-		
 		
 		
 		startGame.setId("default-button");
@@ -346,15 +271,17 @@ public class WordBuilderGame extends Application implements timerCallback {
 		logger.entering( className, "init");
 		logger.info( "MyApplication#init (doing some heavy lifting)");
 		
-
-		pickUpWord();
+		/**
+		 * creates a new wset with greek words
+		 */
+		wset = new WordSet(language, MINLETTERS, MAXLETTERS, "words");
+		wset.performInit();
 
 		// Perform some heavy lifting (i.e. database start, check for application
 		// updates, etc. )
 		for (int i = 0; i < COUNT_LIMIT; i++) {
 			double progress = (100 * i) / COUNT_LIMIT;
 			LauncherImpl.notifyPreloader(this, new Preloader.ProgressNotification(progress));
-
 		}
 		logger.exiting( className, "init");
 	}
@@ -469,12 +396,12 @@ public class WordBuilderGame extends Application implements timerCallback {
 		
 		int maxsize = 0;
 		
-		if( foundWords.size() < numofWordstoFound)
-			maxsize = foundWords.size();
+		if( wset.foundWords.size() < numofWordstoFound)
+			maxsize = wset.foundWords.size();
 		else
 			maxsize = numofWordstoFound;
 		
-		return Arrays.copyOfRange(foundWords.toArray(new String[0]),0,maxsize);
+		return Arrays.copyOfRange( wset.foundWords.toArray(new String[0]),0,maxsize);
 	}
 	
 	
@@ -538,7 +465,7 @@ public class WordBuilderGame extends Application implements timerCallback {
 		SetScore();
 
 		// on the left we will need a list of words to be found
-		wordsList = new ListView<String>();
+		wset.wordsList = new ListView<String>();
 
 		// ***********************This is just an example**************
 		// here we will call a function that will return the found words
@@ -549,10 +476,10 @@ public class WordBuilderGame extends Application implements timerCallback {
 		//wordsList.setItems(FXCollections.observableArrayList(wordsToShowUp));
 		// wordsList.setBackground(value);
 
-		wordsList.setMouseTransparent(true);
-		wordsList.setFocusTraversable(false);
+		wset.wordsList.setMouseTransparent(true);
+		wset.wordsList.setFocusTraversable(false);
 
-		gamePane.add(wordsList, 0, 2, 3, MAXROWS - 2); // spans 1 column, 4 rows
+		gamePane.add( wset.wordsList, 0, 2, 3, MAXROWS - 2); // spans 1 column, 4 rows
 
 		// create and add the timer
 		HBox hbtimer = createTimer();
@@ -562,7 +489,7 @@ public class WordBuilderGame extends Application implements timerCallback {
 
 		SetScoreLabelData();
 
-		createLetterSeqBut(pickedWord);
+		createLetterSeqBut( wset.pickedWord);
 
         //create the 4 control buttons: check word, shuffle, reset, next level
 		chckword = createControlButton("/res/ok.png","Checks if word is in the list!",Color.GREENYELLOW);
@@ -597,9 +524,9 @@ public class WordBuilderGame extends Application implements timerCallback {
 
 		logger.entering( className, "SetGameLevel");
 
-		++CurrentLevel;
+//		++CurrentLevel;
 
-		Text gameLevel = new Text("Level " + CurrentLevel);
+		gameLevel = new Text("Level " + CurrentLevel);
 
 		gameLevel.setId("gamelevel");
 
@@ -656,10 +583,41 @@ public class WordBuilderGame extends Application implements timerCallback {
 		//TODO : flash next level button
 		
 		nextlevel.setDisable(false);
+		
+		
 	}
 	
 	
 	
+	
+	public void gotoNextLevel() {
+
+		Properties	params			= GameMethods.getLevelParameters(CurrentLevel);
+		int			timeMultiplier	= GameMethods.getIntegerProperty(params, "TimeMultiplier", 1);
+		int			timerValue     	= GameMethods.getIntegerProperty(params, "Timer", 60);
+
+		
+		CurrentLevel++;
+		ScoreTotal += timeLeft * timeMultiplier;
+		Score = 0;
+		
+		SetScore();
+		nextlevel.setDisable(true);
+		gameLevel.setText( "Level " + CurrentLevel);
+		
+		timer.stopTimer(0, this);
+		timer.startTimer(timerValue, this);
+		
+		wset.constructLetters();
+		initialLetters = wset.pickedWord;
+
+		charArrayUpper.InitLetters( "");
+		charArrayLower.InitLetters( initialLetters);
+		updateButtons();
+		ft.flashOff(availablePositions);
+
+
+	}
 	
 	
 	
@@ -670,7 +628,7 @@ public class WordBuilderGame extends Application implements timerCallback {
 
 		logger.entering( className, "SetScore");
 
-		Label scoreSlogan = new Label("Score");
+		scoreSlogan = new Label("Total Score");
 		scoreSlogan.setTextFill(Color.WHITE);
 		scoreSlogan.setStyle("-fx-font-size:28px;");
 
@@ -781,7 +739,7 @@ public class WordBuilderGame extends Application implements timerCallback {
 				try {
 					wordForSearch = validateWords.isValidWord(word);
 					
-					validateWords.searchInArrayList(foundWords,wordForSearch);
+					validateWords.searchInArrayList( wset.foundWords,wordForSearch);
 					
 				}
 				catch (InvalidWordException ex) {
@@ -822,6 +780,8 @@ public class WordBuilderGame extends Application implements timerCallback {
 
 				//TODO : Actions for next level
 				logger.log( Level.INFO, "Next Level");
+				gotoNextLevel();
+				
 			}
 
 			logger.exiting( className, "buttons event handler");
@@ -1008,10 +968,12 @@ public class WordBuilderGame extends Application implements timerCallback {
 	@Override
 	public void clockTick( int currentValue, int timeoutValue, int timerNumber, long interval) {
 		
+		timeLeft = timeoutValue-currentValue;
+		
 		Platform.runLater(new Runnable() {
 		    @Override
 		    public void run() {
-		    	timerLabel.setText( String.valueOf( timeoutValue-currentValue));
+		    	timerLabel.setText( String.valueOf( timeLeft));
 		    }
 		});
 	}
@@ -1022,10 +984,12 @@ public class WordBuilderGame extends Application implements timerCallback {
 	@Override
 	public void clockExpired( int currentValue, int timeoutValue, int timerNumber, long interval) {
 		
+		timeLeft = timeoutValue-currentValue;
+
 		Platform.runLater(new Runnable() {
 		    @Override
 		    public void run() {
-		    	timerLabel.setText( String.valueOf( timeoutValue-currentValue));
+		    	timerLabel.setText( String.valueOf( timeLeft));
 		    }
 		});
 		
@@ -1081,11 +1045,11 @@ public class WordBuilderGame extends Application implements timerCallback {
 	 * @return The concatentation of the selected word and the randomized letters separated by one space
 	 */
 	public static String getSelectedWords(int index) {
-		if( selfReference.foundWords.size() == 0 ) {
+		if( selfReference.wset.foundWords.size() == 0 ) {
 			return "";
 		}
-		index = Math.min( index, selfReference.foundWords.size()-1);
-		return selfReference.foundWords.get(index) + CharContainer.WORD_SEPARATOR
+		index = Math.min( index, selfReference.wset.foundWords.size()-1);
+		return selfReference.wset.foundWords.get(index) + CharContainer.WORD_SEPARATOR
 				+ selfReference.charArrayLower.toString();
 	}
 

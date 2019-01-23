@@ -40,12 +40,12 @@ public class GameMethods {
 	public static void updateAvailablePositions( String wordForSearch) {
 		// TODO: implement method updateAvailablePositions
 		
-		ObservableList<String> data = WordBuilderGame.selfReference.wordsList.getItems();
+		ObservableList<String> data = WordBuilderGame.selfReference.wset.wordsList.getItems();
 		if( data.size() >= 10) {
 			data.remove(0);
 		}
 		data.add(wordForSearch);
-		WordBuilderGame.selfReference.wordsList.setItems(data);
+		WordBuilderGame.selfReference.wset.wordsList.setItems(data);
 	}
 	
 	
@@ -69,14 +69,14 @@ public class GameMethods {
 	
 	
 	
-	/**********************************************************************
-	 * 
-	 */
-	public static void updateLevel() {
-		// TODO: implement method updateLevel
-
-	}
-	
+//	/**********************************************************************
+//	 * 
+//	 */
+//	public static void updateLevel() {
+//		// TODO: implement method updateLevel
+//
+//	}
+//	
 	
 	
 	
@@ -93,6 +93,7 @@ public class GameMethods {
 			params.put("TimerInterval", Integer.valueOf(1)); 	// 1 second
 			params.put("TimerUnit", "sec"); 					// Timer unit : sec = seconds / dec = deciseconds
 			params.put("LetterMultiplier", Integer.valueOf(10)); // 10 points per each letter
+			params.put("TimeMultiplier", Integer.valueOf(4));   // 3 points per each second
 		
 		} else if (level < 20) {
 			params.put("NextLevel", Integer.valueOf(200)); 		// 200 points to advance to next level
@@ -100,6 +101,7 @@ public class GameMethods {
 			params.put("TimerInterval", Integer.valueOf(1)); 	// 1 second
 			params.put("TimerUnit", "sec"); 					// Timer unit : sec = seconds / dec = deciseconds
 			params.put("LetterMultiplier", Integer.valueOf(9)); // 9 points per each letter
+			params.put("TimeMultiplier", Integer.valueOf(3));   // 3 points per each second
 		
 		} else if (level < 30) {
 			params.put("NextLevel", Integer.valueOf(400)); 		// 400 points to advance to next level
@@ -107,6 +109,7 @@ public class GameMethods {
 			params.put("TimerInterval", Integer.valueOf(1)); 	// 1 second
 			params.put("TimerUnit", "sec"); 					// Timer unit : sec = seconds / dec = deciseconds
 			params.put("LetterMultiplier", Integer.valueOf(5)); // 5 points per each letter
+			params.put("TimeMultiplier", Integer.valueOf(2));   // 3 points per each second
 
 		} else {
 			params.put("NextLevel", Integer.valueOf(700)); 		// 700 points to advance to next level
@@ -114,6 +117,7 @@ public class GameMethods {
 			params.put("TimerInterval", Integer.valueOf(1)); 	// 1 second
 			params.put("TimerUnit", "sec"); 					// Timer unit : sec = seconds / dec = deciseconds
 			params.put("LetterMultiplier", Integer.valueOf(4)); // 4 points per each letter
+			params.put("TimeMultiplier", Integer.valueOf(1));   // 3 points per each second
 		}
 
 		return params;
