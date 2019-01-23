@@ -87,17 +87,5 @@ public class WordSetTest {
 		
 	}
 
-	
-	@Test
-	public void testGetters() {
-		
-		int val = obj1.minLength();
-		assertEquals( min, val);
-		
-		val = obj1.maxLength();
-		assertEquals( max, val);
-		
-		String val1 = obj1.language();
-		assertEquals( langGR, val1);
-	}
+
 }

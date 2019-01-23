@@ -490,7 +490,7 @@ public class WordBuilderGame extends Application implements timerCallback {
 
 		gamePane.add(hbtimer, MAXCOLS - 4, 2, 2, 1); // spans 2 columns and 2 rows (the last two elements)
 
-		SetScoreLabelData();
+		setScoreLabelData();
 
 		createLetterSeqBut( wset.pickedWord);
 
@@ -565,13 +565,35 @@ public class WordBuilderGame extends Application implements timerCallback {
 	
 	
 	/*********************************************************************
-	 * 
+	 * Updates the score label in the game board
 	 * @author Aris
 	 */
-	public static void updateScoreLabel() {
-		
-		selfReference.scoreLabel.setText(Integer.toString( ScoreTotal));
+	private static void updateScoreLabel() {
+		Platform.runLater(new Runnable() {
+		    @Override
+		    public void run() {
+		    	selfReference.scoreLabel.setText(Integer.toString( ScoreTotal));
+		    }
+		});
 	}
+	
+	
+	
+	
+	
+	/*****************************************************************************
+	 * Updates the game level label in the game board
+	 */
+	private static void updateGameLevelLabel() {
+		Platform.runLater(new Runnable() {
+		    @Override
+		    public void run() {
+		    	selfReference.gameLevel.setText( "Level " + CurrentLevel);
+		    }
+		});
+	}
+	
+	
 	
 	
 	
@@ -609,7 +631,7 @@ public class WordBuilderGame extends Application implements timerCallback {
 		updateScoreLabel();									// Update the score field with the new score
 
 		CurrentLevel++;										// Advance to the next level
-		gameLevel.setText( "Level " + CurrentLevel);		// Update the level field with the current level value
+		updateGameLevelLabel();								// Update the level field with the current level value
 		
 		timer.stopTimer( MAIN_TIMER, this);					// Stop any ongoing timer
 		
@@ -622,7 +644,7 @@ public class WordBuilderGame extends Application implements timerCallback {
 			timer.startTimerDS( TimerValue, TimerInterval, MAIN_TIMER, this);
 		}
 		
-		wset.constructLetters();							// Get a new word and construct new random letters
+		wset.getNextWordAndShuffle();						// Get a new word and construct new random letters
 		initialLetters = wset.pickedWord;					// Store the selected word (randomized)
 
 		charArrayUpper.InitLetters( "");					// Clear the upper letter container
@@ -637,9 +659,10 @@ public class WordBuilderGame extends Application implements timerCallback {
 	
 	
 	/*********************************************************************
-	 * 
+	 * Create the score object in the game board
+	 * @author SOCO
 	 */
-	private void SetScoreLabelData( ) {
+	private void setScoreLabelData( ) {
 
 		logger.entering( className, "SetScore");
 
@@ -665,7 +688,7 @@ public class WordBuilderGame extends Application implements timerCallback {
 	
 	
 	/*********************************************************************
-	 * 
+	 * Redraw the letter objects in the game board from the letter container objects
 	 * @author Nikos
 	 */
 	void updateButtons() {

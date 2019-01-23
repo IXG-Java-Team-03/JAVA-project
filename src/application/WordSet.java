@@ -172,21 +172,23 @@ public class WordSet {
 	 */
 	void performInit() {
 
-		logger.entering( className, "pickUpWord");
+		logger.entering( className, "performInit");
 		
 		listofMaxletters = WordsDB.get( maxLength);
 		
 		fillRandomValues();
-		constructLetters();
+		getNextWordAndShuffle();
 
-		logger.exiting( className, "pickUpWord");
+		logger.exiting( className, "performInit");
 
 	}
 	
 	
 	
-	
-	void constructLetters() {
+	/**************************************************************************************
+	 * Get a new word and return the shuffled letters
+	 */
+	void getNextWordAndShuffle() {
 
 		/**
 		 *  shuffle word letters
@@ -208,48 +210,56 @@ public class WordSet {
 	
 	
 	
-	
+	/***************************************************************************************************
+	 * Fill the array of random values. This way the selected words will be unique within the time frame of a game
+	 * @author Nikos
+	 */
 	private void fillRandomValues() {
 				
-		int sizeOfArray = listofMaxletters.size(); 
+		int sizeOfArray = listofMaxletters.size(); 					// the number of words that are selected 
+																	// for the specific length
 
-		ArrayList<Integer> randomList = new ArrayList<>();
+		ArrayList<Integer> randomList = new ArrayList<>();			// initiate an ArrayList with integers
 		for( int i=0; i<sizeOfArray; i++) {
-			randomList.add( i);
+			randomList.add( i);										// put increasing values to the list
 		}
-		Collections.shuffle( randomList);
+		Collections.shuffle( randomList);							// randomize the list
 		
 		if( sizeOfArray > SIZE_OF_RANDOM_LIST) {
-			sizeOfArray = SIZE_OF_RANDOM_LIST;
+			sizeOfArray = SIZE_OF_RANDOM_LIST;						// get the first 100 random values
 		}
 		
-		randomWordPositions = new int[ sizeOfArray];
+		randomWordPositions = new int[ sizeOfArray];				// store them in an int array
 		
 		for( int i=0; i<sizeOfArray; i++) {
-			randomWordPositions[i] = randomList.get(i);
+			randomWordPositions[i] = randomList.get(i);				// copy the random values
 		}
 		
-		randomValuesPosition = 0;
+		randomValuesPosition = 0;									// reset the fetch counter
 	}
 	
 	
 	
 	
 	
-	
+	/*******************************************************************************************************
+	 * Fetch one random number that will be used to select the next word to play
+	 * @return A random position in the list of words
+	 * @author Nikos
+	 */
 	protected int getRandomValue() {
 		
-		if( randomValuesPosition >= randomWordPositions.length) {
-			fillRandomValues();
+		if( randomValuesPosition >= randomWordPositions.length) {	// check if we have fetched all random values
+			fillRandomValues();										// get another 100 values
 		}
 		
-		int retval = randomWordPositions[ randomValuesPosition];
-		randomValuesPosition++;
+		int retval = randomWordPositions[ randomValuesPosition];	// get the next random values
+		randomValuesPosition++;										// proceed the fetch pointer
 		
-		if( randomValuesPosition >= randomWordPositions.length) {
-			fillRandomValues();
+		if( randomValuesPosition >= randomWordPositions.length) {	// check if we have fetched all random values
+			fillRandomValues();										// get another 100 values
 		}
-		return retval;
+		return retval;												// return the selected random number 
 	}
 	
 	
@@ -262,9 +272,10 @@ public class WordSet {
 
 
 	/*********************************************************************
-	 * 
+	 * Shuffle the letters in the input word
 	 * @param word
-	 * @return
+	 * @return The word with randomized letters
+	 * @author Nikos
 	 */
 	private static String shuffleWord( String word) {
 
@@ -295,10 +306,10 @@ public class WordSet {
     
 
     /**********************************************************************
-     * 
      * Breaks the input string in letters and finds all words that can be created with them.
      * @param l
      * @return
+     * @author HAYI
      */
     public ArrayList<String> AssembleWordGameSet(String l) {
 
