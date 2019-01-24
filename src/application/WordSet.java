@@ -119,7 +119,7 @@ public class WordSet {
             }
             fr.close();
         } catch (IOException ioe) {
-        	logger.severe( "Error reading "+filePath+".");
+        	logger.log( Level.SEVERE, "Error reading {0}.", filePath);
             System.exit(0);
         }
         return w;
@@ -333,7 +333,8 @@ public class WordSet {
 
     				// Dirty check for words with "invisible" illegal chars (eg english A instead of a greek one)
     				if (word.length() < i) {
-    					logger.severe( "*** Η ΛΕΞΗ "+word+" ΘΑ ΕΠΡΕΠΕ ΝΑ ΕΧΕΙ "+i+" ΓΡΑΜΜΑΤΑ! ***");
+    					logger.log( Level.SEVERE, "*** Η ΛΕΞΗ {0} ΘΑ ΕΠΡΕΠΕ ΝΑ ΕΧΕΙ {1} ΓΡΑΜΜΑΤΑ! ***",
+    							new Object[] { word, i});
     				}
 
     				for (int c=0; c<tempLetters.size(); c++) {

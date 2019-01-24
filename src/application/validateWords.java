@@ -2,6 +2,7 @@ package application;
 
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 import helper.InvalidWordException;
 
@@ -71,7 +72,7 @@ public class validateWords {
 			return false;
 		}
 		
-		logger.info("Valid Format = " + word);
+		logger.log( Level.INFO, "Valid Format = {0}", word);
 		logger.exiting( className, "isValidFormat");
 		return true;
 	}
@@ -99,7 +100,7 @@ public class validateWords {
 			throw new InvalidWordException( "Invalid format. Try again");
 		}
 
-		logger.info( "The word that should be checked if valid = " + newWord);
+		logger.log( Level.INFO, "The word that should be checked if valid = {0}", newWord);
 		logger.exiting( className, "isValidWord");
 
 		return newWord;

@@ -826,7 +826,7 @@ public class WordBuilderGame extends Application implements timerCallback {
 			
 			} else if (x == nextlevel) {
 				
-				logger.log( Level.INFO, "Next Level");
+				logger.log( Level.INFO, "Next Level {0}", event.getSource().toString());
 				gotoNextLevel();
 			}
 
