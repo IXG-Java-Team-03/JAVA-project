@@ -1042,7 +1042,12 @@ public class WordBuilderGame extends Application implements timerCallback {
 		if( GameMethods.checkUnlockedNextLevel( ) ) {
 
 			logger.log( Level.INFO, "Goto Next Level at Timer Expiry");
-			gotoNextLevel();
+			Platform.runLater(new Runnable() {
+			    @Override
+			    public void run() {
+					gotoNextLevel();
+			    }
+			});
 		}
 		else {
 			
