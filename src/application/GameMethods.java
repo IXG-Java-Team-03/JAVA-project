@@ -2,8 +2,6 @@ package application;
 
 import java.util.Properties;
 
-import javafx.collections.ObservableList;
-
 /**
  * Write a description of Updates here.
  * This class updates everything is needed after a valid word is found or a level is 
