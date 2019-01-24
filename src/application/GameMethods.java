@@ -16,7 +16,7 @@ public class GameMethods {
 	 * 
 	 * @param wordFound
 	 */
-	public static void updateScore( String wordFound) {
+	static void updateScore( String wordFound) {
 		
 		int multiplier = getIntegerProperty( "LetterMultiplier", 1);
 
@@ -37,7 +37,7 @@ public class GameMethods {
 	 * 
 	 * @return
 	 */
-	public static boolean checkUnlockedNextLevel( ) {
+	static boolean checkUnlockedNextLevel( ) {
 		
 		int PointsForNextLevel = getIntegerProperty( "NextLevel", 100);
 
@@ -55,7 +55,7 @@ public class GameMethods {
 	/**********************************************************************
 	 * @author efpav
 	 */
-	public static Properties getLevelParameters( int level) {
+	static Properties getLevelParameters( int level) {
 		
 		Properties params = new Properties();
 				
@@ -104,7 +104,7 @@ public class GameMethods {
 	 * @param defaultValue The default value that will be returned if the property is not found
 	 * @return The integer value of the indicated property
 	 */
-	public static int getIntegerProperty( Properties p, String tag, int defaultValue) {
+	static int getIntegerProperty( Properties p, String tag, int defaultValue) {
 		if (p != null && p.containsKey(tag)) {
 			if (p.get(tag) instanceof Integer) {
 				return ((Integer) p.get(tag)).intValue();
@@ -121,7 +121,7 @@ public class GameMethods {
 	 * @param defaultValue The default value that will be returned if the property is not found
 	 * @return The integer value of the indicated property
 	 */
-	public static int getIntegerProperty( String tag, int defaultValue) {
+	static int getIntegerProperty( String tag, int defaultValue) {
 		Properties params = GameMethods.getLevelParameters( WordBuilderGame.CurrentLevel);
 		return getIntegerProperty( params, tag, defaultValue);
 	}
@@ -136,7 +136,7 @@ public class GameMethods {
 	 * @param defaultValue The default value that will be returned if the property is not found
 	 * @return The String value of the indicated property
 	 */
-	public static String getStringProperty( Properties p, String tag, String defaultValue) {
+	static String getStringProperty( Properties p, String tag, String defaultValue) {
 		if (p != null && p.containsKey(tag)) {
 			if (p.get(tag) instanceof String) {
 				return (String) p.get(tag);
@@ -152,7 +152,7 @@ public class GameMethods {
 	 * @param defaultValue The default value that will be returned if the property is not found
 	 * @return The String value of the indicated property
 	 */
-	public static String getStringProperty( String tag, String defaultValue) {
+	static String getStringProperty( String tag, String defaultValue) {
 		Properties params = GameMethods.getLevelParameters( WordBuilderGame.CurrentLevel);
 		return getStringProperty( params, tag, defaultValue);
 	}

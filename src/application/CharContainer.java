@@ -204,9 +204,7 @@ public class CharContainer {
 			return String.valueOf(charArray)		// char array to String
 				     .substring(0, numChars+1); 	// limit to number of characters
 		}
-		else {
-			return "";
-		}
+		return "";
 	}
 
 

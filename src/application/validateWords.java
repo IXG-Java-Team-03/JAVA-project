@@ -69,12 +69,11 @@ public class validateWords {
 			logger.info( "Invalid format. Try again");
 			logger.exiting( className, "isValidFormat");
 			return false;
-		} else {
-
-			logger.info("Valid Format = " + word);
-			logger.exiting( className, "isValidFormat");
-			return true;
 		}
+		
+		logger.info("Valid Format = " + word);
+		logger.exiting( className, "isValidFormat");
+		return true;
 	}
 
 
@@ -134,17 +133,11 @@ public class validateWords {
 			//do all the appropriate updates
 			GameMethods.updateScore( wordForSearch);
 			WordBuilderGame.selfReference.insertInWordList( wordForSearch);
-//			GameMethods.updateLevel();
 
 		} else {
 
 			logger.info( "Invalid Word, Not in the arrayList or already found. Try with another word");
-			
 			throw new InvalidWordException("Invalid Word, Not in the arrayList or already found. Try with another word");
-			
-			
-			
-			
 
 		}
 	}
