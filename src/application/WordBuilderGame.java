@@ -54,8 +54,8 @@ public class WordBuilderGame extends Application implements timerCallback {
 	private final static String className = MethodHandles.lookup().lookupClass().getSimpleName();
 	private final static appLogger logger = new appLogger( className, null);
 
-	private final static Button startGame = new Button("Start Playing");
-	private final static Button quitGame = new Button("Quit");
+	private static Button startGame;
+	private static Button quitGame;
 
 	private final static String language ="GR";
 
@@ -230,6 +230,9 @@ public class WordBuilderGame extends Application implements timerCallback {
 
 		selfReference = this;
 		
+		startGame = new Button("Start Playing");
+		quitGame = new Button("Quit");
+
 		startGame.setId("default-button");
 		quitGame.setId("default-button");
 

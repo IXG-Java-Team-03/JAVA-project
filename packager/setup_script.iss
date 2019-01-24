@@ -3,7 +3,7 @@
 
 #define MyAppName "Word Game"
 #define MyAppVersion "0.1"
-#define MyAppPublisher "IXG java team 3"
+#define MyAppPublisher "IXG java team 1"
 #define MyAppExeName "JAVA-project.cmd"
 
 [Setup]
