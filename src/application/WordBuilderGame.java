@@ -12,6 +12,7 @@ import helper.gameclock.timerCallback;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.application.Preloader;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -98,6 +99,8 @@ public class WordBuilderGame extends Application implements timerCallback {
 	Text gameLevel;
 	
 	WordSet wset;
+	public ListView<String> wordsList;
+
 
 	public  Button chckword, resetword, shuffleword, nextlevel;
 
@@ -446,7 +449,7 @@ public class WordBuilderGame extends Application implements timerCallback {
 		updateScoreLabel();
 
 		// on the left we will need a list of words to be found
-		wset.wordsList = new ListView<String>();
+		wordsList = new ListView<String>();
 
 		// ***********************This is just an example**************
 		// here we will call a function that will return the found words
@@ -457,10 +460,10 @@ public class WordBuilderGame extends Application implements timerCallback {
 		//wordsList.setItems(FXCollections.observableArrayList(wordsToShowUp));
 		// wordsList.setBackground(value);
 
-		wset.wordsList.setMouseTransparent(true);
-		wset.wordsList.setFocusTraversable(false);
+		wordsList.setMouseTransparent(true);
+		wordsList.setFocusTraversable(false);
 
-		gamePane.add( wset.wordsList, 0, 2, 3, MAXROWS - 2); // spans 1 column, 4 rows
+		gamePane.add( wordsList, 0, 2, 3, MAXROWS - 2); // spans 1 column, 4 rows
 
 		// create and add the timer
 		HBox hbtimer = createTimer();
@@ -663,6 +666,39 @@ public class WordBuilderGame extends Application implements timerCallback {
 		logger.exiting( className, "SetScore");
 	}
 
+	
+	
+	
+	
+	
+	/*****************************************************************************
+	 * This method clears all words from the word list component
+	 */
+	void resetWordList() {
+		if( wordsList != null) {
+			ObservableList<String> data = wordsList.getItems();
+			data.clear();
+			wordsList.setItems(data);
+		}
+	}
+	
+	
+	
+	/*******************************************************************************
+	 * Insert a word in the word list component
+	 * @param wordForSearch
+	 */
+	void insertInWordList( String wordForSearch) {
+		
+		ObservableList<String> data = wordsList.getItems();
+		if( data.size() >= 10) {
+			data.remove(0);
+		}
+		data.add(wordForSearch);
+		wordsList.setItems(data);
+	}
+
+	
 	
 	
 	/*********************************************************************

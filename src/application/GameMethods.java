@@ -32,18 +32,6 @@ public class GameMethods {
 	}
 	
 	
-	/**********************************************************************
-	 * 
-	 */
-	public static void insertInWordList( String wordForSearch) {
-		
-		ObservableList<String> data = WordBuilderGame.selfReference.wset.wordsList.getItems();
-		if( data.size() >= 10) {
-			data.remove(0);
-		}
-		data.add(wordForSearch);
-		WordBuilderGame.selfReference.wset.wordsList.setItems(data);
-	}
 	
 	
 	

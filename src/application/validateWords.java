@@ -133,7 +133,7 @@ public class validateWords {
 			
 			//do all the appropriate updates
 			GameMethods.updateScore( wordForSearch);
-			GameMethods.insertInWordList( wordForSearch);
+			WordBuilderGame.selfReference.insertInWordList( wordForSearch);
 //			GameMethods.updateLevel();
 
 		} else {

@@ -48,7 +48,6 @@ public class WordSet {
 	
 	ArrayList<String> foundWords;
 	
-	public ListView<String> wordsList;
 
 	
 	
@@ -198,11 +197,7 @@ public class WordSet {
 		//extract all words that can be constructed with "pickedWord" letters
 		foundWords = AssembleWordGameSet( pickedWord);
 
-		if( wordsList != null) {
-			ObservableList<String> data = wordsList.getItems();
-			data.clear();
-			wordsList.setItems(data);
-		}
+		WordBuilderGame.selfReference.resetWordList();
 	}
 
 	
