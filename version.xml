@@ -21,7 +21,7 @@
 		buildNumFile="${basedir}/buildnum.properties"
 		buildNumProperty="buildnum"
 		>
-		<parameter name="DebugInfo"     type="boolean"  value="false" />
+		<parameter name="DebugInfo"     type="boolean"  value="true" />
 		<parameter name="ReleaseYear"   type="int"      value="2019" />
 		<parameter name="PublisherName" type="String"   value="${publisherPar}" />
 	</jreleaseinfo>
