@@ -11,6 +11,8 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
+import versioninfo.ReleaseInfo;
+
 
 public class appLogger extends Logger {
 
@@ -78,6 +80,9 @@ public class appLogger extends Logger {
 		ch.setFormatter( new singleLineFormatter());
 		this.addHandler( ch);
 
+		if( !ReleaseInfo.isDebugInfo()) {
+			setLevel( Level.OFF);
+		}
 //		setLevel( Level.ALL);		// ----- debugging logging level
 	}
 

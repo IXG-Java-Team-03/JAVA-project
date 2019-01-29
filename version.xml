@@ -1,0 +1,53 @@
+<?eclipse.ant.import?>
+<project xmlns='antlib:org.apache.tools.ant'>
+	
+	<property name="versionPar" value="0.6"/>
+	<property name="appNamePar" value="Word Game"/>
+	<property name="publisherPar" value="IXG Java Team 1"/>
+	<dirname property="baseHome" file="${basedir}"/>
+
+	<taskdef 
+	   name="jreleaseinfo" 
+	   classname="ch.oscg.jreleaseinfo.anttask.JReleaseInfoAntTask"
+	   classpath="lib/jreleaseinfo-1.3.0.jar" />
+   
+	<jreleaseinfo 
+		className="ReleaseInfo" 
+		packageName="versionInfo"
+		targetDir="${basedir}/src" 
+		project="${appNamePar}"
+		version="${versionPar}"
+		withViewer="false" 
+		buildNumFile="${basedir}/buildnum.properties"
+		buildNumProperty="buildnum"
+		>
+		<parameter name="DebugInfo"     type="boolean"  value="false" />
+		<parameter name="ReleaseYear"   type="int"      value="2019" />
+		<parameter name="PublisherName" type="String"   value="${publisherPar}" />
+	</jreleaseinfo>
+	
+	
+	
+	<copy file="${basedir}/versionInfo/build.fxbuild" 
+				tofile="${basedir}/build.fxbuild" overwrite="true">
+		<filterset>
+			<filter token="PROGVERSION" value="${versionPar}"/>
+			<filter token="PROGRAMNAME" value="${appNamePar}"/>
+			<filter token="PUBLISHERNAME" value="${publisherPar}"/>
+			<filter token="MAINDIRHOME" value="${baseHome}"/>
+		</filterset>
+	</copy>
+	
+	
+	<copy file="${basedir}/versionInfo/setup_script_base.iss" 
+				tofile="${basedir}/packager/setup_script.iss" overwrite="true">
+		<filterset>
+			<filter token="PROGVERSION" value="${versionPar}"/>
+			<filter token="PROGRAMNAME" value="${appNamePar}"/>
+			<filter token="PUBLISHERNAME" value="${publisherPar}"/>
+			<filter token="MAINDIRHOME" value="${baseHome}"/>
+		</filterset>
+	</copy>
+	
+</project>
+

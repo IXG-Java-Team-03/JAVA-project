@@ -39,6 +39,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import versioninfo.ReleaseInfo;
 
 
 
@@ -495,7 +496,7 @@ public class WordBuilderGame extends Application implements timerCallback {
 
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 
-		applicationStage.setTitle("World Builder");
+		applicationStage.setTitle( ReleaseInfo.getProject() + " v" + ReleaseInfo.getVersion() );
 		applicationStage.setScene(scene);
 		applicationStage.show();
 		
