@@ -60,8 +60,8 @@ public class WordBuilderGame extends Application implements timerCallback {
 
 	private final static String language ="GR";
 
-	private final static int MINLETTERS = 2;
-	private final static int MAXLETTERS = 5;
+	private final static int MINLETTERS = 3;
+	private final static int MAXLETTERS = 7;
 
 	private final static int MAXROWS = 15;
 	private final static int MAXCOLS = 15;
@@ -948,6 +948,7 @@ public class WordBuilderGame extends Application implements timerCallback {
 	 */
 	private void setEffectShadow(Button button,Color color) {
 
+		
 		DropShadow shadow = new DropShadow();
 
 		shadow.setColor(color);
@@ -1054,6 +1055,8 @@ public class WordBuilderGame extends Application implements timerCallback {
 			
 			//TODO : game over
 			logger.log( Level.INFO, "Game Over");
+			
+			//TODO : high score - write to file
 		}
 		
 

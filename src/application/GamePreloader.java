@@ -54,6 +54,8 @@ public class GamePreloader extends Preloader {
 		
 		logger.info( "MyPreloader#init (could be used to initialize preloader view)");
 
+		//TODO : insert gamer's name
+		
 		// If preloader has complex UI it's initialization can be done in
 		// MyPreloader#init
 		Platform.runLater(() -> {
