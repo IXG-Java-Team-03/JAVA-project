@@ -27,8 +27,7 @@
 	</jreleaseinfo>
 	
 	
-	
-	<copy file="${basedir}/versionInfo/build.fxbuild" 
+	<copy file="${basedir}/templateFiles/build.fxbuild" 
 				tofile="${basedir}/build.fxbuild" overwrite="true">
 		<filterset>
 			<filter token="PROGVERSION" value="${versionPar}"/>
@@ -38,8 +37,7 @@
 		</filterset>
 	</copy>
 	
-	
-	<copy file="${basedir}/versionInfo/setup_script_base.iss" 
+	<copy file="${basedir}/templateFiles/setup_script_base.iss" 
 				tofile="${basedir}/packager/setup_script.iss" overwrite="true">
 		<filterset>
 			<filter token="PROGVERSION" value="${versionPar}"/>

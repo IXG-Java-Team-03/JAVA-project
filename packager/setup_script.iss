@@ -5,7 +5,7 @@
 #define MyAppVersion "0.6"
 #define MyAppPublisher "IXG Java Team 1"
 #define MyAppExeName "JAVA-project.cmd"
-#define mainDir "C:\Users\nkot\Documents\eclipse-workspace"
+#define mainDir "C:\Users\Nikos\Documents\eclipse-workspace"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
