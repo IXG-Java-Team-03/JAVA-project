@@ -1,15 +1,18 @@
 <?eclipse.ant.import?>
 <project xmlns='antlib:org.apache.tools.ant'>
 	
-	<property name="versionPar" value="0.6"/>
+	<property name="versionPar" value="0.8"/>
 	<property name="appNamePar" value="Word Game"/>
 	<property name="publisherPar" value="IXG Java Team 1"/>
 	<dirname property="baseHome" file="${basedir}"/>
+	
+	<property name="libpath" value="C:/Java_Libraries" />
+	
 
 	<taskdef 
 	   name="jreleaseinfo" 
 	   classname="ch.oscg.jreleaseinfo.anttask.JReleaseInfoAntTask"
-	   classpath="lib/jreleaseinfo-1.3.0.jar" />
+	   classpath="${libpath}/JReleaseInfo/jreleaseinfo-1.3.0.jar" />
    
 	<jreleaseinfo 
 		className="ReleaseInfo" 

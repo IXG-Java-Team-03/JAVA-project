@@ -2,10 +2,10 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Word Game"
-#define MyAppVersion "0.6"
+#define MyAppVersion "0.8"
 #define MyAppPublisher "IXG Java Team 1"
 #define MyAppExeName "JAVA-project.cmd"
-#define mainDir "C:\Users\Nikos\Documents\eclipse-workspace"
+#define mainDir "C:\Users\nkot\Documents\eclipse-workspace"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.

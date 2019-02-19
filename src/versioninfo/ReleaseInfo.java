@@ -1,5 +1,5 @@
 /* Created by JReleaseInfo AntTask from Open Source Competence Group */
-/* Creation date Wed Jan 30 21:25:39 EET 2019 */
+/* Creation date Tue Feb 19 16:08:52 EET 2019 */
 package versioninfo;
 
 import java.util.Date;
@@ -12,11 +12,11 @@ import java.util.Date;
 public class ReleaseInfo {
 
 
-   /** buildDate (set during build process to 1548876339326L). */
-   private static Date buildDate = new Date(1548876339326L);
+   /** buildDate (set during build process to 1550585332817L). */
+   private static Date buildDate = new Date(1550585332817L);
 
    /**
-    * Get buildDate (set during build process to Wed Jan 30 21:25:39 EET 2019).
+    * Get buildDate (set during build process to Tue Feb 19 16:08:52 EET 2019).
     * @return Date buildDate
     */
    public static final Date getBuildDate() { return buildDate; }
@@ -32,11 +32,11 @@ public class ReleaseInfo {
    public static final String getProject() { return project; }
 
 
-   /** version (set during build process to "0.6"). */
-   private static String version = "0.6";
+   /** version (set during build process to "0.8"). */
+   private static String version = "0.8";
 
    /**
-    * Get version (set during build process to "0.6").
+    * Get version (set during build process to "0.8").
     * @return String version
     */
    public static final String getVersion() { return version; }
@@ -67,9 +67,9 @@ public class ReleaseInfo {
 
 
    /**
-    * Get buildNumber (set during build process to 6).
+    * Get buildNumber (set during build process to 10).
     * @return int buildNumber
     */
-   public static final int getBuildNumber() { return 6; }
+   public static final int getBuildNumber() { return 10; }
 
 }
